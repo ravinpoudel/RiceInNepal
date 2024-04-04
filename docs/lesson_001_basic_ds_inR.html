@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Author: Ravin Poudel" />
+
+
+<title>Getting started with R</title>
+
+<script src="site_libs/header-attrs-2.26/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="site_libs_extra/academicons-1.8.0/css/academicons.css"/>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">
+    <span class="fa fa-info-circle  fa-1x"></span>
+     
+    About
+  </a>
+</li>
+<li>
+  <a href="Agenda.html">Agenda</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Before you come
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="computer_setup.html">Before you come</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-book  fa-1x"></span>
+     
+    Lessons
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="lesson_000_R_Rstudio_project.html">Project Management, R, &amp; RStudio</a>
+    </li>
+    <li>
+      <a href="lesson_001_basic_ds_inR.html">Getting started with R</a>
+    </li>
+    <li>
+      <a href="lesson_002_spreadsheets.html">Spreadsheets</a>
+    </li>
+    <li>
+      <a href="lesson_003_working_with_spreadsheet.html">Working with Spreadsheets</a>
+    </li>
+    <li>
+      <a href="lesson_06_data_manipulation_pt1.html">Data Manipulation</a>
+    </li>
+    <li>
+      <a href="lesson_09_data_viz_pt1.html">Data Visualization</a>
+    </li>
+    <li>
+      <a href="lesson_006_statistical_analyses.html">Statistical Analyses</a>
+    </li>
+    <li>
+      <a href="lesson_12_lubridate.html">Date-times with lubridate</a>
+    </li>
+    <li>
+      <a href="lesson_13_functions.html">Writing functions</a>
+    </li>
+    <li>
+      <a href="lesson_14_iteration.html">Iteration</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="assignments.html">
+    <span class="fa fa-paperclip fa-1x"></span>
+     
+    Challenges
+  </a>
+</li>
+<li>
+  <a href="resources.html">
+    <span class="fa fa-list"></span>
+     
+    Resources
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="contact.html">
+    <span class="fa fa-hand-spock-o"></span>
+     
+    Contact
+  </a>
+</li>
+<li>
+  <a href="https://www.garrettlab.com">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Getting started with R</h1>
+<h4 class="author">Author: Ravin Poudel</h4>
+<h4 class="date">Last update: 04 April, 2024</h4>
+
+</div>
+
+
+<br>
+<div id="learning-objectives" class="section level3 blue">
+<h3>Learning objectives</h3>
+<ol style="list-style-type: decimal">
+<li><strong>Understanding Basic R Operations</strong>:
+<ul>
+<li>Learn to perform basic arithmetic operations such as addition,
+subtraction, multiplication, division, and exponentiation in R.</li>
+<li>Understand how to assign values to variables.</li>
+<li>Familiarize with different methods of subsetting vectors, including
+indexing, logical conditions, and functions like
+<code>subset()</code>.</li>
+</ul></li>
+<li><strong>Working with Basic Data Structures in R</strong>:
+<ul>
+<li>Gain knowledge about fundamental data structures in R such as
+vectors, matrices, arrays, lists, and data frames.</li>
+<li>Understand how to create and manipulate these data structures.</li>
+<li>Learn about subsetting data frames based on specific conditions
+using logical operators (<code>&amp;</code>, <code>|</code>,
+<code>!</code>).</li>
+</ul></li>
+<li><strong>Logical Operators in Data Subsetting</strong>:
+<ul>
+<li>Understand the usage of logical operators (<code>&amp;</code> for
+“AND”, <code>|</code> for “OR”, <code>!</code> for “NOT”) in subsetting
+data frames.</li>
+<li>Learn to combine logical operators to create complex conditions for
+data subsetting.</li>
+</ul></li>
+<li><strong>Practical Application</strong>:
+<ul>
+<li>Apply the learned concepts in practical scenarios such as subsetting
+data frames based on multiple conditions.</li>
+<li>Execute R code snippets provided in the document to practice and
+reinforce understanding</li>
+</ul></li>
+</ol>
+</div>
+<p><br></p>
+<div id="getting-started" class="section level2">
+<h2>Getting started</h2>
+<p>Open R program on your computer and look into your command window. It
+displays a “&gt;” symbol, referred to as the “prompt”. The prompt
+indicates that R is idle and waits for user input, or commands to
+execute. In general, each command in R generates output (some commands
+choose to explicitly suppress their output, as we will see later). If
+you type a command at the prompt and press enter, R will immediately
+proceed to executing the command. If no errors occurred and execution
+finished successfully, the output of your command will be printed into
+next line(s) in the command window, right after the input (command)
+itself.</p>
+<p>Note also that symbol “#” indicates start of a comment in R:
+everything starting from that symbol and through the end of the line is
+completely ignored by R.</p>
+<p>We will use this feature often in order to add inline comments to the
+code snippets – whether you copy just the command itself from these
+notes, or the full line (command + comment) into your R session, both
+will execute and produce exactly the same result (try it, and make sure
+you do not copy the prompt itself!) In other words, when the code
+snippet looks like:</p>
+<pre class="r"><code>2 + 2 # comment, ignored by R; command in this line adds 2 and 2</code></pre>
+<pre><code>## [1] 4</code></pre>
+<p>In R, you can perform a wide range of operations for data
+manipulation, mathematical computations, statistical analysis, and more.
+Here’s a brief overview of some of the basic operations you can perform
+in R:</p>
+</div>
+<div id="arithmetic-operations" class="section level2">
+<h2>Arithmetic Operations:</h2>
+<p>R supports basic arithmetic operations such as addition, subtraction,
+multiplication, division, and exponentiation.</p>
+<pre class="r"><code># Addition
+3 + 5</code></pre>
+<pre><code>## [1] 8</code></pre>
+<pre class="r"><code># Subtraction
+10 - 3</code></pre>
+<pre><code>## [1] 7</code></pre>
+<pre class="r"><code># Multiplication
+4 * 6</code></pre>
+<pre><code>## [1] 24</code></pre>
+<pre class="r"><code># Division
+20 / 5</code></pre>
+<pre><code>## [1] 4</code></pre>
+<pre class="r"><code># Exponentiation
+2 ^ 3</code></pre>
+<pre><code>## [1] 8</code></pre>
+</div>
+<div id="assignment" class="section level2">
+<h2>Assignment:</h2>
+<p>Assign values to variables using <code>&lt;-</code> or
+<code>=</code>.</p>
+<pre class="r"><code>x &lt;- 10
+y = 5</code></pre>
+</div>
+<div id="subsetting" class="section level2">
+<h2>Subsetting:</h2>
+<p>Subsetting vectors in R allows you to extract specific elements or
+subsets of elements from a vector based on certain criteria. There are
+different ways to subset vectors, including indexing, logical
+conditions, and using functions like <code>subset()</code>. Here are
+some examples:</p>
+<pre class="r"><code># Create a numeric vector
+nums &lt;- c(10, 20, 30, 40, 50)
+
+# Check the number of element in vector 
+length(nums)</code></pre>
+<pre><code>## [1] 5</code></pre>
+<pre class="r"><code># Check the type of element in vector object
+mode(nums)</code></pre>
+<pre><code>## [1] &quot;numeric&quot;</code></pre>
+<pre class="r"><code># Extract the second element of the vector
+nums[2]  # Output: 20</code></pre>
+<pre><code>## [1] 20</code></pre>
+<pre class="r"><code># Extract elements 2 to 4
+nums[2:4]  # Output: 20 30 40</code></pre>
+<pre><code>## [1] 20 30 40</code></pre>
+</div>
+<div id="indexing" class="section level2">
+<h2>Indexing</h2>
+<p>You can subset a vector using square brackets <code>[ ]</code> with
+numeric indices indicating the positions of the elements you want to
+extract.</p>
+<div id="logical-indexing" class="section level3">
+<h3>Logical Indexing</h3>
+<p>You can use logical conditions to subset a vector based on certain
+criteria.</p>
+<pre class="r"><code># Create a logical vector
+logic &lt;- c(TRUE, FALSE, TRUE, FALSE, TRUE)
+
+# check the type of element 
+mode(logic)</code></pre>
+<pre><code>## [1] &quot;logical&quot;</code></pre>
+<pre class="r"><code>is.logical(logic)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code># Subset elements where the corresponding logical value is TRUE
+nums[logic]  # Output: 10 30 50</code></pre>
+<pre><code>## [1] 10 30 50</code></pre>
+</div>
+<div id="negative-indexing" class="section level3">
+<h3>Negative Indexing</h3>
+<p>You can use negative indices to exclude certain elements from the
+vector.</p>
+<pre class="r"><code># Exclude the third element from the vector
+nums[-3]  # Output: 10 20 40 50</code></pre>
+<pre><code>## [1] 10 20 40 50</code></pre>
+</div>
+<div id="using-functions" class="section level3">
+<h3>Using Functions</h3>
+<p>You can use functions like <code>subset()</code> to subset vectors
+based on conditions.</p>
+<pre class="r"><code># Create a vector
+fruits &lt;- c(&quot;apple&quot;, &quot;banana&quot;, &quot;orange&quot;, &quot;grape&quot;, &quot;kiwi&quot;)
+
+# check the type of element 
+mode(fruits)</code></pre>
+<pre><code>## [1] &quot;character&quot;</code></pre>
+<pre class="r"><code>is.character(fruits)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code># Subset elements that start with the letter &#39;a&#39;
+subset(fruits, substr(fruits, 1, 1) == &quot;a&quot;)  # Output: apple</code></pre>
+<pre><code>## [1] &quot;apple&quot;</code></pre>
+<p>These are just a few examples of how you can subset vectors in R.
+Subsetting is a powerful feature that allows you to extract specific
+elements or subsets of elements from vectors, which is essential for
+data manipulation and analysis.</p>
+</div>
+</div>
+<div id="basic-data-structures-in-r" class="section level2">
+<h2>Basic data structures in R</h2>
+<p>In R, there are several basic data structures that are fundamental
+for storing and manipulating data. These data structures include:</p>
+<div id="vectors" class="section level3">
+<h3>Vectors</h3>
+<p>Vectors are one-dimensional arrays that can hold elements of the same
+data type, such as numeric, character, logical, etc.</p>
+<pre class="r"><code>numeric_vector &lt;- c(1, 2, 3, 4, 5)
+character_vector &lt;- c(&quot;apple&quot;, &quot;banana&quot;, &quot;orange&quot;)
+logical_vector &lt;- c(TRUE, FALSE, TRUE)</code></pre>
+</div>
+<div id="matrices" class="section level3">
+<h3>Matrices</h3>
+<p>Matrices are two-dimensional arrays with rows and columns that
+contain elements of the same data type.</p>
+<pre class="r"><code>my_matrix &lt;- matrix(1:9, nrow = 3, ncol = 3)
+
+# check the dimension of matrix object
+dim(my_matrix)</code></pre>
+<pre><code>## [1] 3 3</code></pre>
+<pre class="r"><code># check the elements in matrix object
+str(my_matrix)</code></pre>
+<pre><code>##  int [1:3, 1:3] 1 2 3 4 5 6 7 8 9</code></pre>
+<p>Since my_matrix has 3 rows and 3 columns, dim(my_matrix) will output
+[1] 3 3, indicating that the matrix has 3 rows and 3 columns.</p>
+</div>
+<div id="arrays" class="section level3">
+<h3>Arrays</h3>
+<p>Arrays are multi-dimensional extensions of matrices that can have
+more than two dimensions.</p>
+<pre class="r"><code>my_array &lt;- array(1:12, dim = c(3, 2, 2))</code></pre>
+</div>
+<div id="lists" class="section level3">
+<h3>Lists</h3>
+<p>Lists are collections of elements that can be of different data
+types, including other lists.</p>
+<pre class="r"><code>my_list &lt;- list(
+   numeric_vector = c(1, 2, 3),
+   character_vector = c(&quot;apple&quot;, &quot;banana&quot;, &quot;orange&quot;),
+   nested_list = list(inner_numeric_vector = c(4, 5, 6))
+)
+
+# check the length of list object
+length(my_list)</code></pre>
+<pre><code>## [1] 3</code></pre>
+<pre class="r"><code># check the type of element in the list
+str(my_list)</code></pre>
+<pre><code>## List of 3
+##  $ numeric_vector  : num [1:3] 1 2 3
+##  $ character_vector: chr [1:3] &quot;apple&quot; &quot;banana&quot; &quot;orange&quot;
+##  $ nested_list     :List of 1
+##   ..$ inner_numeric_vector: num [1:3] 4 5 6</code></pre>
+<pre class="r"><code># get the name of object in the list
+names(my_list)</code></pre>
+<pre><code>## [1] &quot;numeric_vector&quot;   &quot;character_vector&quot; &quot;nested_list&quot;</code></pre>
+<pre class="r"><code># use name to select the component from the list object
+# by position
+my_list[1]</code></pre>
+<pre><code>## $numeric_vector
+## [1] 1 2 3</code></pre>
+<pre class="r"><code># or by name
+my_list$numeric_vector</code></pre>
+<pre><code>## [1] 1 2 3</code></pre>
+</div>
+<div id="data-frames" class="section level3">
+<h3>Data Frames</h3>
+<p>Data frames are two-dimensional structures similar to matrices, but
+columns can contain elements of different data types. They are commonly
+used for storing structured data.</p>
+<pre class="r"><code>my_df &lt;- data.frame(
+   Name = c(&quot;Alice&quot;, &quot;Bob&quot;, &quot;Charlie&quot;),
+   Age = c(25, 30, 35),
+   Married = c(TRUE, FALSE, TRUE)
+)
+
+# check the dimesion of data frame
+dim(my_df)</code></pre>
+<pre><code>## [1] 3 3</code></pre>
+<pre class="r"><code># inspect the elements
+str(my_df)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    3 obs. of  3 variables:
+##  $ Name   : chr  &quot;Alice&quot; &quot;Bob&quot; &quot;Charlie&quot;
+##  $ Age    : num  25 30 35
+##  $ Married: logi  TRUE FALSE TRUE</code></pre>
+<div id="subsetting-data-frames" class="section level4">
+<h4>Subsetting data frames</h4>
+<pre class="r"><code># Subset rows where Age is greater than 30
+subset_df &lt;- my_df[my_df$Age &gt; 30, ]
+
+# Subset only the Name and Married columns
+subset_df &lt;- my_df[, c(&quot;Name&quot;, &quot;Married&quot;)]
+
+# Subset rows where Age is greater than 25 and Married is TRUE
+subset_df &lt;- my_df[my_df$Age &gt; 25 &amp; my_df$Married == TRUE, ]
+
+# Subset rows where Age is less than or equal to 30
+subset_df &lt;- subset(my_df, Age &lt;= 30)</code></pre>
+</div>
+</div>
+</div>
+<div id="logical-operators" class="section level2">
+<h2>Logical operators</h2>
+<p>In R, you can use the logical operators <code>&amp;</code> for “AND”,
+<code>|</code> for “OR”, and <code>!</code> for “NOT” when subsetting
+dataframes. Here are examples demonstrating their use:</p>
+<ol style="list-style-type: decimal">
+<li>“AND” (<code>&amp;</code>):</li>
+</ol>
+<pre class="r"><code># Subset rows where Age is greater than 25 AND Married is TRUE
+subset_df &lt;- my_df[my_df$Age &gt; 25 &amp; my_df$Married == TRUE, ]
+subset_df</code></pre>
+<pre><code>##      Name Age Married
+## 3 Charlie  35    TRUE</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>“OR” (<code>|</code>):</li>
+</ol>
+<pre class="r"><code># Subset rows where Age is less than 30 OR Married is TRUE
+subset_df &lt;- my_df[my_df$Age &lt; 30 | my_df$Married == TRUE, ]
+subset_df</code></pre>
+<pre><code>##      Name Age Married
+## 1   Alice  25    TRUE
+## 3 Charlie  35    TRUE</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>“NOT” (<code>!</code>):</li>
+</ol>
+<pre class="r"><code># Subset rows where Name is NOT &quot;Bob&quot;
+subset_df &lt;- my_df[my_df$Name != &quot;Bob&quot;, ]
+subset_df</code></pre>
+<pre><code>##      Name Age Married
+## 1   Alice  25    TRUE
+## 3 Charlie  35    TRUE</code></pre>
+<p>We can combine these logical operators to create more complex
+conditions when subsetting dataframes in R.For example:</p>
+<p>Let’s say we want to subset my_df to include rows where the Age is
+greater than 25 OR (Married is TRUE AND Name is not “Bob”):</p>
+<pre class="r"><code># Subset rows where Age is greater than 25 OR (Married is TRUE AND Name is not &quot;Bob&quot;)
+subset_df &lt;- my_df[my_df$Age &gt; 25 | (my_df$Married == TRUE &amp; my_df$Name != &quot;Bob&quot;), ]
+subset_df</code></pre>
+<pre><code>##      Name Age Married
+## 1   Alice  25    TRUE
+## 2     Bob  30   FALSE
+## 3 Charlie  35    TRUE</code></pre>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("show" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

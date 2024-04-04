@@ -1,0 +1,152 @@
+---
+title: "Lectures"
+output:
+  html_document:
+    toc: false
+---
+
+Check out each week to see what you need to be doing before, during, and after class.
+
+## Lectures {.tabset .tabset-fade}
+
+### Week 2
+
+<b>Before class:</b>  
+
+* Catch up on a few videos from Week 1:
+  * [SSH keys](https://youtu.be/itv-H-kOhJw)
+* Videos for Week 2: 
+  * [Intro to R (Part 1)](https://youtu.be/YWTskQW-EkE)
+  * [Intro to R (Part 2)](https://youtu.be/VEQ79huOPwo)
+  * [Filepaths and folder setup](https://youtu.be/eMd_9Lb6wfc)
+  * [How R thinks about data (Part 1)](https://youtu.be/mmkwJH1h6UM)
+  * [How R thinks about data (Part 2)](https://youtu.be/4zOCBgVPueM)
+  * Optional: [Changing RStudio visual defaults](https://youtu.be/KC7YyJsOnQI)]
+
+<b>After class:</b>  
+
+* <a href="https://forms.gle/VoNi6uiAPrUtySQK9" target="_blank">Post-Class Survey (complete after class)</a>
+
+### Week 3
+
+<b>Before class:</b>  
+
+* Complete the Week 2 homework in the [Assignments tab](https://gge-ucd.github.io/R-DAVIS/assignments.html)
+* Videos for Week 3: 
+  * [How R thinks about data (Part 3, vector math)](https://youtu.be/8d0kxYEbuPA)
+  * [How R thinks about data (Part 4, missing values)](https://youtu.be/Fd5ygOAPADI)
+  * [How R thinks about data (Part 5, not-vectors)](https://youtu.be/EWGRfBnmIH0)
+  * [Spreadsheet best-practices](https://youtu.be/D7B1cF-nNHc)
+  * [Reading in and exploring data](https://youtu.be/kAU2UFUR1i8)
+  * [Tidyverse](https://youtu.be/cq7U24UOHTk)  
+
+<b>After class:</b>  
+
+* <a href="https://forms.gle/VoNi6uiAPrUtySQK9" target="_blank">Post-Class Survey (complete after class)</a>
+
+### Week 4
+
+<b>Before class:</b>  
+
+* Complete the Week 3 homework in the [Assignments tab](https://gge-ucd.github.io/R-DAVIS/assignments.html)
+* Videos for Week 4:  
+  * [Data manipulation Part 1a](https://youtu.be/QgLcDEmMhl0)
+  * [Data manipulation Part 1b](https://youtu.be/SxB6rGc9suc)
+
+<!------
+  * [Data manipulation Part 1a](https://www.youtube.com/watch?v=f0OCEG-0ExI&list=PL9RGU7mcuUv6hlpNiICK6Q1NYnBsf-RYk&index=2)
+  * [Data manipulation Part 1b](https://www.youtube.com/watch?v=h6wgu_3Jp1c&list=PL9RGU7mcuUv6hlpNiICK6Q1NYnBsf-RYk&index=1)
+  * In case you missed it last week: [Extra about package installation](https://www.youtube.com/watch?v=LYlto9UAGAA&list=PL9RGU7mcuUv6hlpNiICK6Q1NYnBsf-RYk&index=3)  
+  ------> 
+
+<b>After class:</b>  
+
+* <a href="https://forms.gle/VoNi6uiAPrUtySQK9" target="_blank">Post-Class Survey (complete after class)</a>
+
+### Week 5
+
+<b>Before class:</b>  
+
+* Complete the Week 4 homework in the [Assignments tab](https://gge-ucd.github.io/R-DAVIS/assignments.html)
+* Videos for Week 5:
+  * [Data manipulation Part 2a](https://youtu.be/thFdHm-uILk)
+  * [Data manipulation Part 2b](https://youtu.be/HYyIBZUm3yU)
+
+<!------
+  * [Data manipulation Part 2](https://www.youtube.com/watch?v=Y7nhagJCCk4&list=PL9RGU7mcuUv6hlpNiICK6Q1NYnBsf-RYk&index=1&t=824s)
+* (All videos can be found on the [2021 R-DAVIS video page](https://www.youtube.com/playlist?list=PL9RGU7mcuUv6hlpNiICK6Q1NYnBsf-RYk))
+  ------> 
+
+<b>After class:</b>  
+
+* <a href="https://forms.gle/VoNi6uiAPrUtySQK9" target="_blank">Post-Class Survey (complete after class)</a>
+
+### Week 6
+
+<b>Before class:</b>  
+
+* Complete the Week 5 homework in the [Assignments tab](https://gge-ucd.github.io/R-DAVIS/assignments.html)
+
+* Videos for Week 6:
+  * [Data visualization Part 1a](https://youtu.be/2q2Hfg6zi8Y)
+  * [Data visualization Part 1b](https://youtu.be/FOAe4PnnAoA)
+
+<b>After class:</b>  
+
+* <a href="https://forms.gle/VoNi6uiAPrUtySQK9" target="_blank">Post-Class Survey (complete after class)</a>
+
+### Week 7
+
+<b>Before class:</b>  
+
+* Complete the Week 6 homework in the [Assignments tab](https://gge-ucd.github.io/R-DAVIS/assignments.html)
+* Videos for Week 7:
+  * [Data visualization Part 2a](https://youtu.be/GKiJNuvfT5k)
+  * [Data visualization Part 2b](https://youtu.be/50wbb1-XjI0)
+
+
+<!------
+  * [Data visualization Part 2A](https://www.youtube.com/watch?v=Xq2lCoNlqH8&list=PL9RGU7mcuUv6hlpNiICK6Q1NYnBsf-RYk&index=2)
+  * [Data visualization Part 2B](https://www.youtube.com/watch?v=GDqT7MP2QLA&list=PL9RGU7mcuUv6hlpNiICK6Q1NYnBsf-RYk&index=1)
+* (All videos can be found on the [2021 R-DAVIS video page](https://www.youtube.com/playlist?list=PL9RGU7mcuUv6hlpNiICK6Q1NYnBsf-RYk))
+  ------> 
+
+<b>After class:</b>  
+
+* <a href="https://forms.gle/VoNi6uiAPrUtySQK9" target="_blank">Post-Class Survey (complete after class)</a>
+
+### Week 8
+
+<b>Before class:</b>  
+
+* Complete the Week 7 homework in the [Assignments tab](https://gge-ucd.github.io/R-DAVIS/assignments.html)
+* Videos for Week 8:
+  * [Dates with Lubridate](https://youtu.be/pnST9AkbF9o)
+  * [Function-writing](https://youtu.be/4gHuVmuyBI8)
+  * Iteration (bonus video to be posted soon, no need to watch before)
+
+<!------  
+  * [Lubridate](https://www.youtube.com/watch?v=CVgeZf8Av0I&list=PL9RGU7mcuUv6hlpNiICK6Q1NYnBsf-RYk&index=2)
+  * [Function writing](https://www.youtube.com/watch?v=DzYaUFy6Ims&list=PL9RGU7mcuUv6hlpNiICK6Q1NYnBsf-RYk&index=1)
+* (All videos can be found on the [2021 R-DAVIS video page](https://www.youtube.com/playlist?list=PL9RGU7mcuUv6hlpNiICK6Q1NYnBsf-RYk))
+  ------> 
+
+<b>After class:</b>  
+
+* <a href="https://forms.gle/VoNi6uiAPrUtySQK9" target="_blank">Post-Class Survey (complete after class)</a>
+
+
+### Week 9
+
+<b>Before class:</b>  
+
+* Complete the Week 8 homework in the [Assignments tab](https://gge-ucd.github.io/R-DAVIS/assignments.html)
+* Videos for Week 9: 2022 videos cancelled
+* 2021 videos:
+  * [For loops](https://www.youtube.com/watch?v=DNF4ZwfobiQ&list=PL9RGU7mcuUv6hlpNiICK6Q1NYnBsf-RYk&index=2)
+  * [Map functions](https://www.youtube.com/watch?v=DVaACfvnFJs&list=PL9RGU7mcuUv6hlpNiICK6Q1NYnBsf-RYk&index=1)
+
+### Finals Week
+
+* Complete the [post-course credit reflection](https://forms.gle/q5ZnaZmXqCmKu1GH8)
+

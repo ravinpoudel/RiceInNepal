@@ -1,0 +1,117 @@
+---
+title: "Coding Practice"
+output:
+  html_document:
+    toc: false
+---
+
+Challenge are designed to reinforce the code/lessons covered during the workshop. You can work in group, and discuss the solutions. 
+
+
+<br>
+
+## Challenges {.tabset .tabset-fade .tabset-pills}
+
+### <small>Challenge 1 </small>
+<br>
+TBD
+
+### <small>Challenge 2 </small>
+
+In Challenge 2 we are going to practice subsetting and manipulating vectors.  
+
+First, open your r-davis-in-class-project-YourName and `pull`. Remember, we always want to start working on a github project by pulling, even if we are sure nothing has changed (believe me, this small step will save you lots of headaches).
+
+This chunk of code will create the vector you will use in your homework today. Check in your environment to see what it looks like. What do you think each line of code is doing? 
+
+```{r}
+set.seed(15)
+hw2 <- runif(50, 4, 50)
+hw2 <- replace(hw2, c(4,12,22,27), NA)
+hw2
+```
+
+
+1. Take your `hw2` vector and removed all the NAs then select all the numbers between 14 and 38 inclusive, call this vector `prob1`. 
+
+2. Multiply each number in the `prob1` vector by 3 to create a new vector called `times3`. Then add 10 to each number in your `times3` vector to create a new vector called `plus10`. 
+
+3. Select every other number in your `plus10` vector by selecting the first number, not the second, the third, not the fourth, etc. If you've worked through these three problems in order, you should now have a vector that is 12 numbers long that looks **exactly** like this one:
+
+```{r, echo = F}
+prob1 <- hw2[!is.na(hw2)] #removing the NAs
+
+prob1 <- prob1[prob1 >14 & prob1 < 38] #only selecting numbers between 14 and 38
+
+times3 <- prob1 * 3 #multiplying by 3
+
+plus10 <- times3 + 10 #adding 10 to the whole vector 
+
+final <- plus10[c(TRUE, FALSE)] #selecting every other number
+```
+
+```{r}
+final
+```
+
+Finally, save your script and push all your changes to your github account. 
+
+<details>
+<summary>**DO NOT OPEN** until you are ready to see the answers</summary>
+```{r, eval=T}
+
+prob1 <- hw2[!is.na(hw2)] #removing the NAs
+
+prob1 <- prob1[prob1 >14 & prob1 < 38] #only selecting numbers between 14 and 38
+
+times3 <- prob1 * 3 #multiplying by 3
+
+plus10 <- times3 + 10 #adding 10 to the whole vector 
+
+final <- plus10[c(TRUE, FALSE)] #selecting every other number using logical subsetting
+
+```
+</details>
+
+
+### <small>Challenge 3</small>
+
+In Challenge 3 we will be playing with the `yield_data` data we worked on before. 
+
+Load your `yield_data` data frame with the read.csv() function. Create a new data frame called `surveys_base` with only the species_id, the weight, and the plot_type columns. Have this data frame only be the first 5,000 rows. Convert both species_id and plot_type to factors. Remove all rows where there is an NA in the weight column. Explore these variables and try to explain why a factor is different from a character. Why might we want to use factors? Can you think of any examples? 
+
+CHALLENGE:
+Create a second data frame called `challenge_base` that only consists of individuals from your `yield_data` data frame with weights greater than 150g.  
+
+<details>
+<summary>**DO NOT OPEN** until you are ready to see the answers for the the homework</summary>
+```{r, eval=T}
+#PROBLEM 1
+
+surveys <- read.csv("data/portal_data_joined.csv") #reading the data in
+
+colnames(surveys) #a list of the column names 
+
+surveys_base <- surveys[1:5000, c(6, 9, 13)] #selecting rows 1:5000 and just columns 6, 9 and 13
+
+surveys_base <- surveys_base[complete.cases(surveys_base), ] #selecting only the ROWS that have complete cases (no NAs) **Notice the comma was needed for this to work**
+
+surveys_base$species_id <- factor(surveys_base$species_id) #converting factor data to character
+
+surveys_base$plot_type <- factor(surveys_base$plot_type) #converting factor data to character
+
+#Experimentation of factors
+levels(surveys_base$species_id)
+typeof(surveys_base$species_id)
+class(surveys_base$species_id)
+
+#CHALLENGE
+challenge_base <- surveys_base[surveys_base[, 2]>150,] #selecting just the weights (column 2) that are greater than 150
+
+```
+</details>
+
+<br> 
+
+### <small>Challenge 4</small>
+TBD

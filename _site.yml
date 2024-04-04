@@ -1,0 +1,63 @@
+navbar:
+  left:
+  - text: Home
+    href: index.html
+  - text: About
+    href: about.html
+    icon: fa-info-circle  fa-1x
+  - text: Agenda
+    href: Agenda.html
+  - text: Before you come
+    menu:
+    - text: Before you come
+      href: computer_setup.html
+  - text: Lessons
+    icon: fa-book  fa-1x
+    menu:
+    - text: Project Management, R, & RStudio
+      href: lesson_000_R_Rstudio_project.html
+    - text: Getting started with R
+      href: lesson_001_basic_ds_inR.html
+    - text: Spreadsheets
+      href: lesson_002_spreadsheets.html
+    - text: Working with Spreadsheets
+      href: lesson_003_working_with_spreadsheet.html
+    - text: Data Manipulation
+      href: lesson_06_data_manipulation_pt1.html
+    - text: Data Visualization
+      href: lesson_09_data_viz_pt1.html
+    - text: Statistical Analyses
+      href: lesson_006_statistical_analyses.html
+    - text: Date-times with lubridate
+      href: lesson_12_lubridate.html
+    - text: Writing functions
+      href: lesson_13_functions.html
+    - text: Iteration
+      href: lesson_14_iteration.html
+  - text: Challenges
+    icon: fa-paperclip fa-1x
+    href: assignments.html
+  - text: Resources
+    icon: fa-list
+    href: resources.html
+  right:
+  - text: Contact
+    icon: fa-hand-spock-o
+    href: contact.html
+  - icon: fa-github fa-lg
+    href: https://www.garrettlab.com
+output_dir: docs
+output:
+  html_document:
+    theme: flatly
+    #highlight: pygments
+    code_folding: show
+    toc: yes
+    toc_float:
+      collapsed: yes
+    include:
+      in_header: header.html
+    css: style.css
+    lib_dir: site_libs
+    self_contained: no
+name: Rice In Nepal

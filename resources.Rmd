@@ -1,0 +1,34 @@
+---
+title: "Resources"
+output:
+  html_document:
+    toc: false
+---
+
+## {.tabset .tabset-fade}
+
+There are many resources online and in print. This is by no means a comprehensive list, but hopefully a launching pad for some very useful website and books. All of these examples provide code in same shape or form.
+
+
+### Datasets
+
+This is a list of most of the data sources used in this course.
+
+* [Workshop data](https://github.com/ravinpoudel/tXploreR/tree/master)
+    + [Yield data](https://github.com/ravinpoudel/tXploreR/blob/master/tXploreR/d_long.csv)
+    + [metadata](https://github.com/ravinpoudel/tXploreR/blob/master/tXploreR/d_long.csv)
+
+
+### Presentations
+* [Expert Knowledge Elicitation ~ EKE ](https://www.apsnet.org/edcenter/disimpactmngmnt/topc/EcologyAndEpidemiologyInR/IntroductionToR/Pages/default.aspx)
+
+
+### R workshop by Garrett Lab in the past
+
+* [An Introduction to the R Programming Environment](https://www.apsnet.org/edcenter/disimpactmngmnt/topc/EcologyAndEpidemiologyInR/IntroductionToR/Pages/default.aspx)
+* [Ecology and Epidemiology in R: Disease Progress Over Time](https://www.apsnet.org/edcenter/disimpactmngmnt/topc/EcologyAndEpidemiologyInR/DiseaseProgress/Pages/default.aspx)
+* [Ecology and Epidemiology in R: Modeling Dispersal Gradients](https://www.apsnet.org/edcenter/disimpactmngmnt/topc/EcologyAndEpidemiologyInR/ModelingDispersalGradients/Pages/default.aspx)
+* [Ecology and Epidemiology in R: Spatial Analysis](https://www.apsnet.org/edcenter/disimpactmngmnt/topc/EcologyAndEpidemiologyInR/SpatialAnalysis/Pages/default.aspx)
+* [Ecology and Epidemiology in R: Disease Forecasting and Validation](https://www.apsnet.org/edcenter/disimpactmngmnt/topc/EcologyAndEpidemiologyInR/DiseaseForecasting/Pages/default.aspx)
+
+

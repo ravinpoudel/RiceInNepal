@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Coding Practice</title>
+
+<script src="site_libs/header-attrs-2.26/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="site_libs_extra/academicons-1.8.0/css/academicons.css"/>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">
+    <span class="fa fa-info-circle  fa-1x"></span>
+     
+    About
+  </a>
+</li>
+<li>
+  <a href="Agenda.html">Agenda</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Before you come
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="computer_setup.html">Before you come</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-book  fa-1x"></span>
+     
+    Lessons
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="lesson_000_R_Rstudio_project.html">Project Management, R, &amp; RStudio</a>
+    </li>
+    <li>
+      <a href="lesson_001_basic_ds_inR.html">Getting started with R</a>
+    </li>
+    <li>
+      <a href="lesson_002_spreadsheets.html">Spreadsheets</a>
+    </li>
+    <li>
+      <a href="lesson_003_working_with_spreadsheet.html">Working with Spreadsheets</a>
+    </li>
+    <li>
+      <a href="lesson_06_data_manipulation_pt1.html">Data Manipulation</a>
+    </li>
+    <li>
+      <a href="lesson_09_data_viz_pt1.html">Data Visualization</a>
+    </li>
+    <li>
+      <a href="lesson_006_statistical_analyses.html">Statistical Analyses</a>
+    </li>
+    <li>
+      <a href="lesson_12_lubridate.html">Date-times with lubridate</a>
+    </li>
+    <li>
+      <a href="lesson_13_functions.html">Writing functions</a>
+    </li>
+    <li>
+      <a href="lesson_14_iteration.html">Iteration</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="assignments.html">
+    <span class="fa fa-paperclip fa-1x"></span>
+     
+    Challenges
+  </a>
+</li>
+<li>
+  <a href="resources.html">
+    <span class="fa fa-list"></span>
+     
+    Resources
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="contact.html">
+    <span class="fa fa-hand-spock-o"></span>
+     
+    Contact
+  </a>
+</li>
+<li>
+  <a href="https://www.garrettlab.com">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Coding Practice</h1>
+
+</div>
+
+
+<p>Challenge are designed to reinforce the code/lessons covered during
+the workshop. You can work in group, and discuss the solutions.</p>
+<p><br></p>
+<div id="challenges"
+class="section level2 tabset tabset-fade tabset-pills">
+<h2 class="tabset tabset-fade tabset-pills">Challenges</h2>
+<div id="challenge-1" class="section level3">
+<h3><small>Challenge 1 </small></h3>
+<p><br> TBD</p>
+</div>
+<div id="challenge-2" class="section level3">
+<h3><small>Challenge 2 </small></h3>
+<p>In Challenge 2 we are going to practice subsetting and manipulating
+vectors.</p>
+<p>First, open your r-davis-in-class-project-YourName and
+<code>pull</code>. Remember, we always want to start working on a github
+project by pulling, even if we are sure nothing has changed (believe me,
+this small step will save you lots of headaches).</p>
+<p>This chunk of code will create the vector you will use in your
+homework today. Check in your environment to see what it looks like.
+What do you think each line of code is doing?</p>
+<pre class="r"><code>set.seed(15)
+hw2 &lt;- runif(50, 4, 50)
+hw2 &lt;- replace(hw2, c(4,12,22,27), NA)
+hw2</code></pre>
+<pre><code>##  [1] 31.697246 12.972021 48.457102        NA 20.885307 49.487524 41.498897
+##  [8] 15.682545 35.612619 42.245735  8.814791        NA 27.418158 36.504914
+## [15] 43.666428 42.722117 24.582411 48.374680 10.494605 39.728776 40.971460
+## [22]        NA 20.447903  6.668049 30.024323 34.314318        NA 10.825658
+## [29] 46.676823 25.913006 26.933701 15.810164 26.616794  9.403891 27.589087
+## [36] 34.262403  9.591257 27.733004 17.877330 38.975078 46.102046 25.041810
+## [43] 46.369401 15.919465 19.813791 23.741937 19.192818 38.630297 42.819312
+## [50]  4.500130</code></pre>
+<ol style="list-style-type: decimal">
+<li><p>Take your <code>hw2</code> vector and removed all the NAs then
+select all the numbers between 14 and 38 inclusive, call this vector
+<code>prob1</code>.</p></li>
+<li><p>Multiply each number in the <code>prob1</code> vector by 3 to
+create a new vector called <code>times3</code>. Then add 10 to each
+number in your <code>times3</code> vector to create a new vector called
+<code>plus10</code>.</p></li>
+<li><p>Select every other number in your <code>plus10</code> vector by
+selecting the first number, not the second, the third, not the fourth,
+etc. If you’ve worked through these three problems in order, you should
+now have a vector that is 12 numbers long that looks
+<strong>exactly</strong> like this one:</p></li>
+</ol>
+<pre class="r"><code>final</code></pre>
+<pre><code>##  [1] 105.09174  57.04763  92.25447  83.74723 100.07297  87.73902  57.43049
+##  [8]  92.76726  93.19901  85.12543  69.44137  67.57845</code></pre>
+<p>Finally, save your script and push all your changes to your github
+account.</p>
+<details>
+<summary>
+<strong>DO NOT OPEN</strong> until you are ready to see the answers
+</summary>
+<pre class="r"><code>prob1 &lt;- hw2[!is.na(hw2)] #removing the NAs
+
+prob1 &lt;- prob1[prob1 &gt;14 &amp; prob1 &lt; 38] #only selecting numbers between 14 and 38
+
+times3 &lt;- prob1 * 3 #multiplying by 3
+
+plus10 &lt;- times3 + 10 #adding 10 to the whole vector 
+
+final &lt;- plus10[c(TRUE, FALSE)] #selecting every other number using logical subsetting</code></pre>
+</details>
+</div>
+<div id="challenge-3" class="section level3">
+<h3><small>Challenge 3</small></h3>
+<p>In Challenge 3 we will be playing with the <code>yield_data</code>
+data we worked on before.</p>
+<p>Load your <code>yield_data</code> data frame with the read.csv()
+function. Create a new data frame called <code>surveys_base</code> with
+only the species_id, the weight, and the plot_type columns. Have this
+data frame only be the first 5,000 rows. Convert both species_id and
+plot_type to factors. Remove all rows where there is an NA in the weight
+column. Explore these variables and try to explain why a factor is
+different from a character. Why might we want to use factors? Can you
+think of any examples?</p>
+<p>CHALLENGE: Create a second data frame called
+<code>challenge_base</code> that only consists of individuals from your
+<code>yield_data</code> data frame with weights greater than 150g.</p>
+<details>
+<summary>
+<strong>DO NOT OPEN</strong> until you are ready to see the answers for
+the the homework
+</summary>
+<pre class="r"><code>#PROBLEM 1
+
+surveys &lt;- read.csv(&quot;data/portal_data_joined.csv&quot;) #reading the data in
+
+colnames(surveys) #a list of the column names </code></pre>
+<pre><code>##  [1] &quot;record_id&quot;       &quot;month&quot;           &quot;day&quot;             &quot;year&quot;           
+##  [5] &quot;plot_id&quot;         &quot;species_id&quot;      &quot;sex&quot;             &quot;hindfoot_length&quot;
+##  [9] &quot;weight&quot;          &quot;genus&quot;           &quot;species&quot;         &quot;taxa&quot;           
+## [13] &quot;plot_type&quot;</code></pre>
+<pre class="r"><code>surveys_base &lt;- surveys[1:5000, c(6, 9, 13)] #selecting rows 1:5000 and just columns 6, 9 and 13
+
+surveys_base &lt;- surveys_base[complete.cases(surveys_base), ] #selecting only the ROWS that have complete cases (no NAs) **Notice the comma was needed for this to work**
+
+surveys_base$species_id &lt;- factor(surveys_base$species_id) #converting factor data to character
+
+surveys_base$plot_type &lt;- factor(surveys_base$plot_type) #converting factor data to character
+
+#Experimentation of factors
+levels(surveys_base$species_id)</code></pre>
+<pre><code>##  [1] &quot;BA&quot; &quot;DM&quot; &quot;DO&quot; &quot;DS&quot; &quot;NL&quot; &quot;OL&quot; &quot;OT&quot; &quot;OX&quot; &quot;PB&quot; &quot;PE&quot; &quot;PF&quot; &quot;PH&quot; &quot;PI&quot; &quot;PL&quot; &quot;PM&quot;
+## [16] &quot;PP&quot; &quot;RF&quot; &quot;RM&quot; &quot;RO&quot; &quot;SF&quot; &quot;SH&quot; &quot;SO&quot;</code></pre>
+<pre class="r"><code>typeof(surveys_base$species_id)</code></pre>
+<pre><code>## [1] &quot;integer&quot;</code></pre>
+<pre class="r"><code>class(surveys_base$species_id)</code></pre>
+<pre><code>## [1] &quot;factor&quot;</code></pre>
+<pre class="r"><code>#CHALLENGE
+challenge_base &lt;- surveys_base[surveys_base[, 2]&gt;150,] #selecting just the weights (column 2) that are greater than 150</code></pre>
+</details>
+<p><br></p>
+</div>
+<div id="challenge-4" class="section level3">
+<h3><small>Challenge 4</small></h3>
+<p>TBD</p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("show" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

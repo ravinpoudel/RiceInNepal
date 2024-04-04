@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Author: Ravin Poudel" />
+
+
+<title>Project Management, R, &amp; RStudio</title>
+
+<script src="site_libs/header-attrs-2.26/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="site_libs_extra/academicons-1.8.0/css/academicons.css"/>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">
+    <span class="fa fa-info-circle  fa-1x"></span>
+     
+    About
+  </a>
+</li>
+<li>
+  <a href="Agenda.html">Agenda</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Before you come
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="computer_setup.html">Before you come</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-book  fa-1x"></span>
+     
+    Lessons
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="lesson_000_R_Rstudio_project.html">Project Management, R, &amp; RStudio</a>
+    </li>
+    <li>
+      <a href="lesson_001_basic_ds_inR.html">Getting started with R</a>
+    </li>
+    <li>
+      <a href="lesson_002_spreadsheets.html">Spreadsheets</a>
+    </li>
+    <li>
+      <a href="lesson_003_working_with_spreadsheet.html">Working with Spreadsheets</a>
+    </li>
+    <li>
+      <a href="lesson_06_data_manipulation_pt1.html">Data Manipulation</a>
+    </li>
+    <li>
+      <a href="lesson_09_data_viz_pt1.html">Data Visualization</a>
+    </li>
+    <li>
+      <a href="lesson_006_statistical_analyses.html">Statistical Analyses</a>
+    </li>
+    <li>
+      <a href="lesson_12_lubridate.html">Date-times with lubridate</a>
+    </li>
+    <li>
+      <a href="lesson_13_functions.html">Writing functions</a>
+    </li>
+    <li>
+      <a href="lesson_14_iteration.html">Iteration</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="assignments.html">
+    <span class="fa fa-paperclip fa-1x"></span>
+     
+    Challenges
+  </a>
+</li>
+<li>
+  <a href="resources.html">
+    <span class="fa fa-list"></span>
+     
+    Resources
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="contact.html">
+    <span class="fa fa-hand-spock-o"></span>
+     
+    Contact
+  </a>
+</li>
+<li>
+  <a href="https://www.garrettlab.com">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Project Management, R, &amp; RStudio</h1>
+<h4 class="author">Author: Ravin Poudel</h4>
+<h4 class="date">Last update: 04 April, 2024</h4>
+
+</div>
+
+
+<br>
+<div id="learning-objectives" class="section level3 blue">
+<h3>Learning objectives</h3>
+<ul>
+<li>Learn how to manage and structure R project</li>
+<li>Gain familiarity the RStudio IDE</li>
+<li>Understand the R environment and RStudio</li>
+<li>Understand pros and cons of R</li>
+<li>Learn how to setup working directory, and understand its importance
+in project management</li>
+</ul>
+</div>
+<p><br></p>
+<div id="before-we-open-up-r" class="section level2">
+<h2>Before we open-up R</h2>
+<hr />
+<p>As is true in building anything, we need to start with a plan. It’s
+no different when we are building an R project. We will begin by
+creating a structural plan outlining how we organize input files, where
+and how we will save our results, and the development of our code. A
+well-thought-out plan helps us to be meticulous in organizing files and
+folders, and also supports the reproducibility aspect of the
+project.</p>
+<p>Let’s first navigate to the <strong>Desktop</strong> of your computer
+and create a folder called <strong>RiceInNepal</strong>. This folder
+will serve as the location for our code, input data, output, and all the
+materials needed or generated during our workshop. You can apply the
+same approach for this workshop or any other project we undertake in the
+future.</p>
+<p>Once you have created a folder named <strong>RiceInNepal</strong> on
+the Desktop, we will proceed to structure our project with subfolders
+and files. Let’s create three additional folders inside the
+<strong>RiceInNepa</strong> folder:</p>
+<ul>
+<li><p><strong>input_data</strong>: This folder will contain our input
+data.</p></li>
+<li><p><strong>output</strong>: Inside the output folder, let’s create
+two additional folders:</p>
+<ul>
+<li><strong>figures</strong></li>
+<li><strong>tables</strong></li>
+</ul></li>
+<li><p><strong>code</strong>: This folder will house all of the R code
+generated during this workshop.</p></li>
+</ul>
+<p>Once completed, your <strong>RiceInNepal</strong> folder should have
+the following structure:</p>
+<pre><code>RiceInNepal
+│   input_data
+│
+└───output
+│   │   figures
+│   │   tables
+│
+└───code</code></pre>
+<p>This structure ensures a systematic organization of our project
+materials, facilitating ease of access and reproducibility.</p>
+<hr />
+<p>Once done, your “RiceInNepal” should have following folders and
+subfolders:</p>
+<p><img src="img/Fig1.png" /></p>
+<p>What if do we need to do this?</p>
+<ul>
+<li>Disorganized</li>
+<li>Code, inputs, outputs hard to find, and version</li>
+<li>Difficult to reproduce by other, as input file are linked/defined
+based on your laptop paths</li>
+</ul>
+<p>How to solve this problem?</p>
+<ul>
+<li>Create self-contained projects in RStudio</li>
+<li>For each project create one folder</li>
+<li>Keep all the code, data, output are generated within this
+folder</li>
+</ul>
+<p>Benefits:</p>
+<ul>
+<li>Organized</li>
+<li>All materials associated with the project are within ONE folder</li>
+<li>You can share this folder to your colleges/friends, and should be
+able to run the code and generate the analyses</li>
+</ul>
+</div>
+<div id="lets-open-up-rrstudio" class="section level2">
+<h2>Lets open-up R/RStudio</h2>
+<div id="what-is-r" class="section level3">
+<h3>What is R?</h3>
+<p>R is a free software environment that includes a set of base packages
+for graphics, math, and statistics. You can also make use of specialized
+packages contributed by R users or write your own new functions. R was
+developed as a part of the GNU project from the S language.</p>
+<p><strong>Advantages</strong></p>
+<ul>
+<li>Offers direct programmability and extensibility, serving as a
+complete programming language.</li>
+<li>Benefits from extensive community support, with numerous robust
+advanced packages readily available.</li>
+<li>Provides comprehensive built-in functionalities for data
+manipulation, analysis, and scientific visualization.</li>
+<li>Free of cost!</li>
+</ul>
+<p>However, becoming proficient in R and mastering its intricacies may
+entail a steep learning curve (which we are about to embark upon).
+Specifically, R can be daunting at first glance: with its customizable
+and extensible programming framework, users must navigate through a mix
+of core language features and a plethora of built-in or extended
+functions offered by base and add-on packages, respectively.</p>
+<p><strong>R is unforgiving</strong>; it diligently attempts (sometimes
+overly so!) to execute given commands, often resorting to complex and
+unexpected data transformations to achieve results, even if they do not
+align with the user’s expectations.</p>
+<p>Effectively utilizing R necessitates learning diagnostic techniques
+and cultivating the habit of testing and validating intermediate steps.
+While R lacks professional or commercial support, a plethora of
+resources including books, tutorials, manuals, and mailing lists are
+available both online and offline.</p>
+</div>
+<div id="what-is-rstudio" class="section level3">
+<h3>What is RStudio?</h3>
+<p>RStudio is an integrated development environment (IDE) specifically
+designed for working with the R programming language. It provides a
+user-friendly interface for writing code, running scripts, visualizing
+data, and managing projects. RStudio offers several features that
+enhance the R programming experience, including:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Script Editor</strong>: RStudio includes a script editor
+with features such as syntax highlighting, code completion, and code
+folding, which make writing and editing R code more efficient.</p></li>
+<li><p><strong>Console</strong>: It includes a console where R code can
+be executed interactively. Users can run individual commands, view
+output, and debug code directly within the console.</p></li>
+<li><p><strong>Data Viewer</strong>: RStudio’s data viewer allows users
+to easily explore and interact with data frames and other R objects. It
+provides a spreadsheet-like interface for viewing data, making it easier
+to understand its structure and contents.</p></li>
+<li><p><strong>Plots and Visualization</strong>: RStudio provides tools
+for creating and customizing plots and visualizations directly within
+the IDE. Users can generate a wide variety of charts and graphs using
+R’s powerful plotting capabilities.</p></li>
+<li><p><strong>Package Management</strong>: RStudio includes features
+for managing R packages, such as installing, updating, and loading
+packages. It also provides tools for browsing and searching packages
+from CRAN (Comprehensive R Archive Network) and other
+repositories.</p></li>
+<li><p><strong>Project Management</strong>: RStudio supports
+project-based workflows, allowing users to organize their R code, data,
+and related files into projects. Projects help maintain a clean
+directory structure and make it easier to collaborate with
+others.</p></li>
+<li><p><strong>Version Control</strong>: RStudio integrates with version
+control systems such as Git and SVN, enabling users to track changes to
+their code and collaborate with others more effectively.</p></li>
+</ol>
+<p>Overall, RStudio is a powerful and user-friendly environment for
+working with R, suitable for both beginners and experienced R users
+alike.</p>
+<p>Now, we have plan for the projecet. Lets open R in RStuido, which
+should look like the following:</p>
+<p><img src="img/Fig2.png" /></p>
+<p>Now we need to create a Rproject. To do so, we need follow the steps
+as shown in the figure below, and save the .Rproj file inside the
+<strong>RiceInNepal</strong> folder in *Desktop**.</p>
+<p><img src="img/Fig3.png" /></p>
+<p>At this point, you should be able to see a file called
+<strong>RiceInNepal.Rproj</strong>.</p>
+<p><img src="img/Fig4.png" /></p>
+</div>
+<div id="what-do-you-see-in-rstudio" class="section level3">
+<h3>What do you see in RStudio?</h3>
+<p><img src="img/Fig5.png" /></p>
+<p>In RStudio, the interface typically consists of four main
+sections:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Source Editor</strong>: This is where you write your R
+scripts or Markdown documents. It provides features like syntax
+highlighting, code completion, and other tools to aid in writing and
+editing code.</p></li>
+<li><p><strong>Console</strong>: The console is where you can directly
+interact with R. You can execute individual commands or entire scripts,
+and the results are displayed here. It’s also where you see error
+messages and warnings.</p></li>
+<li><p><strong>Environment/History</strong>: This section shows you
+information about the current R environment, including the objects
+(variables, functions, etc.) that are currently defined, along with
+their values. The history tab displays a history of commands that you’ve
+executed in the console.</p></li>
+<li><p><strong>Files/Plots/Packages/Help</strong>: This is a panel with
+tabs for various functionalities:</p>
+<ul>
+<li><strong>Files</strong>: Allows you to navigate through your file
+system and manage files and directories.</li>
+<li><strong>Plots</strong>: Displays plots generated by R.</li>
+<li><strong>Packages</strong>: Shows information about installed
+packages and allows you to install, update, and remove packages.</li>
+<li><strong>Help</strong>: Provides access to documentation and help
+files for R functions and packages.</li>
+</ul></li>
+</ol>
+<p>These sections provide a comprehensive environment for coding,
+executing, and managing R projects efficiently.</p>
+</div>
+<div id="where-to-save-the-codescript" class="section level3">
+<h3>Where to save the code/script?</h3>
+<p><img src="img/Fig6.png" /></p>
+</div>
+<div id="working-directory-and-file-paths" class="section level3">
+<h3>Working Directory and File Paths</h3>
+<p>In R, the working directory is the directory or folder on your
+computer where R will look for files and where it will save files by
+default unless otherwise specified. When you start an R session, it sets
+a default working directory, usually the directory where R was launched
+or where your R script is located.</p>
+<p>You can check the current working directory in R using the
+<code>getwd()</code> function, and you can change the working directory
+using the <code>setwd()</code> function.</p>
+<p>For example:</p>
+<pre class="r"><code># Check the current working directory
+getwd()
+[1] &quot;/Users/ravinpoudel/Desktop/RiceInNepal&quot;
+
+# Change the working directory
+setwd(&quot;/path/to/new/directory&quot;)</code></pre>
+<p>It’s important to set the working directory to the location where
+your data files or scripts are stored, so R can easily access them.
+Additionally, setting the working directory to a specific location can
+help organize your R projects and make it easier to manage files.</p>
+<p>The working directory plays a crucial role in project management in R
+for several reasons:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>File Access</strong>: The working directory determines
+where R looks for files and where it saves files by default. By setting
+the working directory to the project folder, you ensure that R can
+easily access data files, scripts, and other project-related resources
+without specifying their full paths.</p></li>
+<li><p><strong>Project Organization</strong>: Setting the working
+directory to the project folder helps keep your project organized. All
+project-related files and scripts are stored in one central location,
+making it easier to manage and collaborate with others.</p></li>
+<li><p><strong>Code Portability</strong>: When sharing R scripts with
+others or moving your project to a different computer, specifying file
+paths relative to the working directory ensures that the code remains
+portable. You don’t have to worry about hardcoding absolute paths that
+may differ between systems.</p></li>
+<li><p><strong>Reproducibility</strong>: Setting the working directory
+helps ensure reproducibility of your analyses. By explicitly specifying
+where data files are located and where results should be saved, you make
+it easier for others (or yourself at a later time) to rerun the analysis
+and obtain the same results.</p></li>
+<li><p><strong>Ease of Collaboration</strong>: When working with
+collaborators, setting a consistent working directory across team
+members ensures everyone is accessing the same files and resources. It
+reduces confusion and prevents errors that may arise from working in
+different directory locations.</p></li>
+</ol>
+<p>Overall, setting and managing the working directory effectively is
+essential for project management in R, facilitating file access,
+organization, code portability, version control, reproducibility, and
+collaboration.</p>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("show" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

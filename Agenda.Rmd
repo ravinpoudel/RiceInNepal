@@ -1,0 +1,88 @@
+---
+title: "Rice in Nepal"
+subtitle: "Workshop Agenda"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+
+# Suppress package startup messages
+suppressPackageStartupMessages({
+  library(knitr)
+  library(kableExtra)
+  library(dplyr)
+
+  # Add other libraries here
+})
+
+```
+
+
+```{r,echo=FALSE}
+# Create a sample data frame for the meeting agenda
+agenda_morning <- data.frame(
+  Agenda_Item = c("Introduction", "Lesson", "Lesson", "Break", "Lesson", "Lesson","Break"),
+  Time = c("8:00 AM - 8:15 AM", 
+           "8:15 AM - 9:00 AM", 
+           "9:00 AM - 9:45 AM",
+           "9:45 AM - 10:15 AM", 
+           "10:15 AM - 11:00 AM",
+           "11:00 AM - 12:00",
+           "12:00 - 1:00 PM"),
+  Notes = c(
+    "Welcome and introductions",
+    "[Intro to programming, R, & RStudio](file:///Users/ravinpoudel/Personal/RiceHealthinNepal2024/RiceInNepal/docs/lesson_01_intro_r_rstudio.html)",
+    "[Project Management](file:///Users/ravinpoudel/Personal/RiceHealthinNepal2024/RiceInNepal/docs/lesson_01_intro_r_rstudio.html)",
+    "Coffee Break",
+    "[Spreadsheets & data organization](file:///Users/ravinpoudel/Personal/RiceHealthinNepal2024/RiceInNepal/docs/lesson_01_intro_r_rstudio.html)",
+    "[Variables in R](file:///Users/ravinpoudel/Personal/RiceHealthinNepal2024/RiceInNepal/docs/lesson_01_intro_r_rstudio.html)",
+    "Lunch Break"
+  )
+)
+
+agenda_afternoon <- data.frame(
+  Agenda_Item = c("Lesson", "Lesson", "Break", "Lesson", "Lesson"),
+  Time = c("1:00 PM - 2:00 PM", 
+           "2:00 PM - 3:00 PM", 
+           "3:00 AM - 3:30 PM",
+           "3:30 AM - 4:30 PM", 
+           "4:30 PM - 5:30 PM"),
+  Notes = c(
+    " [Data Manipulation in R - part 1](file:///Users/ravinpoudel/Personal/RiceHealthinNepal2024/RiceInNepal/docs/lesson_01_intro_r_rstudio.html)",
+    " [Data Manipulation in R - part 2](file:///Users/ravinpoudel/Personal/RiceHealthinNepal2024/RiceInNepal/docs/lesson_01_intro_r_rstudio.html)",
+    " Coffee Break",
+    " [Visualizations](file:///Users/ravinpoudel/Personal/RiceHealthinNepal2024/RiceInNepal/docs/lesson_01_intro_r_rstudio.html)",
+    " [Functions and apply method in R](file:///Users/ravinpoudel/Personal/RiceHealthinNepal2024/RiceInNepal/docs/lesson_01_intro_r_rstudio.html)"
+  )
+)
+
+
+```
+
+```{r,echo=FALSE}
+
+# Combine morning and afternoon tables
+combined_agenda <- dplyr::bind_rows(
+  mutate(agenda_morning, Session = "Morning"),
+  mutate(agenda_afternoon, Session = "Afternoon")
+)
+
+# Create a new table with styling
+combined_agenda_table <- combined_agenda %>%
+  kable(caption = "", format = "html", table.attr = "style='width:50%;'") %>%
+  kable_styling(
+    full_width = FALSE,
+    position = "center",
+    latex_options = "scale_down",
+    font_size = 20,
+    bootstrap_options = "striped"
+  ) %>%
+  row_spec(0, bold = TRUE, color = "white", background = "#708090")
+
+combined_agenda_table
+
+```
