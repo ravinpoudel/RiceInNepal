@@ -13,8 +13,53 @@ Challenge are designed to reinforce the code/lessons covered during the workshop
 ## Challenges {.tabset .tabset-fade .tabset-pills}
 
 ### <small>Challenge 1 </small>
-<br>
-TBD
+
+Let’s now define how big the difference could be if the samples were selected from the same distribution?
+IN this case inorder to sample from the same distribution:Let’s take the vector of marketable yield for all of the Maxifort present in the dataset as the “population distribution” and select two subsets, of sizes 10 and 10 from that vector. By doing that, we are modeling the assumption that distributions of two treatments/rootstocks for maxifort and non graft were exactly the same. If the originally observed difference is significantly larger than what we usually obtain using this assumption, then the latter is invalidated.
+
+
+<details>
+<summary>ANSWER</summary>
+```{r}
+meta_df <- read.csv("input_data/tomato_grafting_metadata.csv", header = TRUE)
+yield_df <- read.csv("input_data/tomato_grafting_yield_spad.csv", header = TRUE)
+
+# merge metadata with yield data
+yield_with_meata_df <- merge(yield_df, meta_df, by="plantID")
+
+## let make random sample of yiled for maxifort and nongraft
+maxi_yield <- yield_with_meata_df[yield_with_meata_df$rootstock=="Selfgraft", "marketable_yield_kg"]
+ng_yield <- yield_with_meata_df[yield_with_meata_df$rootstock=="Nongraft", "marketable_yield_kg"]
+
+
+ori.diff <- mean(maxi_yield)-mean(ng_yield) # diff between original samples
+
+diff.sim <- numeric() # create an empty vector
+ge.cnt <- 0 # how many times resampled diff is greater than original
+n.sims <- 10000 # perform 10000 resamplings
+for ( i.sim in 1:n.sims ) { # in each iteration:
+ x.sim <- sample(yield_with_meata_df$marketable_yield_kg, 20) # sample 30 yield data point
+ #... assign them to two samples and compute diff between means
+ diff.sim[i.sim] <- mean(x.sim[1:10])-mean(x.sim[11:20])
+ if ( diff.sim[i.sim] >= ori.diff ) {
+ ge.cnt <- ge.cnt + 1
+ }
+}
+
+## Plot 
+old.par <- par(mfrow=c(2,1),ps=20)
+plot(sort(diff.sim),main=paste("Rank",
+  ge.cnt/n.sims),ylab="",
+  xlab=paste("one-sided t-test",
+  signif(t.test(maxi_yield,ng_yield,alt="greater")$p.value,3)))
+points(n.sims-ge.cnt,ori.diff,
+  cex=4,col="red",pch=20)
+plot(hist(diff.sim,breaks=20,plot=F),main="",xlab="")
+abline(v=ori.diff,lwd=2,col="red")
+
+
+```
+
 
 ### <small>Challenge 2 </small>
 
@@ -109,9 +154,19 @@ class(surveys_base$species_id)
 challenge_base <- surveys_base[surveys_base[, 2]>150,] #selecting just the weights (column 2) that are greater than 150
 
 ```
-</details>
 
-<br> 
 
 ### <small>Challenge 4</small>
-TBD
+Why Unbiased Sampel Varince is better estimator of variance?
+
+Sample variance: Simply defined as average squared deviation from the mean (also determined from the same data),where x is defined from our sample. If you noticed does approximate population variance (2), and thus is an estimator, but it is not an optimal one. The quantity defined in (5) is a variance of the sample considered as a whole population, and is known as “biased estimator of variance”; the source of the bias is that the sample itself (its mean in particular) may fluctuate away from the true underlying distribution due to random sampling. The unbiased sample variance,
+
+**(1)** Sample Mean
+$$\bar{x} = \frac{1}{n}\sum_{i=1}^{n}x_i$$
+
+**(2)** Biased Sample Variance
+$$S_{n}^{2} = \frac{1}{n}\sum (x_{i} - \bar{x})^{2}$$
+
+
+**(3)** Unbiased Sample Variance
+$$S_{n-1}^{2} = \frac{1}{n-1}\sum (x_{i} - \bar{x})^{2}$$

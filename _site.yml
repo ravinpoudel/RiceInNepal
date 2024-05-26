@@ -28,18 +28,6 @@ navbar:
       href: lesson_09_data_viz_pt1.html
     - text: Statistical Analyses
       href: lesson_006_statistical_analyses.html
-    - text: Date-times with lubridate
-      href: lesson_12_lubridate.html
-    - text: Writing functions
-      href: lesson_13_functions.html
-    - text: Iteration
-      href: lesson_14_iteration.html
-  - text: Challenges
-    icon: fa-paperclip fa-1x
-    href: assignments.html
-  - text: Resources
-    icon: fa-list
-    href: resources.html
   right:
   - text: Contact
     icon: fa-hand-spock-o

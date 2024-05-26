@@ -4,8 +4,15 @@ title: Data visualization with ggplot2
 
 ```{r setup, echo=FALSE, purl=FALSE, message=F, results=F, warning = FALSE}
 library(tidyverse)
-surveys_complete <- read_csv("data/portal_data_joined.csv") %>% 
-  filter(complete.cases(.))
+# Yield
+yield_df <- read.csv("input_data/tomato_grafting_yield_spad.csv", header = TRUE)
+
+#metadata
+meta_df <- read.csv("input_data/tomato_grafting_metadata.csv", header = TRUE)
+
+# merge metadata with yield data
+yield_with_meata_df <- merge(yield_df, meta_df, by="plantID")
+
 ```
 
 
@@ -26,12 +33,7 @@ We start by loading the required packages. **`ggplot2`** is included in the **`t
 library(tidyverse)
 ```
 
-Let's read in our surveys data, but filter it to only get back rows where ALL the data are present, also known as "complete cases". We're also showing you a new little trick: using a period with a pipe. Normally, a pipe just sends the stuff on the left into the FIRST argument position in the function on the right. However, sometimes we want that stuff to get sent to a slightly different place in the righthand function. In this case, we want to send it into the `complete.cases()` function, so that function will run on the whole dataset. In order to specifically tell the pipe to send the lefthand side into this function, we put a period there. You can think of this as the target for the pipe.
-
-```{r load-data, eval=FALSE, purl=FALSE}
-surveys_complete <- read_csv("data/portal_data_joined.csv") %>% 
-  filter(complete.cases(.))
-```
+Let's read in our tomato yiled data for learning various plots in R. We will use the data maniputation techniques, that we have learned before, and use it for visulization as well.
 
 ## Plotting with **`ggplot2`**
 
@@ -59,13 +61,13 @@ ggplot(data = <DATA>, mapping = aes(<MAPPINGS>)) +  <GEOM_FUNCTION>()
       `data` argument
 
 ```{r, eval=FALSE, purl=FALSE}
-ggplot(data = surveys_complete)
+ggplot(data = yield_with_meata_df)
 ```
 
 - define a mapping (using the aesthetic (`aes`) function), by selecting the variables to be plotted and specifying how to present them in the graph, e.g. as x/y positions or characteristics such as size, shape, color, etc.
 
 ```{r, eval=FALSE, purl=FALSE}
-ggplot(data = surveys_complete, mapping = aes(x = weight, y = hindfoot_length))
+ggplot(data = yield_with_meata_df, mapping = aes(x = marketable_yield_kg, y = spad_value))
 ```
 
 - add 'geoms' – graphical representations of the data in the plot (points,
@@ -80,7 +82,7 @@ To add a geom to the plot use the `+` operator. Because we have two continuous v
 let's use `geom_point()` first:
 
 ```{r first-ggplot, purl=FALSE}
-ggplot(data = surveys_complete, mapping = aes(x = weight, y = hindfoot_length)) +
+ggplot(data = yield_with_meata_df, mapping = aes(x = marketable_yield_kg, y = spad_value)) +
   geom_point()
 ```
 
@@ -91,11 +93,10 @@ plot can also be generated with code like this:
 
 ```{r, first-ggplot-with-plus, eval=FALSE, purl=FALSE}
 # Assign plot to a variable
-surveys_plot <- ggplot(data = surveys_complete, 
-                       mapping = aes(x = weight, y = hindfoot_length))
+gg_spad_yield <- ggplot(data = yield_with_meata_df, mapping = aes(x = marketable_yield_kg, y = spad_value))
 
 # Draw the plot
-surveys_plot + 
+gg_spad_yield + 
     geom_point()
 ```
 
@@ -113,11 +114,11 @@ error message.
 
 ```{r, ggplot-with-plus-position, eval=FALSE, purl=FALSE}
 # This is the correct syntax for adding layers
-surveys_plot +
+gg_spad_yield +
   geom_point()
 
 # This will not add the new layer and will return an error message
-surveys_plot
+gg_spad_yield
   + geom_point()
 ```
 
@@ -127,7 +128,7 @@ Building plots with **`ggplot2`** is typically an iterative process. We start by
 defining the dataset we'll use, lay out the axes, and choose a geom:
 
 ```{r create-ggplot-object, purl=FALSE}
-ggplot(data = surveys_complete, mapping = aes(x = weight, y = hindfoot_length)) +
+ggplot(data = yield_with_meata_df, mapping = aes(x = marketable_yield_kg, y = spad_value))+
     geom_point()
 ```
 
@@ -135,46 +136,54 @@ Then, we start modifying this plot to extract more information from it. For
 instance, we can add transparency (`alpha`) to avoid overplotting:
 
 ```{r adding-transparency, purl=FALSE}
-ggplot(data = surveys_complete, mapping = aes(x = weight, y = hindfoot_length)) +
+
+ggplot(data = yield_with_meata_df, mapping = aes(x = marketable_yield_kg, y = spad_value))+
     geom_point(alpha = 0.1)
 ```
 
 We can also add colors for all the points:
 
 ```{r adding-colors, purl=FALSE}
-ggplot(data = surveys_complete, mapping = aes(x = weight, y = hindfoot_length)) +
-    geom_point(alpha = 0.1, color = "blue")
+
+ggplot(data = yield_with_meata_df, mapping = aes(x = marketable_yield_kg, y = spad_value))+
+    geom_point(alpha = 0.5, color = "blue")
+
 ```
 
 Or to color each species in the plot differently, you could use a vector as an input to the argument **color**. **`ggplot2`** will provide a different color corresponding to different values in the vector. Here is an example where we color with **`species_id`**:
 
 
 ```{r color-by-species, purl=FALSE}
-ggplot(data = surveys_complete, mapping = aes(x = weight, y = hindfoot_length)) +
-    geom_point(alpha = 0.1, aes(color = species_id))
+
+ggplot(data = yield_with_meata_df, mapping = aes(x = marketable_yield_kg, y = spad_value))+
+    geom_point(alpha = 0.5, aes(color = rootstock))
+
+
 ```
 
 We can also specify the colors directly inside the mapping provided in the `ggplot()` function. This will be seen by all geom layers and the mapping will be determined by the x- and y-axis set up in `aes()`.
 
 ```{r color-by-species2, purl=FALSE}
-ggplot(data = surveys_complete, mapping = aes(x = weight, y = hindfoot_length, color = species_id)) +
-    geom_point(alpha = 0.1)
+
+ggplot(data = yield_with_meata_df, mapping = aes(x = marketable_yield_kg, y = spad_value, color = rootstock))+
+    geom_point(alpha = 0.5)
 ```
 
-Notice that we can change the geom layer and colors will be still determined by **`species_id`**
+Notice that we can change the geom layer and colors will be still determined by **`rootstock`**
 
 
 <div class = "blue">
 ### Challenge
 
-Use `ggplot()` to create a scatter plot of `weight` and
-`species_id` with weight on the Y-axis, and species_id on the X-axis. Have the colors be coded by `plot_type`. Is this a good way to show this type of data? What might be a better graph? 
+Use `ggplot()` to create a scatter plot of `marketable_yield_kg` and
+`rootstock` with marketable_yield_kg on the Y-axis, and rootstock on the X-axis. Have the colors be coded by `rootstock`. Is this a good way to show this type of data? What might be a better graph? 
 
 <details>
 <summary>ANSWER</summary>
 ```{r scatter-challenge, purl=FALSE}
-ggplot(data = surveys_complete, mapping = aes(x = species_id, y = weight)) +
-   geom_point(aes(color = plot_type))
+ggplot(data = yield_with_meata_df, mapping = aes(x = rootstock, y = marketable_yield_kg, color = rootstock))+
+    geom_point(alpha = 0.5)
+
 ```
 </details>
 </div>
@@ -186,8 +195,11 @@ ggplot(data = surveys_complete, mapping = aes(x = species_id, y = weight)) +
 We can use boxplots to visualize the distribution of weight within each species:
 
 ```{r boxplot, purl=FALSE}
-ggplot(data = surveys_complete, mapping = aes(x = species_id, y = weight)) +
+
+
+ggplot(data = yield_with_meata_df, mapping = aes(x = rootstock, y = marketable_yield_kg, color = rootstock))+
     geom_boxplot()
+
 ```
 
 By adding points to boxplot, we can have a better idea of the number of
@@ -196,9 +208,11 @@ measurements and of their distribution.
 Let's also use the geometry "jitter". `geom_jitter` is almost like `geom_point` but it allows you to visualize how the density of points because it adds a small amount of random variation to the location of each point. 
 
 ```{r boxplot-with-points, purl=FALSE}
-ggplot(data = surveys_complete, mapping = aes(x = species_id, y = weight)) +
+
+ggplot(data = yield_with_meata_df, mapping = aes(x = rootstock, y = marketable_yield_kg))+
     geom_boxplot(alpha = 0) +
-    geom_jitter(alpha = 0.3, color = "tomato") #notice our color needs to be in quotations 
+    geom_jitter(alpha = 0.5, color = "tomato") #notice our color needs to be in quotations 
+
 ```
 
 Notice how the boxplot layer is behind the jitter layer? What do you need to
@@ -223,26 +237,32 @@ incrementally adding commands). Try making these modifications:
 
 - Use the violin plot you made in Q1 and adjust the weight to be on the log~10~ scale; see `scale_y_log10()`.
 
-3. Make a new plot to explore the distribution of `hindfoot_length` just for species NL and PF using `geom_boxplot()`. Overlay a jitter/scatter plot of the hindfoot lengths of the two species behind the boxplots. Then, add an `aes()` argument to color the datapoints (but not the boxplots) according to the plot from which the sample was taken.  
+3. Make a new plot to explore the distribution of `marketable_yield_kg` just for rootstocks Nongraft and Maxifort using `geom_boxplot()`. Overlay a jitter/scatter plot of the marketable_yield_kg of the two rootstocks behind the boxplots. Then, add an `aes()` argument to color the datapoints (but not the boxplots) according to the plantID from which the sample was taken.  
 
-*Hint:* Check the class for `plot_id`. Consider changing the class of `plot_id` from integer to factor. Why does this change how R makes the graph?
 
 <details>
 <summary>ANSWER</summary>  
 ```{r}
-#1 + 2
+#1 
 
-ggplot(data = surveys_complete, mapping = aes(x = species_id, y = weight)) +
-    geom_jitter(alpha = 0.3, color = "tomato") +
+ggplot(data = yield_with_meata_df, mapping = aes(x = rootstock, y = marketable_yield_kg))+
+    geom_jitter(alpha = 0.5, color = "tomato") +
+    geom_violin(alpha = 0)
+
+
+# 2
+ggplot(data = yield_with_meata_df, mapping = aes(x = rootstock, y = marketable_yield_kg))+
+    geom_jitter(alpha = 0.5, color = "tomato") +
     geom_violin(alpha = 0) + 
     scale_y_log10()
 
 #3
-surveys_complete %>% 
-  filter(species_id == "NL" | species_id == "PF") %>% 
-ggplot(mapping = aes(x= species_id, y = hindfoot_length)) + 
-  geom_jitter(alpha = 0.3, aes(color = as.factor(plot_id))) +
-  geom_boxplot()
+
+yield_with_meata_df %>% 
+  filter(rootstock=="Nongraft" | rootstock=="Maxifort") %>%
+  ggplot(mapping = aes(x = rootstock, y = marketable_yield_kg))+
+    geom_jitter(alpha = 0.3, aes(color = plantID)) +
+   geom_boxplot()
 
 
    
@@ -251,40 +271,6 @@ ggplot(mapping = aes(x= species_id, y = hindfoot_length)) +
 </div>
 <br>
 
-## Plotting time series data
-
-Let's calculate number of counts per year for each species. First we need
-to group the data and count records within each group. We can quickly use the dplyr function `count` to do this. `count` is very similar to the function `tally` we have seen before, but it interally calls `group_by` before the function and `ungroup` after. 
-
-```{r, purl=FALSE}
-
-yearly_counts <- surveys_complete %>%
-                 count(year, species_id) 
-```
-
-Time series data can be visualized as a line plot with years on the x axis and counts
-on the y axis:
-
-```{r first-time-series, purl=FALSE}
-ggplot(data = yearly_counts, mapping = aes(x = year, y = n)) +
-     geom_line()
-```
-
-Unfortunately, this does not work because we plotted data for all the species
-together. We need to tell ggplot to draw a line for each species by modifying
-the aesthetic function to include `group = species_id`:
-
-```{r time-series-by-species, purl=FALSE}
-ggplot(data = yearly_counts, mapping = aes(x = year, y = n, group = species_id)) +
-    geom_line()
-```
-
-We will be able to distinguish species in the plot if we add colors (using `color` also automatically groups the data):
-
-```{r time-series-with-colors, purl=FALSE}
-ggplot(data = yearly_counts, mapping = aes(x = year, y = n, color = species_id)) +
-    geom_line()
-```
 
 ## Faceting
 
@@ -293,52 +279,16 @@ plot into multiple plots based on a factor included in the dataset. We will use 
 make a time series plot for each species:
 
 ```{r first-facet, purl=FALSE}
-ggplot(data = yearly_counts, mapping = aes(x = year, y = n)) +
-    geom_line() +
-    facet_wrap(~ species_id)
+
+
+yield_with_meata_df %>% 
+  ggplot(data = yield_with_meata_df, mapping = aes(x = rootstock, y = marketable_yield_kg, color = rootstock)) +
+    geom_jitter(alpha = 0.3) +
+    geom_boxplot()+
+  facet_wrap(~ sampling_date)
+
+
 ```
-
-
-<div class = "blue">
-### Challenge
-
-You are looking at a new dataset shared with you by a collaborator. You received the dataset shortly after the vernal equinox. Your collaborator didn't really give you any context on what the data represent, and you need to do some preliminary visualizations before you can really even formulate a question for them. Import the mystery dataset using:
-
-```{r}
-mystery <- read_csv("https://raw.githubusercontent.com/gge-ucd/R-DAVIS/master/data/mysteryData.csv")
-```
-
-Can you figure out what this dataset represents? 
-
-*Hint* Use your new knowledge of faceting to break up the data into groups, and consider changing the size and transparency of your `geom_`'s to get a better look!
-
-<details>
-<summary>ANSWER</summary>
-```{r}
-# Preview the data
-mystery %>%
-  head(5)
-# Plot the data
-ggplot(data = mystery, mapping = aes(x = x, y = y)) +
-     facet_wrap(~ Group) +
-     geom_point(size = 0.1, alpha = 0.01) 
-```
-
-If all went well, and you faceted by group, set points to be very small, and transparency to be very high (i.e., a low `alpha` setting), you should discover that each group is the outline of a different animal! You may notice that there is some distortion going on, and our foxy friend in Group B appears to have some thick thighs. Try equalizing the coordinate space in the x- and y-axes by adding a `coord_equal()` to your `ggplot()` call:
-
-```{r}
-## Equalize coordinate mapping
-ggplot(data = mystery, mapping = aes(x = x, y = y)) +
-  facet_wrap(~ Group) +
-  geom_point(size = 0.1, alpha = 0.01) +
-  coord_equal()
-```
-
-This challenge was inspired by Trevor Branch's [Coelocanth post on Twitter](https://twitter.com/TrevorABranch/status/1227493205337182209) and adapted by [Christian John](https://jepsonnomad.github.io/).
-
-</details>
-</div>
-<br>
 
 ## **`ggplot2`** themes
 
@@ -357,33 +307,103 @@ the background to white using the function `theme_bw()`. Additionally, you can r
 the grid:
 
 ```{r facet-by-species-and-sex-white-bg, purl=FALSE}
- ggplot(data = yearly_counts, mapping = aes(x = year, y = n)) +
-     geom_line() +
-     facet_wrap(~ species_id) +
-     theme_bw() +
+
+yield_with_meata_df %>% 
+  ggplot(data = yield_with_meata_df, mapping = aes(x = rootstock, y = marketable_yield_kg, color = rootstock)) +
+    geom_jitter(alpha = 0.3) +
+    geom_boxplot()+
+  facet_wrap(~ sampling_date)+
+   theme_bw() +
      theme(panel.grid = element_blank())
+
 ```
 
 <div class = "blue">
 ### Challenge 1 
 
-Let's make one final change to our facet wrapped plot of our yearly count data. What if we wanted to split the counts of species up by sex where the lines for each sex are different colors? Make sure you have a nice theme on your graph too! 
-
-*Hint* Make a new dataframe using the `count` function we learned earlier! 
+How to make high quality plot for the publication? 
+We want to show the plot of marketable_yield_kg yield, by two sampling date. 
+Here, we want to play with various factors of ggplot and themes.
 
 <details>
 <summary>ANSWER</summary>
 ```{r}
-#new data frame counting the number of each sex of each species 
- yearly_sex_counts <- surveys_complete %>%
-                      count(year, species_id, sex)
+# change the date so that they are in the same foramt
+yield_with_meta_date_fix_df <- yield_with_meata_df %>%
+  mutate(date_column = ifelse(sampling_date=="july-15-2018", "07/15/2018","06/15/2018"))
 
-#plot code 
- ggplot(data = yearly_sex_counts, mapping = aes(x = year, y = n, color = sex)) +
-     geom_line() +
-     facet_wrap(~ species_id) +
-     theme_bw()
+##
+yield_with_meta_date_fix_df %>%
+  ggplot(mapping = aes(x = rootstock, y = marketable_yield_kg)) +
+    geom_jitter(alpha = 0.5) +
+    geom_boxplot()+
+  facet_wrap(~ date_column)+
+   theme_classic() +
+     theme(panel.grid = element_blank())
+
+###
+
+## change the order of the rootstocsk. We want Nongraft, Selfgraft, RST-04-106, and Maxifort
+yield_with_meta_date_fix_df$rootstock <- factor(yield_with_meta_date_fix_df$rootstock, levels = c("Nongraft", "Selfgraft","RST-04-106", "Maxifort"))
+
+yield_with_meta_date_fix_df %>%
+  ggplot(mapping = aes(x = rootstock, y = marketable_yield_kg)) +
+    geom_jitter(alpha = 0.5) +
+    geom_boxplot()+
+  facet_wrap(~ date_column)+
+   theme_classic() +
+     theme(panel.grid = element_blank())
+
+
+## Chnage the Y axis and X axis label
+
+yield_with_meta_date_fix_df %>%
+  ggplot(mapping = aes(x = rootstock, y = marketable_yield_kg)) +
+    geom_jitter(alpha = 0.5) +
+    geom_boxplot()+
+  facet_wrap(~ date_column)+
+  labs(x="Rootstocks", y="Marketable Yield (Kg)")+
+   theme_classic() +
+     theme(panel.grid = element_blank())
+
+## line thinkness
+yield_with_meta_date_fix_df %>%
+  ggplot(mapping = aes(x = rootstock, y = marketable_yield_kg)) +
+    geom_jitter(alpha = 0.5) +
+    geom_boxplot()+
+  facet_wrap(~ date_column)+
+  labs(x="Rootstocks", y="Marketable Yield (Kg)")+
+   theme_classic() +
+     theme(panel.grid = element_blank(),
+           axis.line = element_line(linewidth = 1))
+
+## 
+gg_marketable_yiled_by_rootstocks_sdate <- yield_with_meta_date_fix_df %>%
+  ggplot(mapping = aes(x = rootstock, y = marketable_yield_kg)) +
+    geom_jitter(alpha = 0.8) +
+    geom_boxplot()+
+  facet_wrap(~ date_column)+
+  labs(x="Rootstocks", y="Marketable Yield (Kg)")+
+   theme_classic() +
+     theme(panel.grid = element_blank(),
+           axis.line = element_line(linewidth = 1),
+           axis.title = element_text(size = 20, face = "bold"),
+           axis.text.x = element_text(size = 14, angle = 45, vjust = 1, hjust = 1),
+           axis.text.y = element_text(size = 14))+
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        strip.background = element_blank(),
+        panel.border = element_blank(),
+        strip.text = element_text(size = 20))
+
+gg_marketable_yiled_by_rootstocks_sdate
+## save the plot in pdf
+ggsave("output/figures/gg_marketable_yiled_by_rootstocks_sdate.pdf", gg_marketable_yiled_by_rootstocks_sdate, height = 5, width = 5 )
+
+
+
 ```
+
 </details>
 </div>
 
@@ -400,23 +420,18 @@ of each species changes through the years.
 ```{r average-weight-time-series, purl=FALSE}
 
 #create a new dataframe 
-yearly_weight <- surveys_complete %>%
-                 group_by(year, species_id) %>%
-                 summarize(avg_weight = mean(weight))
+average_market_yiled_by_rootstocsk <- yield_with_meta_date_fix_df %>%
+                 group_by(rootstock) %>%
+                 summarize(avg_weight = mean(marketable_yield_kg))
 
+ggplot(data = average_market_yiled_by_rootstocsk, mapping = aes(x=rootstock, y=avg_weight)) +
+   geom_col() +
+   labs(x="Rootstocks", y="Marketable Yield (Mean)", title = "this is a barplot")+
+   theme_classic()
 
-ggplot(data = yearly_weight, mapping = aes(x=year, y=avg_weight)) +
-   geom_line() +
-   facet_wrap(~ species_id) +
-   theme_bw()
 ```
 </details>
 </div>
 
 <br>
-
-
-
-This lesson was contributed by [Martha Zillig](https://github.com/MarthaWohlfeil).
-
 

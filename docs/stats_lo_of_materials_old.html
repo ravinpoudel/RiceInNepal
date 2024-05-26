@@ -1,0 +1,1502 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Author: Ravin Poudel" />
+
+
+<title>Statistical Analyses</title>
+
+<script src="site_libs/header-attrs-2.26/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="site_libs_extra/academicons-1.8.0/css/academicons.css"/>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">
+    <span class="fa fa-info-circle  fa-1x"></span>
+     
+    About
+  </a>
+</li>
+<li>
+  <a href="Agenda.html">Agenda</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Before you come
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="computer_setup.html">Before you come</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-book  fa-1x"></span>
+     
+    Lessons
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="lesson_000_R_Rstudio_project.html">Project Management, R, &amp; RStudio</a>
+    </li>
+    <li>
+      <a href="lesson_001_basic_ds_inR.html">Getting started with R</a>
+    </li>
+    <li>
+      <a href="lesson_002_spreadsheets.html">Spreadsheets</a>
+    </li>
+    <li>
+      <a href="lesson_003_working_with_spreadsheet.html">Working with Spreadsheets</a>
+    </li>
+    <li>
+      <a href="lesson_06_data_manipulation_pt1.html">Data Manipulation</a>
+    </li>
+    <li>
+      <a href="lesson_09_data_viz_pt1.html">Data Visualization</a>
+    </li>
+    <li>
+      <a href="lesson_006_statistical_analyses.html">Statistical Analyses</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="contact.html">
+    <span class="fa fa-hand-spock-o"></span>
+     
+    Contact
+  </a>
+</li>
+<li>
+  <a href="https://www.garrettlab.com">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Statistical Analyses</h1>
+<h4 class="author">Author: Ravin Poudel</h4>
+<h4 class="date">Last update: 26 May, 2024</h4>
+
+</div>
+
+
+<p>#Descriptive and Inferential Statistics</p>
+<p>we will introduce the concepts of descriptive and inferential
+statistics, and briefly discuss a few most basic ways of getting an
+overall high-level view at the data at hand (descriptive approach).
+Towards this end, we will also introduce a few additional R commands and
+useful plots.</p>
+<div id="descriptive-and-inferential-statistics" class="section level1">
+<h1>Descriptive and Inferential Statistics</h1>
+<p>Statistics is about detecting trends, dependencies and features in
+the data in the presence of random noise and uncertainty. Statistical
+approaches to data analysis can be roughly categorized into descriptive
+and inferential, although the boundary is somewhat blurred and one
+rarely goes without the other. It is still useful to realize that in
+different situations we might be at least leaning towards one or the
+other end depending on the stated goal.</p>
+<p>-Descriptive Statistics – Methods for organizing and summarizing data
+and information – E.g. “where is the center and what is the spread of
+measurements forapples and oranges in this sample?” - Inferential
+Statistics – Drawing conclusions about a population based on information
+obtained from a limited sample drawn from the population and assessing
+the reliability of these conclusions. – E.g. “are apples same as
+oranges?” Or, rather, “given the differences between measurements for
+apples and oranges obtained from a limited sample, how likely it is that
+apples and oranges in general are/are not indeed different?”</p>
+<p>Inferential statistics uses probability theory to make generalizing
+statements based on the results of descriptive analysis and R has
+numerous methods implementing most conventional (as well as more
+state-of-art) approaches.</p>
+<p>#Data Display and Characterization</p>
+<pre class="r"><code>library(dplyr)
+meta_df &lt;- read.csv(&quot;input_data/tomato_grafting_metadata.csv&quot;, header = TRUE)
+yield_df &lt;- read.csv(&quot;input_data/tomato_grafting_yield_spad.csv&quot;, header = TRUE)
+
+# merge metadata with yield data
+yield_with_meata_df &lt;- merge(yield_df, meta_df, by=&quot;plantID&quot;)
+
+pie(table(yield_with_meata_df$rootstock))</code></pre>
+<p><img src="stats_lo_of_materials_old_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<pre class="r"><code>pie(table(yield_with_meata_df$sampling_date))</code></pre>
+<p><img src="stats_lo_of_materials_old_files/figure-html/unnamed-chunk-1-2.png" width="672" /></p>
+<pre class="r"><code>hist(yield_with_meata_df$spad_value)</code></pre>
+<p><img src="stats_lo_of_materials_old_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<pre class="r"><code>hist(yield_with_meata_df$marketable_yield_kg)</code></pre>
+<p><img src="stats_lo_of_materials_old_files/figure-html/unnamed-chunk-2-2.png" width="672" /></p>
+<pre class="r"><code>plot(yield_with_meata_df$marketable_yield_kg,type=&quot;p&quot;,main=&quot;marketable_yield_kg&quot;,ylab=&quot;Yiled ~ Kg&quot;)</code></pre>
+<p><img src="stats_lo_of_materials_old_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<pre class="r"><code>plot(yield_with_meata_df$spad_value, type =&quot;p&quot;,main=&quot;SPAD&quot;,ylab=&quot;SPAD&quot;)</code></pre>
+<p><img src="stats_lo_of_materials_old_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
+<p>Base plot are quick way, but we will be can use ggplot to make more
+interesting plots.</p>
+</div>
+<div
+id="need-to-work-on-where-to-put-the-descriptive-and-inferential-part-may-be-this-can-be-the-part-right-after-subsetting-dplyr-part."
+class="section level1">
+<h1>NEED TO WORK ON WHERE TO PUT THE DESCRIPTIVE AND INFERENTIAL PART?
+MAY BE THIS CAN BE THE PART RIGHT AFTER SUBSETTING DPLYR PART.</h1>
+<pre class="r"><code>mean(yield_with_meata_df$marketable_yield_kg);</code></pre>
+<pre><code>## [1] 29.25562</code></pre>
+<pre class="r"><code>median(yield_with_meata_df$marketable_yield_kg)</code></pre>
+<pre><code>## [1] 24.65</code></pre>
+<pre class="r"><code>sd(yield_with_meata_df$marketable_yield_kg, na.rm = TRUE) </code></pre>
+<pre><code>## [1] 12.35358</code></pre>
+<pre class="r"><code>mad(yield_with_meata_df$marketable_yield_kg, na.rm = TRUE) </code></pre>
+<pre><code>## [1] 6.22692</code></pre>
+<p>Note that sd() and mad() (like many other functions) have optional
+parameter na.rm; when it set to T it instructs the function to discard
+all NA’s from the input vector and apply the computations to the
+remaining data.</p>
+<p>Other useful characteristics are:</p>
+<p><strong>Range</strong> is simply the min-to-max range of all observed
+values in the data.</p>
+<pre class="r"><code>range(yield_with_meata_df$marketable_yield_kg,na.rm=T) # range of all observed values, min to max</code></pre>
+<pre><code>## [1] 10.5 55.1</code></pre>
+<p><strong>Interquartile range(IQR)</strong> is yet another robust
+characteristic of the data defined similarly to a median. Namely, just
+like the median is the midpoint of the data, we can also define a lower
+quartile (Q1) as a value such that 25% of the observed data values are
+below Q1. Similarly, the upper quartile (Q3) is such a value that only
+25% of the observed values are above (Q3), and the rest is below Q3.
+Interquartile distance is then defined as <code>IQR=Q3-Q1</code>.</p>
+<pre class="r"><code>IQR(yield_with_meata_df$marketable_yield_kg,na.rm=T) # interquartile distance</code></pre>
+<pre><code>## [1] 14.5</code></pre>
+<p><strong>Box Plot fivenum</strong></p>
+<p>To conclude this section, let us examine another extremely useful
+visualization of the distribution of the data values, a box-and-whisker
+plot (or simply a “boxplot”). Boxplot is based on the “5-number” summary
+of the observed data: (Min, lower quartile, median, upper quartile,
+max).</p>
+<pre class="r"><code>fivenum(yield_with_meata_df$marketable_yield_kg, na.rm = TRUE) </code></pre>
+<pre><code>## [1] 10.50 21.15 24.65 37.95 55.10</code></pre>
+<p>Here, fivenum provides:</p>
+<ul>
+<li>First value ~ Minimum : 17.70</li>
+<li>Second value ~ Q1 : 22.25</li>
+<li>Third value ~ Q2/median : 32.05</li>
+<li>Fourth value ~ Q3 : 45.05</li>
+<li>Fifth value ~ Maximum : 51.80</li>
+</ul>
+<p>In the boxplot, the box is drawn from lower to upper quartile
+(i.e. the height of the box is equal to IQR, 50% of the observed values
+are within the box), the median of the data is marked with a line inside
+the box, and the whiskers show the tails of the distribution of the
+data: lower whisker is drawn to Lower quartile – 1.5 IQR or to the Min,
+whichever is greater, and the upper whisker extends to Upper quartile +
+1.5 IQR or to the Max, whichever is less. Data points that fall outside
+of the whiskers (i.e. those that are located far from the center and are
+likely outliers and/or very long tails of the distribution) are drawn,
+if present, as individual dots. The commands and the resulting plots are
+shown below.</p>
+<div
+style="display: flex; justify-content: center; align-items: center; height: 30vh;">
+<p><img src="img/IQR.png" width="500" /></p>
+</div>
+<pre class="r"><code># Create a boxplot for the &#39;marketable_yield_kg&#39; column in &#39;yield_with_meata_df&#39; dataframe
+boxplot(yield_with_meata_df$marketable_yield_kg, na.rm = TRUE, horizontal = TRUE)</code></pre>
+<p><img src="stats_lo_of_materials_old_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<div id="statistical-analysis" class="section level2">
+<h2>Statistical Analysis</h2>
+<div id="anova-analysis-of-variance-model" class="section level3">
+<h3>ANOVA (Analysis of Variance Model)</h3>
+<p><strong>ANOVA</strong> is often used when there are more than two
+groups to compare, and it helps determine whether there are
+statistically significant differences among the means of these
+groups.</p>
+<p><strong><em>Which rootstock shows better results? Is there a
+treatment effect in the mean yield across the
+rootstocks?</em></strong></p>
+<pre class="r"><code># how to run the ANOCA in R
+help(aov)</code></pre>
+<p>The ANOVA test will evaluate whether there are significant
+differences in the mean <code>marketable_yield_kg</code> across
+different levels of the <code>rootstock</code> variable. If the p-value
+associated with the <code>rootstock</code> variable is below a certain
+significance level (e.g., 0.05), we would reject the null hypothesis,
+concluding that there are significant differences in
+<code>marketable_yield_kg</code> between at least two levels of the
+<code>rootstock</code> variable.</p>
+<p>In the code
+<code>aov(formula = marketable_yield_kg ~ rootstock, data = yield_with_meata_df)</code>,
+we are conducting an Analysis of Variance (ANOVA) to explore the
+relationship between the <code>marketable_yield_kg</code> variable
+(dependent variable) and the <code>rootstock</code> variable
+(independent variable) using the data stored in the
+<code>yield_with_meata_df</code> dataframe.</p>
+<p>Let’s break down the components:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong><code>aov()</code></strong>: This function in R stands
+for “Analysis of Variance.” It is used to perform ANOVA, which is a
+statistical method used to analyze the differences among group means in
+a sample.</p></li>
+<li><p><strong><code>formula = marketable_yield_kg ~ rootstock</code></strong>:
+This part defines the formula for the ANOVA. It specifies that
+<code>marketable_yield_kg</code> is the dependent variable, and
+<code>rootstock</code> is the independent variable. The <code>~</code>
+symbol separates the dependent variable from the independent
+variable.</p></li>
+<li><p><strong><code>data = yield_with_meata_df</code></strong>: This
+specifies the dataframe <code>yield_with_meata_df</code> from which the
+variables are taken. It tells R where to find the variables specified in
+the formula.</p></li>
+</ol>
+<pre class="r"><code>m1_yield_avo &lt;- aov(formula=marketable_yield_kg ~ rootstock, data=yield_with_meata_df) </code></pre>
+<p>Let’s check the ‘Value’ section of the help page so we know what does
+it return. It returns an object, which can further be explored with
+print() and summary(). Let’s assign it to an object so that we can use
+print() and summary() on it.</p>
+<pre class="r"><code>summary(m1_yield_avo)</code></pre>
+<pre><code>##              Df Sum Sq Mean Sq F value Pr(&gt;F)    
+## rootstock     3  22063    7354     521 &lt;2e-16 ***
+## Residuals   156   2202      14                   
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+<div id="what-is-in-the-summary-of-the-model" class="section level3">
+<h3>What is in the summary of the model?</h3>
+<p>The ANOVA results indicate the statistical significance of the
+<code>rootstock</code> variable in explaining the variation in the
+<code>marketable_yield_kg</code> variable. Let’s interpret the key
+components:</p>
+<ul>
+<li><p><strong>Df (Degrees of Freedom)</strong>: This column displays
+the degrees of freedom associated with the <code>rootstock</code>
+variable and the residuals. In this case, there are 3 degrees of freedom
+for <code>rootstock</code> and 156 degrees of freedom for
+residuals.</p></li>
+<li><p><strong>Sum Sq (Sum of Squares)</strong>: This column shows the
+sum of squared deviations from the mean for <code>rootstock</code> and
+residuals. For <code>rootstock</code>, the sum of squares is 23478,
+while for residuals, it is 138.</p></li>
+<li><p><strong>Mean Sq (Mean Square)</strong>: This is the mean square,
+calculated by dividing the sum of squares by the degrees of freedom. For
+<code>rootstock</code>, it is 7826 (23478 divided by 3), while for
+residuals, it is 1 (138 divided by 156).</p></li>
+<li><p><strong>F value</strong>: This is the F-statistic, which is the
+ratio of the mean square for <code>rootstock</code> to the mean square
+for residuals. It is used to test the null hypothesis that all group
+means are equal. Here, the F value is 8826.</p></li>
+<li><p><strong>Pr(&gt;F)</strong>: This is the p-value associated with
+the F-statistic. It represents the probability of observing an
+F-statistic as extreme as, or more extreme than, the one computed from
+the sample data, assuming the null hypothesis (no effect of
+<code>rootstock</code>) is true. In this case, the p-value is less than
+2e-16 (a very small number close to zero), indicating strong evidence
+against the null hypothesis.</p></li>
+</ul>
+<p>Overall, the results suggested that the <code>rootstock</code>
+variable has a statistically significant effect on the
+<code>marketable_yield_kg</code> variable. The extremely low p-value
+indicates that the observed differences in mean
+<code>marketable_yield_kg</code> among different levels of
+<code>rootstock</code> are highly unlikely to be due to random
+chance.</p>
+<div id="which-treatments-are-different" class="section level4">
+<h4>Which treatments are different???</h4>
+<p>Now that we know that differences exist between our treatments, how
+can we find which treatments are different? We can do this by using
+Tukey’s post-hoc test. If you scroll down the help page of aov and go
+the section ‘See Also’, you will see a function TukeyHSD. This is what
+we need.</p>
+<pre class="r"><code>TukeyHSD(m1_yield_avo) </code></pre>
+<pre><code>##   Tukey multiple comparisons of means
+##     95% family-wise confidence level
+## 
+## Fit: aov(formula = marketable_yield_kg ~ rootstock, data = yield_with_meata_df)
+## 
+## $rootstock
+##                          diff        lwr          upr     p adj
+## Nongraft-Maxifort    -26.9325 -29.114179 -24.75082061 0.0000000
+## RST-04-106-Maxifort  -25.9900 -28.171679 -23.80832061 0.0000000
+## Selfgraft-Maxifort   -28.2450 -30.426679 -26.06332061 0.0000000
+## RST-04-106-Nongraft    0.9425  -1.239179   3.12417939 0.6766024
+## Selfgraft-Nongraft    -1.3125  -3.494179   0.86917939 0.4031948
+## Selfgraft-RST-04-106  -2.2550  -4.436679  -0.07332061 0.0398197</code></pre>
+<p>After you conduct an ANOVA and find a significant difference between
+the groups, Tukey’s HSD test allows you to determine which specific
+pairs of group means are significantly different from each other. It
+calculates confidence intervals for all pairwise differences between
+group means and then compares these intervals to determine which
+differences are statistically significant.</p>
+</div>
+</div>
+<div id="challenge" class="section level3 blue">
+<h3>Challenge</h3>
+Can you run the ANOVA test using SPAD value as response? Do we see the
+similar pattern?
+<details>
+<summary>
+ANSWER
+</summary>
+<pre class="r"><code># build the anova model
+m2_spad_avo &lt;- aov(formula=spad_value ~ rootstock, data=yield_with_meata_df) 
+
+# get the summary of the model
+summary(m2_spad_avo)
+
+
+# TukeyHSD
+TukeyHSD(m2_spad_avo) </code></pre>
+</details>
+</div>
+<p><br></p>
+</div>
+<div id="t-test" class="section level2">
+<h2>## T test</h2>
+</div>
+<div id="statistical-models" class="section level2">
+<h2>statistical models</h2>
+<div id="linear-models" class="section level4">
+<h4>Linear models</h4>
+<p>When we conduct experiments (measurements, surveys, etc), we collect
+raw data. What are these data used for? Clearly, the purpose of any
+study is to learn something. “Learning” means generalizing and/or
+finding trends, dependencies, and relations in the data.</p>
+<p>In contrast, representing the results of a study as 1000 data points
+is an exact but also the most meaningless way of conveying the findings
+(or lack thereof). Even in the simplest possible scenario, we want at
+the very least to characterize our dataset, e.g. by calculating its mean
+and variance. Moreover, in most cases we are studying and characterizing
+a sample drawn from a population and want to generalize our findings to
+that population. By doing so, we already make some (implicit)
+assumptions. For instance, if we assume that the distribution is indeed
+normal or reasonably close to normal (at least, some bell-shaped curve),
+we can use only mean and variance to characterize the distribution
+(higher moments are not needed), or we may want to use the t-test in
+order to determine whether two samples (for instance, ages of male and
+female patients in ALL dataset) are significantly different or not.</p>
+<p>However, if the shape of underlying distribution is very different,
+e.g. has two different maxima at different locations, all our estimates
+would need to be done differently as well. We have seen this in Homework
+2: we could still compute the mean, but it would grossly misrepresent
+the actual structure of the data; for instance, estimates made with
+t-test (which effectively looks at the means) are useless and actually
+misleading in this case.</p>
+<p>When we make an assumption about underlying distribution or
+dependency, we say that we have a model. Since we are doing statistics
+and are always concerned with probability distributions of the data
+themselves as well as the noise, the models we are going to look at are
+statistical models (those that explicitly include probability
+distributions).</p>
+<p>Another interesting question to ask is: if we are given multiple
+random variables, X, Y, … , is there any relationship (and if so, then
+how significant it is statistically) or they are completely unrelated.
+For example, those variables could be expression levels of individual
+genes measured in a sample of patients (thus, in our ALL dataset we
+already have 10K random variables (genes) measured across all 128
+patients to look at), or time to remission in the disease, etc.</p>
+<p>Statistical independence.</p>
+<p>The random variables X and Y are considered unrelated, or
+independent, when the probability to observe any value of Y does not
+depend on the realization of X: in other words, whatever value we have
+measured for X it provides us with no additional information about what
+values of Y we should expect (the distribution of Y stays the same).
+Using notations from probability theory:</p>
+<p>EQUAITION HERE probability distribution of Y conditioned on X is the
+same as the marginal probability distribution of Y: in other words X is
+irrelevant for predicting the values of Y).</p>
+<p>Here lets look if there is some relationship between the yield and
+spad value</p>
+<pre class="r"><code>plot(yield_with_meata_df$marketable_yield_kg, yield_with_meata_df$spad_value)</code></pre>
+<p><img src="stats_lo_of_materials_old_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<pre class="r"><code>lm_yiled_spad &lt;- lm(marketable_yield_kg ~ spad_value, yield_with_meata_df) 
+coef(lm_yiled_spad)</code></pre>
+<pre><code>## (Intercept)  spad_value 
+## -22.5920122   0.8724061</code></pre>
+<pre class="r"><code>print(lm_yiled_spad)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = marketable_yield_kg ~ spad_value, data = yield_with_meata_df)
+## 
+## Coefficients:
+## (Intercept)   spad_value  
+##    -22.5920       0.8724</code></pre>
+<pre class="r"><code># Fit a linear regression model to predict marketable_yield_kg based on spad_value
+lm_yield_spad &lt;- lm(marketable_yield_kg ~ spad_value, data = yield_with_meata_df)
+
+# Create a scatter plot of actual data points
+plot(yield_with_meata_df$spad_value,
+     yield_with_meata_df$marketable_yield_kg,
+     xlab = &quot;SPAD&quot;,  # Label for x-axis
+     ylab = &quot;Marketable Yield&quot;)  # Label for y-axis
+
+# Add predicted values as red points
+points(yield_with_meata_df$spad_value,
+       predict(lm_yield_spad),
+       col = &quot;red&quot;,  # Color of points
+       pch = 20)     # Point type
+
+# Add the best-fit line in blue
+abline(lm_yield_spad, col = &quot;blue&quot;)  # Add a line representing the linear regression model</code></pre>
+<p><img src="stats_lo_of_materials_old_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p>Here’s a simplified explanation of the provided code:</p>
+<ol style="list-style-type: decimal">
+<li><p>The
+<code>lm_yield_spad &lt;- lm(marketable_yield_kg ~ spad_value, data = yield_with_meata_df)</code>
+command creates a linear regression model (<code>lm</code>) where
+<code>marketable_yield_kg</code> is the variable we want to predict and
+<code>spad_value</code> is the predictor variable. This command fits the
+model to the data.</p></li>
+<li><p>The <code>coefficients()</code> function retrieves the
+coefficients from the fitted linear model. These coefficients represent
+the intercept and slope of the best-fit line. In our case, the intercept
+is approximately 11.0557, and the slope (coefficient for
+<code>spad_value</code>) is approximately 0.4849.</p></li>
+<li><p>Based on the coefficients obtained in step 2, we can express the
+relationship between <code>marketable_yield_kg</code> and
+<code>spad_value</code> as:<br />
+Marketable Yield = 11.0557 + 0.4849 * SPAD [+ residuals]</p></li>
+<li><p>The <code>plot()</code> function creates a scatter plot of the
+actual data points, with <code>SPAD</code> on the x-axis and
+<code>Marketable Yield</code> on the y-axis.</p></li>
+<li><p>Using the <code>predict()</code> function, we calculate the
+predicted values of <code>marketable_yield_kg</code> for each
+<code>SPAD</code> value based on our fitted linear model. These
+predicted values are then plotted as red points on the scatter
+plot.</p></li>
+<li><p>The <code>abline()</code> function adds a blue line to the plot,
+representing the linear regression line fitted to the data.</p></li>
+</ol>
+<p>So, in summary, the code fits a linear regression model to predict
+<code>marketable_yield_kg</code> based on <code>spad_value</code>,
+retrieves the coefficients of the model, visualizes the actual data
+points, overlays the predicted values, and adds a line representing the
+best-fit linear model.</p>
+</div>
+<div id="quality-control-for-model-fitting-diagnostic-plots"
+class="section level4">
+<h4>Quality Control for Model Fitting: Diagnostic Plots</h4>
+<pre class="r"><code>qqnorm(resid(lm_yield_spad))
+qqline(resid(lm_yield_spad))</code></pre>
+<p><img src="stats_lo_of_materials_old_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<pre class="r"><code>hist(resid(lm_yield_spad))</code></pre>
+<p><img src="stats_lo_of_materials_old_files/figure-html/unnamed-chunk-17-2.png" width="672" /></p>
+<pre class="r"><code>shapiro.test(resid(lm_yield_spad))$p.value</code></pre>
+<pre><code>## [1] 0.4830924</code></pre>
+<pre class="r"><code>plot(fitted(lm_yield_spad), yield_with_meata_df$marketable_yield_kg,
+     xlab=&quot;Fitted&quot;,ylab=&quot;Observed&quot;)
+abline(0,1,lty=2)</code></pre>
+<p><img src="stats_lo_of_materials_old_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<pre class="r"><code>plot(fitted(lm_yield_spad),
+resid(lm(marketable_yield_kg ~ spad_value, data = yield_with_meata_df)),
+xlab=&quot;Fitted&quot;,ylab=&quot;Residuals&quot;)
+abline(h=0,lty=2)</code></pre>
+<p><img src="stats_lo_of_materials_old_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<pre class="r"><code>old.par &lt;- par(mfrow=c(2,2),ps=16)
+plot(lm_yield_spad)</code></pre>
+<p><img src="stats_lo_of_materials_old_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p>The <code>plot()</code> function applied directly to a linear
+regression model (<code>lm</code> object) in R produces a set of
+diagnostic plots, often referred to as “residual plots”. These plots
+help assess the assumptions and check the validity of the linear
+regression model. The four main diagnostic plots produced by
+<code>plot(lm_object)</code> are:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Residuals vs Fitted Values Plot</strong>: This plot shows
+the residuals (the differences between observed and predicted values) on
+the y-axis against the fitted values (the predicted values of the
+dependent variable) on the x-axis. It helps to check for patterns in the
+residuals, which should ideally be randomly scattered around zero with
+no discernible pattern. If there is a clear pattern (like a curve or
+funnel shape), it suggests that the relationship between the variables
+may not be linear, or there may be heteroscedasticity.</p></li>
+<li><p><strong>Normal Q-Q Plot</strong>: This plot compares the
+distribution of the residuals to a normal distribution. If the residuals
+are normally distributed, the points on the plot should follow a
+straight line. Departures from a straight line suggest departures from
+normality.</p></li>
+<li><p><strong>Scale-Location (or Spread-Location) Plot</strong>: This
+plot shows the square root of the standardized residuals against the
+fitted values. It helps to assess the homogeneity of variance
+(homoscedasticity). Ideally, the points should be randomly scattered
+around a horizontal line with constant variance. If the spread of points
+widens or narrows as the fitted values change, it suggests
+heteroscedasticity.</p></li>
+<li><p><strong>Residuals vs Leverage Plot</strong>: This plot helps
+identify influential data points (outliers or high leverage points) that
+may disproportionately affect the regression model. Data points that are
+outliers in the y-direction or have high leverage will be shown as
+points with high residuals or high leverage values, respectively. Points
+to watch for are those that are far away from the rest of the data in
+the plot.</p></li>
+</ol>
+<p>These diagnostic plots are crucial for evaluating the assumptions of
+linear regression and identifying any potential issues with the
+model.</p>
+<pre class="r"><code>anova(lm_yield_spad)  </code></pre>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: marketable_yield_kg
+##             Df  Sum Sq Mean Sq F value    Pr(&gt;F)    
+## spad_value   1 19418.7 19418.7  633.07 &lt; 2.2e-16 ***
+## Residuals  158  4846.4    30.7                      
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>anova(lm_yield_spad)$&quot;Pr(&gt;F)&quot;[1] # we can retrieve just the p-value</code></pre>
+<pre><code>## [1] 3.840787e-57</code></pre>
+</div>
+</div>
+<div id="categorialcal-models" class="section level2">
+<h2>Categorialcal models</h2>
+<pre class="r"><code>boxplot(marketable_yield_kg ~ rootstock, data = yield_with_meata_df)</code></pre>
+<p><img src="stats_lo_of_materials_old_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+</div>
+</div>
+<div id="this-could-be-next-page" class="section level1">
+<h1>This COULD BE NEXT PAGE</h1>
+<div id="population-statistics-vs-sample-statistics"
+class="section level2">
+<h2>Population Statistics vs Sample Statistics</h2>
+<p>“Population statistics” is just a name for the descriptive
+characterization of the whole population (with respect to particular
+quantity we are interested in). Note that this can be just an
+idealization since we usually do not have measurements for everyone in a
+population. The important point is that the underlying distribution of
+the quantity of interest, f(x), always exists. We may not know its
+parameters (where it is centered or how much spread it has) or even its
+shape, but this is exactly why we perform the measurements.</p>
+<p>When we perform a finite number of measurements we are sampling
+randomly from the underlying population. Note that the word “population”
+itself can be somewhat misleading: it has direct meaning only if we, for
+instance, select a finite number of study participants from the large
+population and measure their cholesterol levels or poll their party
+affiliations. But if our measuring apparatus is subject to noise and we
+perform five measurements on each subject in order to overcome that
+noise, it is better to say that our repeated measurements are sampled
+from the underlying noise distribution, not a “population” of any sort.
+Hence, while we will be sometimes using these terms interchangeably
+(e.g. when we indeed sample from a human population), the universally
+applicable concept is that of sampling from underlying distribution and
+trying to determine its parameters or other interesting properties,
+whether that underlying distribution describes patients or some random
+measurement error.</p>
+</div>
+</div>
+<div id="hypothesis-testing" class="section level1">
+<h1>Hypothesis Testing</h1>
+<div id="overview" class="section level3">
+<h3>Overview</h3>
+<p>In this note we learn how to compare two samples; “compare” here
+means answering the question “given the fluctuations and randomness in
+the data and the sampling process, is it likely that the two samples at
+hand came from the same underlying distribution, or the differences
+between the samples are so pronounced that they cannot be explained by
+chance and we have to conclude that the samples (or rather their
+underlying distributions) are truly different”. We will first perform a
+numerical resampling experiment in a toy model derived from the tomato
+grafting data; then we will look at t-test and its uses.</p>
+</div>
+<div id="comparing-means" class="section level3">
+<h3>Comparing means</h3>
+<pre class="r"><code>library(dplyr)
+
+meta_df &lt;- read.csv(&quot;input_data/tomato_grafting_metadata.csv&quot;, header = TRUE)
+yield_df &lt;- read.csv(&quot;input_data/tomato_grafting_yield_spad.csv&quot;, header = TRUE)
+
+# check colnames
+colnames(meta_df)</code></pre>
+<pre><code>## [1] &quot;plantID&quot;   &quot;rootstock&quot;</code></pre>
+<pre class="r"><code># check colnames
+colnames(yield_df)</code></pre>
+<pre><code>## [1] &quot;plantID&quot;             &quot;marketable_yield_kg&quot; &quot;spad_value&quot;         
+## [4] &quot;sampling_date&quot;</code></pre>
+<pre class="r"><code># merge metadata with yield data
+yield_with_meata_df &lt;- merge(yield_df, meta_df, by=&quot;plantID&quot;)
+
+# Box plot of yield of all data
+boxplot(yield_with_meata_df$marketable_yield_kg,cex.axis=1) # all rootstocks</code></pre>
+<p><img src="stats_lo_of_materials_old_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<pre class="r"><code># stratified by rootstocks (NOTE formula syntax!!):
+boxplot(marketable_yield_kg ~ rootstock , yield_with_meata_df ,cex.axis=1) # by rootstocks</code></pre>
+<p><img src="stats_lo_of_materials_old_files/figure-html/unnamed-chunk-23-2.png" width="672" /></p>
+<pre class="r"><code># we can also look at the spad value
+boxplot(yield_with_meata_df$spad_value,cex.axis=1) # all spad value</code></pre>
+<p><img src="stats_lo_of_materials_old_files/figure-html/unnamed-chunk-23-3.png" width="672" /></p>
+<pre class="r"><code># we can also look at the spad value
+boxplot(spad_value ~ rootstock , yield_with_meata_df ,cex.axis=1) # by rootstocks</code></pre>
+<p><img src="stats_lo_of_materials_old_files/figure-html/unnamed-chunk-23-4.png" width="672" /></p>
+<pre class="r"><code># Check the presence of NA
+is.na(yield_with_meata_df$marketable_yield_kg)</code></pre>
+<pre><code>##   [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [13] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [25] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [37] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [49] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [61] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [73] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [85] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [97] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [109] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [121] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [133] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [145] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [157] FALSE FALSE FALSE FALSE</code></pre>
+<pre class="r"><code># count
+sum(is.na(yield_with_meata_df$marketable_yield_kg))</code></pre>
+<pre><code>## [1] 0</code></pre>
+<pre class="r"><code># random sampling
+y_rand &lt;- sample(yield_with_meata_df$marketable_yield_kg, size=100, replace = TRUE)
+
+## let make random sample of yiled for maxifort and nongraft
+maxi_yield &lt;- yield_with_meata_df[yield_with_meata_df$rootstock==&quot;Maxifort&quot;, &quot;marketable_yield_kg&quot;]
+rst04_106_yield &lt;- yield_with_meata_df[yield_with_meata_df$rootstock==&quot;RST-04-106&quot;, &quot;marketable_yield_kg&quot;]
+ng_yield &lt;- yield_with_meata_df[yield_with_meata_df$rootstock==&quot;Nongraft&quot;, &quot;marketable_yield_kg&quot;]
+sg_yield &lt;- yield_with_meata_df[yield_with_meata_df$rootstock==&quot;Selfgraft&quot;, &quot;marketable_yield_kg&quot;]
+
+
+# 
+stripchart(list(Maxifort=maxi_yield,`RST-04-106`=rst04_106_yield, Selfgraft= sg_yield, Nongraft=ng_yield),vertical=TRUE) # compare samples</code></pre>
+<p><img src="stats_lo_of_materials_old_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+</div>
+<div id="hypothesis-testing-t-test" class="section level3">
+<h3>Hypothesis Testing: t-test</h3>
+<p>The approach we have taken in the previous section is very common.
+What we did is known as “hypothesis testing”. First we formulate a null
+hypothesis – usually a minimalist statement assuming that there is no
+effect whatsoever. Under this assumption we evaluate the probability to
+observe the same or even more extreme value of some quantity than was
+actually observed. The quantity chosen for testing is known as test
+statistics and the probability to observe equal or more extreme value of
+test statistics is called p-value. If this probability is high,
+i.e. under the null hypothesis it is very likely to make observations as
+or more extreme than we did, then our data are consistent with the null.
+In contrast, if the probability of the observation we made is too low
+under the null hypothesis, we may decide that the data contradict the
+null and the latter should be rejected.</p>
+<p>There are two important points to acknowledge here: 1) in hypothesis
+testing, the “probability to observe the value of test statistic” always
+refers to multiple re-testing. The question we are asking is,
+invariably, “what would happen if we were to repeat our whole
+experiment, i.e. draw new samples, over and over again – how often would
+we observe the test statistics as extreme, assuming the null hypothesis
+were true?”</p>
+<ol start="2" style="list-style-type: decimal">
+<li>the test statistics is calculated for the sample (e.g. mean of the
+sample) and is thus a random variable itself; hence we can speak only
+about the probability for the test statistic to exceed any particular
+value. In this sense, we can only tell that a particular observation is
+very unlikely under the null hypothesis (i.e. has very low probability,
+or p-value). It is an arbitrary and subjective decision whether the
+probability is low enough to reject the null. One traditionally used
+value of the p-value cutoff is 0.05 (i.e. 5% probability that there is
+in fact no effect, null is correct, and the observed difference is due
+to chance); in many applications however, you may want to choose much
+more stringent cutoffs, especially in multiple testing as we will
+discuss later on.</li>
+</ol>
+<div id="t-test-and-usage" class="section level4">
+<h4>T-test and usage</h4>
+<p>The test statistics of this test (known as t-statistics) is pretty
+much either the mean or difference between the means, properly re-scaled
+(there are flavors of the test for one or two samples), and the test
+assumes the underlying distributions(s) to be normal (Gaussian);
+importantly, by making these assumptions, one can obtain an analytical
+result and thus avoid performing 10000 re-samplings every time one needs
+to test for significance. In the single-sample case (the null is that
+the sample came from a distribution with specific mean, and the observed
+difference between that mean and sample mean is solely due to
+chance)</p>
+<p>The test is very attractive because it is simple and computationally
+efficient. However, it explicitly relies on the assumption of normality
+of the underlying distribution(s).</p>
+<pre class="r"><code>## t-test if the yield between nongraft and maxifort were sampled from the same distribution.
+
+t.test.res = t.test(maxi_yield, ng_yield)
+t.test.res</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  maxi_yield and ng_yield
+## t = 29.462, df = 67.379, p-value &lt; 2.2e-16
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  25.10802 28.75698
+## sample estimates:
+## mean of x mean of y 
+##   49.5475   22.6150</code></pre>
+</div>
+<div id="example-of-t-test" class="section level4">
+<h4>Example of t-test</h4>
+<pre class="r"><code>yy = c(maxi_yield, ng_yield)
+tt = as.factor(c(rep(&quot;Maxi&quot;, 40), rep(&quot;NG&quot;,40)))
+
+dd = data.frame(trt=tt, yield = yy)
+
+# Compute the analysis of variance
+anova.res &lt;- aov(yield ~ trt, data = dd)
+# Summary of the analysis
+summary(anova.res)</code></pre>
+<pre><code>##             Df Sum Sq Mean Sq F value Pr(&gt;F)    
+## trt          1  14507   14507     868 &lt;2e-16 ***
+## Residuals   78   1304      17                   
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>confint(anova.res)</code></pre>
+<pre><code>##                 2.5 %    97.5 %
+## (Intercept)  48.26060  50.83440
+## trtNG       -28.75245 -25.11255</code></pre>
+<pre class="r"><code>##
+mean(maxi_yield)</code></pre>
+<pre><code>## [1] 49.5475</code></pre>
+<pre class="r"><code>mean(ng_yield)</code></pre>
+<pre><code>## [1] 22.615</code></pre>
+<pre class="r"><code># the square of the t-statistic from a t-test (specifically, a two-sample t-test) should be approximately equal to the F-statistic from an ANOVA analysis when comparing the means of two groups.
+
+# t-test and anova 
+cat(t.test.res$statistic^2,summary(anova.res)[[1]]$&quot;F value&quot;[1],fill=T)</code></pre>
+<pre><code>## 867.9806 867.9806</code></pre>
+<pre class="r"><code># pvalue
+cat(t.test.res$p.value,summary(anova.res)[[1]]$`Pr(&gt;F)`[1],fill=T)</code></pre>
+<pre><code>## 3.25903e-40 5.06971e-44</code></pre>
+</div>
+</div>
+<div id="analysis-of-variance" class="section level2">
+<h2>Analysis of Variance</h2>
+<p>The “classical” set-up for what is known as “one-way ANOVA” is very
+similar to the t-test. Namely, we have n groups of measurements
+(i.e. samples), n≥2 , with multiple measurements (e.g. blood pressures
+in a number of patients) in each group (for instance, healthy controls,
+disease stage I, disease stage II etc.). The null hypothesis we test is
+that the underlying means and variances of the respective distributions
+all the samples were drawn from are the same:</p>
+<p>Thus for n=2, the null hypothesis is the same both for ANOVA and for
+the two-sample t-test with equal variance</p>
+<p>With larger number of samples, n&gt;2, ANOVA is often a preferable
+way of testing. The reason is that regardless of the actual number of
+samples, n, ANOVA is still just one test applied to all samples at once.
+In contrast, if we were to use t-test, we could only run multiple
+pairwise comparisons between the samples when n&gt;2. As a result, while
+the latter procedure can be applied in practice in order to get better
+understanding of the data, the results of such tests are subject to
+multiple testing errors (when performing many tests, we are bound to
+eventually run into a case which is significant merely by chance!)</p>
+<pre class="r"><code>yield_with_meata_df</code></pre>
+<pre><code>##        plantID marketable_yield_kg spad_value sampling_date  rootstock
+## 1   T1-B1-M-P1                49.9       77.3       6/15/18   Maxifort
+## 2   T1-B1-M-P2                52.9       80.6  july-15-2018   Maxifort
+## 3   T1-B1-N-P1                33.4       53.2       6/15/18   Nongraft
+## 4   T1-B1-N-P2                21.1       48.9  july-15-2018   Nongraft
+## 5   T1-B1-R-P1                23.0       47.4       6/15/18 RST-04-106
+## 6   T1-B1-R-P2                27.0       51.4  july-15-2018 RST-04-106
+## 7   T1-B1-S-P1                18.8       50.6       6/15/18  Selfgraft
+## 8   T1-B1-S-P2                22.9       44.9  july-15-2018  Selfgraft
+## 9   T1-B2-M-P1                47.7       79.2       6/15/18   Maxifort
+## 10  T1-B2-M-P2                45.0       79.4  july-15-2018   Maxifort
+## 11  T1-B2-N-P1                19.7       54.4       6/15/18   Nongraft
+## 12  T1-B2-N-P2                26.6       47.2  july-15-2018   Nongraft
+## 13  T1-B2-R-P1                25.6       43.9       6/15/18 RST-04-106
+## 14  T1-B2-R-P2                22.4       51.3  july-15-2018 RST-04-106
+## 15  T1-B2-S-P1                23.3       50.3       6/15/18  Selfgraft
+## 16  T1-B2-S-P2                18.7       49.8  july-15-2018  Selfgraft
+## 17  T1-B3-M-P1                52.5       72.4       6/15/18   Maxifort
+## 18  T1-B3-M-P2                43.4       80.1  july-15-2018   Maxifort
+## 19  T1-B3-N-P1                20.4       56.8       6/15/18   Nongraft
+## 20  T1-B3-N-P2                20.9       43.5  july-15-2018   Nongraft
+## 21  T1-B3-R-P1                20.8       56.5       6/15/18 RST-04-106
+## 22  T1-B3-R-P2                23.1       46.7  july-15-2018 RST-04-106
+## 23  T1-B3-S-P1                24.0       50.1       6/15/18  Selfgraft
+## 24  T1-B3-S-P2                19.1       50.2  july-15-2018  Selfgraft
+## 25  T1-B4-M-P1                52.5       78.5       6/15/18   Maxifort
+## 26  T1-B4-M-P2                47.7       81.2  july-15-2018   Maxifort
+## 27  T1-B4-N-P1                26.4       50.5       6/15/18   Nongraft
+## 28  T1-B4-N-P2                10.5       55.9  july-15-2018   Nongraft
+## 29  T1-B4-R-P1                23.2       58.1       6/15/18 RST-04-106
+## 30  T1-B4-R-P2                27.3       58.2  july-15-2018 RST-04-106
+## 31  T1-B4-S-P1                21.4       50.9       6/15/18  Selfgraft
+## 32  T1-B4-S-P2                17.7       52.0  july-15-2018  Selfgraft
+## 33  T2-B1-M-P1                53.1       81.4       6/15/18   Maxifort
+## 34  T2-B1-M-P2                50.5       77.7  july-15-2018   Maxifort
+## 35  T2-B1-N-P1                28.4       49.0       6/15/18   Nongraft
+## 36  T2-B1-N-P2                17.6       50.5  july-15-2018   Nongraft
+## 37  T2-B1-R-P1                24.7       55.7       6/15/18 RST-04-106
+## 38  T2-B1-R-P2                24.0       54.2  july-15-2018 RST-04-106
+## 39  T2-B1-S-P1                18.0       56.5       6/15/18  Selfgraft
+## 40  T2-B1-S-P2                25.2       61.1  july-15-2018  Selfgraft
+## 41  T2-B2-M-P1                53.8       79.5       6/15/18   Maxifort
+## 42  T2-B2-M-P2                48.0       83.4  july-15-2018   Maxifort
+## 43  T2-B2-N-P1                18.7       52.3       6/15/18   Nongraft
+## 44  T2-B2-N-P2                23.1       53.2  july-15-2018   Nongraft
+## 45  T2-B2-R-P1                22.9       48.7       6/15/18 RST-04-106
+## 46  T2-B2-R-P2                19.0       53.6  july-15-2018 RST-04-106
+## 47  T2-B2-S-P1                12.5       54.3       6/15/18  Selfgraft
+## 48  T2-B2-S-P2                25.9       49.6  july-15-2018  Selfgraft
+## 49  T2-B3-M-P1                48.5       82.1       6/15/18   Maxifort
+## 50  T2-B3-M-P2                48.3       86.6  july-15-2018   Maxifort
+## 51  T2-B3-N-P1                25.3       61.1       6/15/18   Nongraft
+## 52  T2-B3-N-P2                29.2       55.5  july-15-2018   Nongraft
+## 53  T2-B3-R-P1                24.3       61.8       6/15/18 RST-04-106
+## 54  T2-B3-R-P2                21.5       50.3  july-15-2018 RST-04-106
+## 55  T2-B3-S-P1                25.1       43.7       6/15/18  Selfgraft
+## 56  T2-B3-S-P2                24.9       53.4  july-15-2018  Selfgraft
+## 57  T2-B4-M-P1                48.6       81.5       6/15/18   Maxifort
+## 58  T2-B4-M-P2                51.0       84.4  july-15-2018   Maxifort
+## 59  T2-B4-N-P1                19.2       50.7       6/15/18   Nongraft
+## 60  T2-B4-N-P2                19.0       50.5  july-15-2018   Nongraft
+## 61  T2-B4-R-P1                22.0       52.1       6/15/18 RST-04-106
+## 62  T2-B4-R-P2                27.0       52.8  july-15-2018 RST-04-106
+## 63  T2-B4-S-P1                21.5       43.7       6/15/18  Selfgraft
+## 64  T2-B4-S-P2                18.8       49.5  july-15-2018  Selfgraft
+## 65  T3-B1-M-P1                50.8       81.9       6/15/18   Maxifort
+## 66  T3-B1-M-P2                46.8       78.6  july-15-2018   Maxifort
+## 67  T3-B1-N-P1                17.2       55.4       6/15/18   Nongraft
+## 68  T3-B1-N-P2                23.4       51.6  july-15-2018   Nongraft
+## 69  T3-B1-R-P1                25.1       62.9       6/15/18 RST-04-106
+## 70  T3-B1-R-P2                22.2       48.6  july-15-2018 RST-04-106
+## 71  T3-B1-S-P1                25.7       52.9       6/15/18  Selfgraft
+## 72  T3-B1-S-P2                14.1       46.8  july-15-2018  Selfgraft
+## 73  T3-B2-M-P1                51.9       82.0       6/15/18   Maxifort
+## 74  T3-B2-M-P2                49.7       74.5  july-15-2018   Maxifort
+## 75  T3-B2-N-P1                25.1       51.3       6/15/18   Nongraft
+## 76  T3-B2-N-P2                17.2       53.1  july-15-2018   Nongraft
+## 77  T3-B2-R-P1                23.8       56.8       6/15/18 RST-04-106
+## 78  T3-B2-R-P2                25.0       48.8  july-15-2018 RST-04-106
+## 79  T3-B2-S-P1                15.3       53.7       6/15/18  Selfgraft
+## 80  T3-B2-S-P2                25.7       56.2  july-15-2018  Selfgraft
+## 81  T3-B3-M-P1                49.0       74.8       6/15/18   Maxifort
+## 82  T3-B3-M-P2                51.5       80.2  july-15-2018   Maxifort
+## 83  T3-B3-N-P1                22.5       50.6       6/15/18   Nongraft
+## 84  T3-B3-N-P2                16.9       52.7  july-15-2018   Nongraft
+## 85  T3-B3-R-P1                23.9       60.0       6/15/18 RST-04-106
+## 86  T3-B3-R-P2                24.0       44.4  july-15-2018 RST-04-106
+## 87  T3-B3-S-P1                16.7       41.5       6/15/18  Selfgraft
+## 88  T3-B3-S-P2                22.1       47.7  july-15-2018  Selfgraft
+## 89  T3-B4-M-P1                48.7       80.0       6/15/18   Maxifort
+## 90  T3-B4-M-P2                54.9       82.6  july-15-2018   Maxifort
+## 91  T3-B4-N-P1                23.9       49.9       6/15/18   Nongraft
+## 92  T3-B4-N-P2                18.1       49.7  july-15-2018   Nongraft
+## 93  T3-B4-R-P1                18.2       55.7       6/15/18 RST-04-106
+## 94  T3-B4-R-P2                22.5       58.9  july-15-2018 RST-04-106
+## 95  T3-B4-S-P1                22.4       48.9       6/15/18  Selfgraft
+## 96  T3-B4-S-P2                22.8       66.7  july-15-2018  Selfgraft
+## 97  T4-B1-M-P1                48.1       84.9       6/15/18   Maxifort
+## 98  T4-B1-M-P2                51.4       82.3  july-15-2018   Maxifort
+## 99  T4-B1-N-P1                19.1       51.4       6/15/18   Nongraft
+## 100 T4-B1-N-P2                28.8       54.2  july-15-2018   Nongraft
+## 101 T4-B1-R-P1                22.0       53.7       6/15/18 RST-04-106
+## 102 T4-B1-R-P2                22.9       54.6  july-15-2018 RST-04-106
+## 103 T4-B1-S-P1                15.9       53.1       6/15/18  Selfgraft
+## 104 T4-B1-S-P2                28.2       53.5  july-15-2018  Selfgraft
+## 105 T4-B2-M-P1                54.4       78.6       6/15/18   Maxifort
+## 106 T4-B2-M-P2                55.1       76.3  july-15-2018   Maxifort
+## 107 T4-B2-N-P1                31.0       56.9       6/15/18   Nongraft
+## 108 T4-B2-N-P2                26.7       53.6  july-15-2018   Nongraft
+## 109 T4-B2-R-P1                19.5       48.9       6/15/18 RST-04-106
+## 110 T4-B2-R-P2                25.2       48.4  july-15-2018 RST-04-106
+## 111 T4-B2-S-P1                13.1       60.3       6/15/18  Selfgraft
+## 112 T4-B2-S-P2                18.5       53.3  july-15-2018  Selfgraft
+## 113 T4-B3-M-P1                42.5       81.4       6/15/18   Maxifort
+## 114 T4-B3-M-P2                51.4       76.7  july-15-2018   Maxifort
+## 115 T4-B3-N-P1                25.3       52.9       6/15/18   Nongraft
+## 116 T4-B3-N-P2                25.0       51.1  july-15-2018   Nongraft
+## 117 T4-B3-R-P1                19.2       51.2       6/15/18 RST-04-106
+## 118 T4-B3-R-P2                24.6       59.8  july-15-2018 RST-04-106
+## 119 T4-B3-S-P1                26.9       42.9       6/15/18  Selfgraft
+## 120 T4-B3-S-P2                28.7       52.7  july-15-2018  Selfgraft
+## 121 T4-B4-M-P1                49.5       80.4       6/15/18   Maxifort
+## 122 T4-B4-M-P2                50.0       80.4  july-15-2018   Maxifort
+## 123 T4-B4-N-P1                20.1       53.5       6/15/18   Nongraft
+## 124 T4-B4-N-P2                27.6       48.3  july-15-2018   Nongraft
+## 125 T4-B4-R-P1                22.5       53.8       6/15/18 RST-04-106
+## 126 T4-B4-R-P2                27.7       57.1  july-15-2018 RST-04-106
+## 127 T4-B4-S-P1                27.5       46.7       6/15/18  Selfgraft
+## 128 T4-B4-S-P2                20.9       62.2  july-15-2018  Selfgraft
+## 129 T5-B1-M-P1                50.1       81.7       6/15/18   Maxifort
+## 130 T5-B1-M-P2                43.2       81.9  july-15-2018   Maxifort
+## 131 T5-B1-N-P1                25.5       54.5       6/15/18   Nongraft
+## 132 T5-B1-N-P2                19.9       53.9  july-15-2018   Nongraft
+## 133 T5-B1-R-P1                23.5       55.4       6/15/18 RST-04-106
+## 134 T5-B1-R-P2                23.4       57.7  july-15-2018 RST-04-106
+## 135 T5-B1-S-P1                17.9       47.6       6/15/18  Selfgraft
+## 136 T5-B1-S-P2                19.4       56.3  july-15-2018  Selfgraft
+## 137 T5-B2-M-P1                46.8       79.2       6/15/18   Maxifort
+## 138 T5-B2-M-P2                46.3       82.6  july-15-2018   Maxifort
+## 139 T5-B2-N-P1                15.9       58.2       6/15/18   Nongraft
+## 140 T5-B2-N-P2                25.8       56.3  july-15-2018   Nongraft
+## 141 T5-B2-R-P1                24.9       53.8       6/15/18 RST-04-106
+## 142 T5-B2-R-P2                21.2       52.9  july-15-2018 RST-04-106
+## 143 T5-B2-S-P1                21.6       53.9       6/15/18  Selfgraft
+## 144 T5-B2-S-P2                22.0       51.7  july-15-2018  Selfgraft
+## 145 T5-B3-M-P1                51.2       78.1       6/15/18   Maxifort
+## 146 T5-B3-M-P2                49.0       82.4  july-15-2018   Maxifort
+## 147 T5-B3-N-P1                21.3       54.3       6/15/18   Nongraft
+## 148 T5-B3-N-P2                23.0       56.1  july-15-2018   Nongraft
+## 149 T5-B3-R-P1                27.3       53.1       6/15/18 RST-04-106
+## 150 T5-B3-R-P2                24.5       51.9  july-15-2018 RST-04-106
+## 151 T5-B3-S-P1                17.3       54.7       6/15/18  Selfgraft
+## 152 T5-B3-S-P2                25.0       47.2  july-15-2018  Selfgraft
+## 153 T5-B4-M-P1                44.1       80.2       6/15/18   Maxifort
+## 154 T5-B4-M-P2                52.1       77.1  july-15-2018   Maxifort
+## 155 T5-B4-N-P1                29.0       47.7       6/15/18   Nongraft
+## 156 T5-B4-N-P2                16.8       54.6  july-15-2018   Nongraft
+## 157 T5-B4-R-P1                25.3       54.9       6/15/18 RST-04-106
+## 158 T5-B4-R-P2                26.1       53.5  july-15-2018 RST-04-106
+## 159 T5-B4-S-P1                24.6       51.4       6/15/18  Selfgraft
+## 160 T5-B4-S-P2                22.0       47.8  july-15-2018  Selfgraft</code></pre>
+<pre class="r"><code>yield_with_meata_df$rootstock &lt;- factor(yield_with_meata_df$rootstock, levels=c(&quot;Nongraft&quot;,&quot;Selfgraft&quot;,&quot;RST-04-106&quot;,&quot;Maxifort&quot;))
+yield_with_meata_df$rootstock</code></pre>
+<pre><code>##   [1] Maxifort   Maxifort   Nongraft   Nongraft   RST-04-106 RST-04-106
+##   [7] Selfgraft  Selfgraft  Maxifort   Maxifort   Nongraft   Nongraft  
+##  [13] RST-04-106 RST-04-106 Selfgraft  Selfgraft  Maxifort   Maxifort  
+##  [19] Nongraft   Nongraft   RST-04-106 RST-04-106 Selfgraft  Selfgraft 
+##  [25] Maxifort   Maxifort   Nongraft   Nongraft   RST-04-106 RST-04-106
+##  [31] Selfgraft  Selfgraft  Maxifort   Maxifort   Nongraft   Nongraft  
+##  [37] RST-04-106 RST-04-106 Selfgraft  Selfgraft  Maxifort   Maxifort  
+##  [43] Nongraft   Nongraft   RST-04-106 RST-04-106 Selfgraft  Selfgraft 
+##  [49] Maxifort   Maxifort   Nongraft   Nongraft   RST-04-106 RST-04-106
+##  [55] Selfgraft  Selfgraft  Maxifort   Maxifort   Nongraft   Nongraft  
+##  [61] RST-04-106 RST-04-106 Selfgraft  Selfgraft  Maxifort   Maxifort  
+##  [67] Nongraft   Nongraft   RST-04-106 RST-04-106 Selfgraft  Selfgraft 
+##  [73] Maxifort   Maxifort   Nongraft   Nongraft   RST-04-106 RST-04-106
+##  [79] Selfgraft  Selfgraft  Maxifort   Maxifort   Nongraft   Nongraft  
+##  [85] RST-04-106 RST-04-106 Selfgraft  Selfgraft  Maxifort   Maxifort  
+##  [91] Nongraft   Nongraft   RST-04-106 RST-04-106 Selfgraft  Selfgraft 
+##  [97] Maxifort   Maxifort   Nongraft   Nongraft   RST-04-106 RST-04-106
+## [103] Selfgraft  Selfgraft  Maxifort   Maxifort   Nongraft   Nongraft  
+## [109] RST-04-106 RST-04-106 Selfgraft  Selfgraft  Maxifort   Maxifort  
+## [115] Nongraft   Nongraft   RST-04-106 RST-04-106 Selfgraft  Selfgraft 
+## [121] Maxifort   Maxifort   Nongraft   Nongraft   RST-04-106 RST-04-106
+## [127] Selfgraft  Selfgraft  Maxifort   Maxifort   Nongraft   Nongraft  
+## [133] RST-04-106 RST-04-106 Selfgraft  Selfgraft  Maxifort   Maxifort  
+## [139] Nongraft   Nongraft   RST-04-106 RST-04-106 Selfgraft  Selfgraft 
+## [145] Maxifort   Maxifort   Nongraft   Nongraft   RST-04-106 RST-04-106
+## [151] Selfgraft  Selfgraft  Maxifort   Maxifort   Nongraft   Nongraft  
+## [157] RST-04-106 RST-04-106 Selfgraft  Selfgraft 
+## Levels: Nongraft Selfgraft RST-04-106 Maxifort</code></pre>
+<pre class="r"><code>anova.res &lt;- aov(lm(marketable_yield_kg ~ rootstock, data = yield_with_meata_df))
+summary(anova.res)</code></pre>
+<pre><code>##              Df Sum Sq Mean Sq F value Pr(&gt;F)    
+## rootstock     3  22063    7354     521 &lt;2e-16 ***
+## Residuals   156   2202      14                   
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code># does the rootstocsk type expalin the yiled?
+coef(lm(marketable_yield_kg~rootstock,yield_with_meata_df))</code></pre>
+<pre><code>##         (Intercept)  rootstockSelfgraft rootstockRST-04-106   rootstockMaxifort 
+##             22.6150             -1.3125              0.9425             26.9325</code></pre>
+<p>The first command in the code segment above fits linear model of gene
+expression vs fusion protein status. Since fp is a categorical variable,
+we should be very careful in interpreting the coefficients of this
+“linear fit”. Remember that when we had a “conventional” linear
+regression fit, y=ax+b, the slope a was the “rate of change” of the
+variable y: the latter would change by a when x changes by 1. Moreover,
+when x is numerical, we can define “greater” and “less” relations, order
+the values, and can have changes in x from data point to data point
+equal to 1.7, 2.18 or 3.1415, as obvious as it sounds. In contrast, with
+categorical variable fp, we have three different values, but those
+values do not have any order, and we cannot define a “distance” between
+them (by how much does fp change from p190 to p210??), so we cannot
+really write a term like a∗fp in our model. Instead, when linear model
+is fitted on categorical data, each individual level of the categorical
+variable is encoded as 0 (not set) or 1 (set).</p>
+<p>Next, you can remember that in “conventional” linear models we
+interpreted predicted value yi as the “mean” of measurements we would
+expect to make when x=xi (even if in reality we had only one yi
+measurement for each xi, so we had to use other techniques to infer that
+mean). This interpretation remains exactly the same with linear models
+applied to categorical variables, except that in contrast to continuous
+variable x, when we have only a few levels of a categorical variable, it
+is likely that we have many measurements yi for each level. Thus we can
+truly compute the mean in each category, and importantly this is all we
+can compute: since distance between the categorical labels is not
+defined, we cannot define a slope as well.</p>
+<p>Let us now examine closely the coefficients calculated by our linear
+model in the code fragment shown above. We can see that the “Intercept”
+is the mean of the first category (p190), see the explicit calculation
+of the mean in that category few lines below.</p>
+<p>Next value, let’s denote it A, under p190/p210, should be interpreted
+as follows: when the category is p190/210 (i.e. the corresponding “flag”
+is 1, or “set”) then intercept+A gives the mean (in other words
+“predicted value”) of Y in that category. So in some sense, A is a
+slope, but only with respect to the indicator variable 0/1,
+mean(p190/210)=intercept+A<em>1. For p210 we need to use a different
+indicator variable, and different “slope” B, so that when the label is
+p210 (corresponding indicator is 1), then
+mean(fpp210)=intercept+B</em>1.</p>
+<p>You can easily check that the coefficients reported by the linear
+model indeed give the means in the groups, when properly interpreted.
+This is left as a homework exercise.</p>
+<p>Note that the means in the groups is the best and only “prediction”
+that we can make in this case, in the same way as a conventional linear
+model gives single predicted “mean” value for each “category” xiin the
+data, and all the deviations of measured values of y from those
+predictions is unexplained noise.</p>
+<pre class="r"><code># intercept is equal to mean of ng
+mean(ng_yield)</code></pre>
+<pre><code>## [1] 22.615</code></pre>
+<pre class="r"><code># mean of sg == intercept +coefficeint for SG
+cat(mean(sg_yield), coef(lm(marketable_yield_kg~rootstock,yield_with_meata_df))[2] + coef(lm(marketable_yield_kg~rootstock,yield_with_meata_df))[1])</code></pre>
+<pre><code>## 21.3025 21.3025</code></pre>
+<pre class="r"><code>cat(mean(rst04_106_yield), coef(lm(marketable_yield_kg~rootstock,yield_with_meata_df))[3] + coef(lm(marketable_yield_kg~rootstock,yield_with_meata_df))[1])</code></pre>
+<pre><code>## 23.5575 23.5575</code></pre>
+<pre class="r"><code>cat(mean(maxi_yield), coef(lm(marketable_yield_kg~rootstock,yield_with_meata_df))[4] + coef(lm(marketable_yield_kg~rootstock,yield_with_meata_df))[1])</code></pre>
+<pre><code>## 49.5475 49.5475</code></pre>
+<div id="testing-for-data-normality" class="section level4">
+<h4>Testing for data normality</h4>
+</div>
+<div id="statistical-models-1" class="section level4">
+<h4>Statistical Models</h4>
+</div>
+<div id="statistical-independence" class="section level4">
+<h4>Statistical Independence</h4>
+</div>
+<div id="linear-models-1" class="section level4">
+<h4>Linear Models</h4>
+</div>
+<div id="evaluating-linear-model" class="section level3">
+<h3>Evaluating Linear Model</h3>
+</div>
+<div id="quality-control-for-model-fitting-diagnostic-plots-1"
+class="section level3">
+<h3>Quality Control for Model Fitting: Diagnostic Plots</h3>
+</div>
+<div id="central-limit-theorem" class="section level3">
+<h3>Central Limit Theorem</h3>
+</div>
+<div id="clt-illustration" class="section level3">
+<h3>CLT Illustration</h3>
+</div>
+<div id="confidence-intervals" class="section level3">
+<h3>Confidence Intervals</h3>
+</div>
+<div id="analysis-of-variance-1" class="section level3">
+<h3>Analysis of Variance</h3>
+</div>
+<div id="between--and-within-sample-variance" class="section level3">
+<h3>Between- and Within-sample Variance</h3>
+<div id="anova-examples" class="section level4">
+<h4>ANOVA Examples</h4>
+</div>
+<div id="anova-example-continuous-variables" class="section level4">
+<h4>ANOVA Example: Continuous Variables</h4>
+</div>
+</div>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("show" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

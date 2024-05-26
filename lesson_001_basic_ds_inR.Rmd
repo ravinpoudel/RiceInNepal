@@ -272,5 +272,5 @@ subset_df <- my_df[my_df$Age > 25 | (my_df$Married == TRUE & my_df$Name != "Bob"
 subset_df
 ```
 
-
+## ADD FIGURES OF LOGICAL OPERATORS IN R
 

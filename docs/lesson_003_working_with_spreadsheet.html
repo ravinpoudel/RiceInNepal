@@ -382,30 +382,7 @@ div.tocify {
     <li>
       <a href="lesson_006_statistical_analyses.html">Statistical Analyses</a>
     </li>
-    <li>
-      <a href="lesson_12_lubridate.html">Date-times with lubridate</a>
-    </li>
-    <li>
-      <a href="lesson_13_functions.html">Writing functions</a>
-    </li>
-    <li>
-      <a href="lesson_14_iteration.html">Iteration</a>
-    </li>
   </ul>
-</li>
-<li>
-  <a href="assignments.html">
-    <span class="fa fa-paperclip fa-1x"></span>
-     
-    Challenges
-  </a>
-</li>
-<li>
-  <a href="resources.html">
-    <span class="fa fa-list"></span>
-     
-    Resources
-  </a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -441,7 +418,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Working with Spreadsheets</h1>
 <h4 class="author">Author: Ravin Poudel</h4>
-<h4 class="date">Last update: 04 April, 2024</h4>
+<h4 class="date">Last update: 26 May, 2024</h4>
 
 </div>
 
@@ -531,12 +508,12 @@ then the name of the <code>CSV file</code>.</p>
 # view head of the data object
 head(yield_df)</code></pre>
 <pre><code>##      plantID marketable_yield_kg spad_value sampling_date
-## 1 T1-B1-M-P1                49.4       79.9       6/15/18
-## 2 T1-B2-M-P1                49.8       78.7       6/15/18
-## 3 T1-B3-M-P1                51.6       81.7       6/15/18
-## 4 T1-B4-M-P1                50.1       80.9       6/15/18
-## 5 T2-B1-M-P1                50.1       80.2       6/15/18
-## 6 T2-B2-M-P1                51.7       81.2       6/15/18</code></pre>
+## 1 T1-B1-M-P1                49.9       77.3       6/15/18
+## 2 T1-B2-M-P1                47.7       79.2       6/15/18
+## 3 T1-B3-M-P1                52.5       72.4       6/15/18
+## 4 T1-B4-M-P1                52.5       78.5       6/15/18
+## 5 T2-B1-M-P1                53.1       81.4       6/15/18
+## 6 T2-B2-M-P1                53.8       79.5       6/15/18</code></pre>
 <pre class="r"><code># check the dimension of dataframe
 dim(yield_df)</code></pre>
 <pre><code>## [1] 160   4</code></pre>
@@ -544,8 +521,8 @@ dim(yield_df)</code></pre>
 str(yield_df)</code></pre>
 <pre><code>## &#39;data.frame&#39;:    160 obs. of  4 variables:
 ##  $ plantID            : chr  &quot;T1-B1-M-P1&quot; &quot;T1-B2-M-P1&quot; &quot;T1-B3-M-P1&quot; &quot;T1-B4-M-P1&quot; ...
-##  $ marketable_yield_kg: num  49.4 49.8 51.6 50.1 50.1 51.7 50.5 48.7 49.3 49.6 ...
-##  $ spad_value         : num  79.9 78.7 81.7 80.9 80.2 81.2 78.7 80.7 79.5 80.7 ...
+##  $ marketable_yield_kg: num  49.9 47.7 52.5 52.5 53.1 53.8 48.5 48.6 50.8 51.9 ...
+##  $ spad_value         : num  77.3 79.2 72.4 78.5 81.4 79.5 82.1 81.5 81.9 82 ...
 ##  $ sampling_date      : chr  &quot;6/15/18&quot; &quot;6/15/18&quot; &quot;6/15/18&quot; &quot;6/15/18&quot; ...</code></pre>
 <p>Sure, here are some examples of subsetting operations for a dataframe
 <code>yield_df</code> based on different conditions:</p>
@@ -556,26 +533,29 @@ str(yield_df)</code></pre>
 s_g80_df &lt;- yield_df[yield_df$spad_value &gt; 80, ]
 s_g80_df</code></pre>
 <pre><code>##       plantID marketable_yield_kg spad_value sampling_date
-## 3  T1-B3-M-P1                51.6       81.7       6/15/18
-## 4  T1-B4-M-P1                50.1       80.9       6/15/18
-## 5  T2-B1-M-P1                50.1       80.2       6/15/18
-## 6  T2-B2-M-P1                51.7       81.2       6/15/18
-## 8  T2-B4-M-P1                48.7       80.7       6/15/18
-## 10 T3-B2-M-P1                49.6       80.7       6/15/18
-## 12 T3-B4-M-P1                50.4       80.6       6/15/18
-## 13 T4-B1-M-P1                50.4       81.3       6/15/18
-## 15 T4-B3-M-P1                49.4       81.0       6/15/18
-## 18 T5-B2-M-P1                48.0       81.5       6/15/18
-## 19 T5-B3-M-P1                50.7       80.4       6/15/18
-## 23 T1-B3-M-P2                49.0       80.9  july-15-2018
-## 25 T2-B1-M-P2                49.4       80.6  july-15-2018
-## 26 T2-B2-M-P2                48.3       81.0  july-15-2018
-## 27 T2-B3-M-P2                50.8       81.7  july-15-2018
-## 28 T2-B4-M-P2                50.2       80.1  july-15-2018
-## 31 T3-B3-M-P2                50.4       80.1  july-15-2018
-## 35 T4-B3-M-P2                50.8       81.0  july-15-2018
-## 38 T5-B2-M-P2                49.9       80.1  july-15-2018
-## 40 T5-B4-M-P2                49.6       80.3  july-15-2018</code></pre>
+## 5  T2-B1-M-P1                53.1       81.4       6/15/18
+## 7  T2-B3-M-P1                48.5       82.1       6/15/18
+## 8  T2-B4-M-P1                48.6       81.5       6/15/18
+## 9  T3-B1-M-P1                50.8       81.9       6/15/18
+## 10 T3-B2-M-P1                51.9       82.0       6/15/18
+## 13 T4-B1-M-P1                48.1       84.9       6/15/18
+## 15 T4-B3-M-P1                42.5       81.4       6/15/18
+## 16 T4-B4-M-P1                49.5       80.4       6/15/18
+## 17 T5-B1-M-P1                50.1       81.7       6/15/18
+## 20 T5-B4-M-P1                44.1       80.2       6/15/18
+## 21 T1-B1-M-P2                52.9       80.6  july-15-2018
+## 23 T1-B3-M-P2                43.4       80.1  july-15-2018
+## 24 T1-B4-M-P2                47.7       81.2  july-15-2018
+## 26 T2-B2-M-P2                48.0       83.4  july-15-2018
+## 27 T2-B3-M-P2                48.3       86.6  july-15-2018
+## 28 T2-B4-M-P2                51.0       84.4  july-15-2018
+## 31 T3-B3-M-P2                51.5       80.2  july-15-2018
+## 32 T3-B4-M-P2                54.9       82.6  july-15-2018
+## 33 T4-B1-M-P2                51.4       82.3  july-15-2018
+## 36 T4-B4-M-P2                50.0       80.4  july-15-2018
+## 37 T5-B1-M-P2                43.2       81.9  july-15-2018
+## 38 T5-B2-M-P2                46.3       82.6  july-15-2018
+## 39 T5-B3-M-P2                49.0       82.4  july-15-2018</code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li>Subsetting based on multiple conditions:</li>
 </ol>
@@ -583,17 +563,15 @@ s_g80_df</code></pre>
 s_g80_y_g50_df &lt;- yield_df[yield_df$spad_value &gt; 80 &amp; yield_df$marketable_yield_kg &gt; 50, ]
 s_g80_y_g50_df</code></pre>
 <pre><code>##       plantID marketable_yield_kg spad_value sampling_date
-## 3  T1-B3-M-P1                51.6       81.7       6/15/18
-## 4  T1-B4-M-P1                50.1       80.9       6/15/18
-## 5  T2-B1-M-P1                50.1       80.2       6/15/18
-## 6  T2-B2-M-P1                51.7       81.2       6/15/18
-## 12 T3-B4-M-P1                50.4       80.6       6/15/18
-## 13 T4-B1-M-P1                50.4       81.3       6/15/18
-## 19 T5-B3-M-P1                50.7       80.4       6/15/18
-## 27 T2-B3-M-P2                50.8       81.7  july-15-2018
-## 28 T2-B4-M-P2                50.2       80.1  july-15-2018
-## 31 T3-B3-M-P2                50.4       80.1  july-15-2018
-## 35 T4-B3-M-P2                50.8       81.0  july-15-2018</code></pre>
+## 5  T2-B1-M-P1                53.1       81.4       6/15/18
+## 9  T3-B1-M-P1                50.8       81.9       6/15/18
+## 10 T3-B2-M-P1                51.9       82.0       6/15/18
+## 17 T5-B1-M-P1                50.1       81.7       6/15/18
+## 21 T1-B1-M-P2                52.9       80.6  july-15-2018
+## 28 T2-B4-M-P2                51.0       84.4  july-15-2018
+## 31 T3-B3-M-P2                51.5       80.2  july-15-2018
+## 32 T3-B4-M-P2                54.9       82.6  july-15-2018
+## 33 T4-B1-M-P2                51.4       82.3  july-15-2018</code></pre>
 <ol start="3" style="list-style-type: decimal">
 <li>Subsetting based on column names:</li>
 </ol>
@@ -601,12 +579,12 @@ s_g80_y_g50_df</code></pre>
 yield_df_sel_sy &lt;- yield_df[, c(&quot;spad_value&quot;, &quot;marketable_yield_kg&quot;)]
 head(yield_df_sel_sy)</code></pre>
 <pre><code>##   spad_value marketable_yield_kg
-## 1       79.9                49.4
-## 2       78.7                49.8
-## 3       81.7                51.6
-## 4       80.9                50.1
-## 5       80.2                50.1
-## 6       81.2                51.7</code></pre>
+## 1       77.3                49.9
+## 2       79.2                47.7
+## 3       72.4                52.5
+## 4       78.5                52.5
+## 5       81.4                53.1
+## 6       79.5                53.8</code></pre>
 <ol start="4" style="list-style-type: decimal">
 <li>Subsetting based on specific values in a column:</li>
 </ol>
@@ -614,7 +592,7 @@ head(yield_df_sel_sy)</code></pre>
 yield_df_sel_mp1 &lt;- yield_df[yield_df$plantID == &#39;T1-B1-M-P1&#39;, ]
 yield_df_sel_mp1</code></pre>
 <pre><code>##      plantID marketable_yield_kg spad_value sampling_date
-## 1 T1-B1-M-P1                49.4       79.9       6/15/18</code></pre>
+## 1 T1-B1-M-P1                49.9       77.3       6/15/18</code></pre>
 <ol start="5" style="list-style-type: decimal">
 <li>Subsetting based on row numbers:</li>
 </ol>
@@ -622,35 +600,35 @@ yield_df_sel_mp1</code></pre>
 yield_df_sub_r_1_5 &lt;- yield_df[1:5, ]
 yield_df_sub_r_1_5</code></pre>
 <pre><code>##      plantID marketable_yield_kg spad_value sampling_date
-## 1 T1-B1-M-P1                49.4       79.9       6/15/18
-## 2 T1-B2-M-P1                49.8       78.7       6/15/18
-## 3 T1-B3-M-P1                51.6       81.7       6/15/18
-## 4 T1-B4-M-P1                50.1       80.9       6/15/18
-## 5 T2-B1-M-P1                50.1       80.2       6/15/18</code></pre>
+## 1 T1-B1-M-P1                49.9       77.3       6/15/18
+## 2 T1-B2-M-P1                47.7       79.2       6/15/18
+## 3 T1-B3-M-P1                52.5       72.4       6/15/18
+## 4 T1-B4-M-P1                52.5       78.5       6/15/18
+## 5 T2-B1-M-P1                53.1       81.4       6/15/18</code></pre>
 <ol start="6" style="list-style-type: decimal">
 <li>Subsetting columns from index 2 to 4:</li>
 </ol>
 <pre class="r"><code>yield_df_sub_c2_4 &lt;- yield_df[, 2:4]
 head(yield_df_sub_c2_4)</code></pre>
 <pre><code>##   marketable_yield_kg spad_value sampling_date
-## 1                49.4       79.9       6/15/18
-## 2                49.8       78.7       6/15/18
-## 3                51.6       81.7       6/15/18
-## 4                50.1       80.9       6/15/18
-## 5                50.1       80.2       6/15/18
-## 6                51.7       81.2       6/15/18</code></pre>
+## 1                49.9       77.3       6/15/18
+## 2                47.7       79.2       6/15/18
+## 3                52.5       72.4       6/15/18
+## 4                52.5       78.5       6/15/18
+## 5                53.1       81.4       6/15/18
+## 6                53.8       79.5       6/15/18</code></pre>
 <ol start="7" style="list-style-type: decimal">
 <li>Subsetting rows and columns simultaneously:</li>
 </ol>
 <pre class="r"><code>yield_df_sub_r1_5_c2_4 &lt;- yield_df[5:10, 2:4]
 yield_df_sub_r1_5_c2_4</code></pre>
 <pre><code>##    marketable_yield_kg spad_value sampling_date
-## 5                 50.1       80.2       6/15/18
-## 6                 51.7       81.2       6/15/18
-## 7                 50.5       78.7       6/15/18
-## 8                 48.7       80.7       6/15/18
-## 9                 49.3       79.5       6/15/18
-## 10                49.6       80.7       6/15/18</code></pre>
+## 5                 53.1       81.4       6/15/18
+## 6                 53.8       79.5       6/15/18
+## 7                 48.5       82.1       6/15/18
+## 8                 48.6       81.5       6/15/18
+## 9                 50.8       81.9       6/15/18
+## 10                51.9       82.0       6/15/18</code></pre>
 </div>
 <div id="how-to-name-object-variable" class="section level3">
 <h3>How to name object variable?</h3>

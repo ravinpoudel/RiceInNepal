@@ -2,15 +2,6 @@
 title: "Manipulating and analyzing data in the tidyverse, Part 1"
 ---
 
-```{r, echo=FALSE, purl=FALSE, message = FALSE}
-#source("setup.R")
-surveys <- read.csv("data/portal_data_joined.csv")
-suppressWarnings(surveys$date <- lubridate::ymd(paste(surveys$year,
-                                                      surveys$month,
-                                                      surveys$day,
-                                                      sep = "-")))
-```
-
 
 <div class = "blue">
 
@@ -77,10 +68,14 @@ To learn more about **`dplyr`** and **`tidyr`** after the workshop, you may want
 We'll read in our data using the `read_csv()` function, from the tidyverse package **`readr`**, instead of `read.csv()`, the base function for reading in data. The data we are going to be using today should already be in your R_DAVIS_2022 project in the folder `data`. 
 
 ```{r,results = 'hide', purl = FALSE}
-surveys <- read_csv("data/portal_data_joined.csv")
+yield_df <- read.csv("input_data/tomato_grafting_yield_spad.csv", header = TRUE)
 
 ## inspect the data
-str(surveys)
+str(yield_df)
+
+
+# head of the data
+head(yield_df)
 ```
 
 Notice that the class of the data is now `tbl_df`
@@ -100,42 +95,10 @@ data frame, use `select()`. The first argument to this function is the data
 frame (`surveys`), and the subsequent arguments are the **columns** to keep.
 
 ```{r, results = 'hide', purl = FALSE}
-select(surveys, plot_id, species_id, weight)
+head(select(yield_df, plantID, sampling_date))
 ```
-
-To choose **rows** based on a specific criteria, use `filter()`:
-
-```{r, purl = FALSE}
-filter(surveys, year == 1995)
-```
-
-`select` is used for **rows** and `filter` is used for **columns**.
-
-## Pipes
-
-What if you want to select and filter at the same time? There are three
-ways to do this: use intermediate steps, nested functions, or pipes.
-
-With intermediate steps, you create a temporary data frame and use
-that as input to the next function, like this:
-
-```{r, purl = FALSE}
-surveys2 <- filter(surveys, weight < 5)
-surveys_sml <- select(surveys2, species_id, sex, weight)
-```
-
-This is readable, but can clutter up your workspace with lots of objects that you have to name individually. With multiple steps, that can be hard to keep track of.
-
-You can also nest functions (i.e. one function inside of another), like this:
-
-```{r, purl = FALSE}
-surveys_sml <- select(filter(surveys, weight < 5), species_id, sex, weight)
-```
-
-This is handy, but can be difficult to read if too many functions are nested, as
-R evaluates the expression from the inside out (in this case, filtering, then selecting).
-
-The last option is **`pipes`**. Pipes let you take
+We can also use pipe function to make it more clear. 
+Pipes let you take
 the output of one function and send it directly to the next, which is useful
 when you need to do many things to the same dataset.  Pipes in R look like
 `%>%` and are made available via the **`magrittr`** package, installed automatically
@@ -143,23 +106,46 @@ with **`dplyr`**. If you use RStudio, you can type the pipe with <kbd>Ctrl</kbd>
 + <kbd>Shift</kbd> + <kbd>M</kbd> if you have a PC or <kbd>Cmd</kbd> + 
 <kbd>Shift</kbd> + <kbd>M</kbd> if you have a Mac.
 
-```{r, purl = FALSE}
-surveys %>%
-  filter(weight < 5) %>%
-  select(species_id, sex, weight)
+```{r}
+library(tidyverse)
+yield_df %>% select(plantID, sampling_date) %>%
+  head()
 ```
 
-In the above code, we use the pipe to send the `surveys` dataset first through
-`filter()` to keep rows where `weight` is less than 5, then through `select()`
-to keep only the `species_id`, `sex`, and `weight` columns. Since `%>%` takes
+
+To choose **rows** based on a specific criteria, use `filter()`:
+
+```{r, purl = FALSE}
+yield_df %>% filter(sampling_date=="6/15/18") %>%
+  head()
+```
+
+`select` is used for **rows** and `filter` is used for **columns**.
+
+
+What if you want to select and filter at the same time? 
+Let say we want to select select plantID, sampling date, and filter marketable yield greater than 50.
+
+
+
+
+```{r, purl = FALSE}
+yield_df %>% 
+  select(plantID, marketable_yield_kg, sampling_date) %>%
+  filter(marketable_yield_kg > 50) %>%
+  head()
+```
+
+In the above code, we use the pipe to send the `yield_df` dataset first through
+`select()` to select the three columns of interest, then we use `filter()` to filter out rows that is greater tan 50. Since `%>%` takes
 the object on its left and passes it as the first argument to the function on
 its right, we don't need to explicitly include the data frame as an argument
 to the `filter()` and `select()` functions any more.
 
 Some may find it helpful to read the pipe like the word "then". For instance,
-in the above example, we took the data frame `surveys`, *then* we `filter`ed
-for rows with `weight < 5`, *then* we `select`ed columns `species_id`, `sex`,
-and `weight`. The **`dplyr`** functions by themselves are somewhat simple,
+in the above example, we took the data frame `yield_df`, *then* we `filter`ed
+for rows with `marketable_yield_kg > 50`, *then* we `select`ed columns `plantID`, `marketable_yield_kg`,
+and `sampling_date`. The **`dplyr`** functions by themselves are somewhat simple,
 but by combining them into linear workflows with the pipe, we can accomplish
 more complex manipulations of data frames.
 
@@ -167,26 +153,36 @@ If we want to create a new object with this smaller version of the data, we
 can assign it a new name:
 
 ```{r, purl = FALSE}
-surveys_sml <- surveys %>%
-  filter(weight < 5) %>%
-  select(species_id, sex, weight)
+yield_g_50 <- yield_df %>% 
+  select(plantID, marketable_yield_kg, sampling_date) %>%
+  filter(marketable_yield_kg > 50)
 
-surveys_sml
+
+head(yield_g_50)
 ```
 
 Note that the final data frame is the leftmost part of this expression.
 
 <div class = "blue">
 ### Challenge 
-Using pipes, subset the `surveys` data to include individuals collected before
-1995 and retain only the columns `year`, `sex`, and `weight`. Name this dataframe `surveys_challenge`
+Can you selec the samples with marketable_yield greater than 50 for the sampled collected in june but not july? 
 
 <details>
 <summary>ANSWER</summary>
 ```{r, eval=FALSE, purl=FALSE}
-surveys_challenge <- surveys %>%
-    filter(year < 1995) %>%
-    select(year, sex, weight)
+
+yield_g_50_june <- yield_df %>% 
+  select(plantID, marketable_yield_kg, sampling_date) %>%
+  filter(marketable_yield_kg > 50 & sampling_date=="6/15/18") %>%
+  head()
+
+# what about negative selection
+
+
+yield_g_50_m2 <- yield_df %>% 
+  select(plantID, marketable_yield_kg, sampling_date) %>%
+  filter(marketable_yield_kg > 50 & sampling_date!="july-15-2018") %>%
+  head()
 ```
 </details>
 </div>
@@ -201,16 +197,19 @@ columns. For this we'll use `mutate()`.
 To create a new column of weight in kg:
 
 ```{r, purl = FALSE}
-surveys %>%
-  mutate(weight_kg = weight / 1000)
+yield_df %>%
+  mutate(marketable_yield_gram = marketable_yield_kg * 1000) %>%
+  head()
 ```
 
 You can also create a second new column based on the first new column within the same call of `mutate()`:
 
 ```{r, purl = FALSE}
-surveys %>%
-  mutate(weight_kg = weight / 1000,
-         weight_kg2 = weight_kg * 2)
+
+yield_df %>%
+  mutate(marketable_yield_gram = marketable_yield_kg * 1000, 
+         marketable_yield_lbs = marketable_yield_kg * 2.2) %>%
+  head()
 ```
 
 If this runs off your screen and you just want to see the first few rows, you
@@ -218,18 +217,28 @@ can use a pipe to view the `head()` of the data. (Pipes work with non-**`dplyr`*
 functions, too, as long as the **`dplyr`** or `magrittr` package is loaded).
 
 ```{r, purl = FALSE}
-surveys %>%
-  mutate(weight_kg = weight / 1000) %>%
+
+yield_df %>%
+  mutate(marketable_yield_gram = marketable_yield_kg * 1000, 
+         marketable_yield_lbs = marketable_yield_kg * 2.2) %>%
   head()
 ```
+How to deal with NA in data?
+Although the example data set that we are working here doesnot have NA. Lets  modify the dataframe and work with it. For now you can just run the following code.
+```{r}
+yield_wit_NA_df <- yield_df %>%
+  mutate(raw_yield = ifelse(marketable_yield_kg < 20, NA, marketable_yield_kg)) %>%
+  head()
+```
+
 
 The first few rows of the output are full of `NA`s, so if we wanted to remove
 those we could insert a `filter()` in the chain:
 
 ```{r, purl = FALSE}
-surveys %>%
-  filter(!is.na(weight)) %>%
-  mutate(weight_kg = weight / 1000) %>%
+yield_wit_NA_df %>%
+  filter(!is.na(raw_yield)) %>%
+  mutate(marketable_yield_gram = marketable_yield_kg * 1000) %>%
   head()
 ```
 
@@ -239,22 +248,23 @@ symbol negates the result, so we're asking for every row where weight *is not* a
 <div class = "blue">
 ### Challenge
 
-Create a new data frame from the `surveys` data that meets the following
-criteria: contains only the `species_id` column and a new column called
-`hindfoot_half` containing values that are half the `hindfoot_length` values.
-In this `hindfoot_half` column, there are no `NA`s and all values are less
-than 30. Name this data frame `surveys_hindfoot_half`.
+Create a new data frame from the `yield_wit_NA_df` data that meets the following
+criteria: contains only the `plantID`, `sampling_date` columns, and a new column called
+`marketable_yield_lbs` containing values of marketable yield in pound (lbs). Note: 1kg ~ 2.2lbs
+In this `marketable_yield_lbs` column, there are no `NA`s and all values are less
+than 100lbs and belong to july sampling. Name this data frame `yield_july_lbs_df`.
 
 **Hint**: think about how the commands should be ordered to produce this data frame!
 
 <details>
 <summary>ANSWER</summary>
 ```{r, eval=FALSE, purl=FALSE}
-surveys_hindfoot_half <- surveys %>%
-    filter(!is.na(hindfoot_length)) %>%
-    mutate(hindfoot_half = hindfoot_length / 2) %>%
-    filter(hindfoot_half < 30) %>%
-    select(species_id, hindfoot_half)
+yield_july_lbs_df <- yield_wit_NA_df %>%
+    filter(!is.na(raw_yield)) %>%
+    filter(sampling_date=="july-15-2018") %>%
+    mutate(marketable_yield_lbs = marketable_yield_kg * 2.2) %>%
+    filter(marketable_yield_lbs > 100 ) %>%
+    select(plantID, sampling_date, marketable_yield_lbs)
 ```
 </details>
 </div>
@@ -273,87 +283,84 @@ the column names that contain the **categorical** variables for which you want
 to calculate the summary statistics. So to compute the mean `weight` by sex:
 
 ```{r, purl = FALSE}
-surveys %>%
-  group_by(sex) %>%
-  summarize(mean_weight = mean(weight, na.rm = TRUE))
+yield_df %>%
+  group_by(sampling_date) %>%
+  summarize(mean_weight = mean(marketable_yield_kg, na.rm = TRUE))
 ```
 
 You may also have noticed that the output from these calls doesn't run off the
 screen anymore. It's one of the advantages of `tbl_df` over data frame.
 
+## Join
+Often we have multiple table to work with, and in dplyr we can combine different related table using joins. 
+Lets bring in our metadata file,  join with the yiled data. This will allow us to answer more interesting meaningful question regarding tomato yield across various rootstocks that we studied in this work.
+
+```{r}
+meta_df <- read.csv("input_data/tomato_grafting_metadata.csv", header = TRUE)
+str(meta_df)
+
+# merge metadata with yield data
+yield_with_meata_df <- merge(yield_df, meta_df, by="plantID")
+
+head(yield_with_meata_df)
+```
+
+ADD MERGE AND JOINS PICTURE HERE!!!
+
+
 You can also group by multiple columns:
 
 ```{r, purl = FALSE}
-surveys %>%
-  group_by(sex, species_id) %>%
-  summarize(mean_weight = mean(weight, na.rm = TRUE))
+
+yield_with_meata_df %>%
+  group_by(rootstock, sampling_date) %>%
+  summarize(mean_weight = mean(marketable_yield_kg, na.rm = TRUE))
 ```
 
-When grouping both by `sex` and `species_id`, the first rows are for individuals
-that escaped before their sex could be determined and weighted. You may notice
-that the last column does not contain `NA` but `NaN` (which refers to "Not a
-Number"). To avoid this, we can remove the missing values for weight before we
-attempt to calculate the summary statistics on weight. Because the missing
-values are removed first, we can omit `na.rm = TRUE` when computing the mean:
-
-```{r, purl = FALSE}
-surveys %>%
-  filter(!is.na(weight)) %>%
-  group_by(sex, species_id) %>%
-  summarize(mean_weight = mean(weight))
-```
-
-Here, again, the output from these calls doesn't run off the screen
-anymore. If you want to display more data, you can use the `print()` function
-at the end of your chain with the argument `n` specifying the number of rows to
-display:
-
-```{r, purl = FALSE}
-surveys %>%
-  filter(!is.na(weight)) %>%
-  group_by(sex, species_id) %>%
-  summarize(mean_weight = mean(weight)) %>%
-  print(n = 15)
-```
+Here we are getting average marketable_yield_kg by rootstocks and two sampling dates.
 
 Once the data are grouped, you can also summarize multiple variables at the same
 time (and not necessarily on the same variable). For instance, we could add a
-column indicating the minimum weight for each species for each sex:
+column indicating the mean spad for each rootstock:
 
 ```{r, purl = FALSE}
-surveys %>%
-  filter(!is.na(weight)) %>%
-  group_by(sex, species_id) %>%
-  summarize(mean_weight = mean(weight),
-            min_weight = min(weight))
+yield_with_meata_df %>%
+  group_by(rootstock) %>%
+  summarize(mean_weight = mean(marketable_yield_kg),
+            mean_spad = mean(spad_value))
 ```
+
+
 
 <div class = "blue">
 ### Challenge
 
-1. What was the weight of the heaviest animal measured in each year? Return a table with three columns: year, weight of the heaviest animal in grams, and weight in kilograms, arranged (`arrange()`) in descending order, from heaviest to lightest.  (This table should have 26 rows, one for each year)  
-2. Try out a new function, `count()`. Group the data by `sex` and pipe the grouped data into the `count()` function. How could you get the same result
+1. Find  maximum yiled by rootstocks in each sampling date Arrange the table by smapling date by in descending date, i.e july first, then june. 
+
+2. Try out a new function, `count()`. Group the data by `rootstock` and pipe the grouped data into the `count()` function. How could you get the same result
 using `group_by()` and `summarize()`? Hint: see `?n`.
+
+2. Are the number of sample per rootstocks same for june and july?
 
 <details>
 <summary>ANSWER</summary>
 ```{r, purl=FALSE}
 ## Answer 1
-surveys %>%
-    filter(!is.na(weight)) %>%
-    group_by(year) %>%
-    summarize(max_weight_g = max(weight)) %>% 
-    mutate(max_weight_kg = max_weight_g/1000) %>% 
-    arrange()
+yield_with_meata_df %>%
+  group_by(rootstock, sampling_date) %>%
+  summarize(max_yiled = max(marketable_yield_kg)) %>%
+  arrange(desc(sampling_date))
 
 ## Answer 2
-surveys %>%
-  group_by(sex) %>%
+yield_with_meata_df %>%
+  group_by(rootstock) %>%
   count()
 
-surveys %>%
-  group_by(sex) %>%
-  summarize(n = n())
+## Answer 3
+yield_with_meata_df %>%
+  group_by(rootstock, sampling_date) %>%
+  count()
+
 ```
 </details>
 </div>

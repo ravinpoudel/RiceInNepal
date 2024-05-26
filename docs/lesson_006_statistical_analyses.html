@@ -382,30 +382,7 @@ div.tocify {
     <li>
       <a href="lesson_006_statistical_analyses.html">Statistical Analyses</a>
     </li>
-    <li>
-      <a href="lesson_12_lubridate.html">Date-times with lubridate</a>
-    </li>
-    <li>
-      <a href="lesson_13_functions.html">Writing functions</a>
-    </li>
-    <li>
-      <a href="lesson_14_iteration.html">Iteration</a>
-    </li>
   </ul>
-</li>
-<li>
-  <a href="assignments.html">
-    <span class="fa fa-paperclip fa-1x"></span>
-     
-    Challenges
-  </a>
-</li>
-<li>
-  <a href="resources.html">
-    <span class="fa fa-list"></span>
-     
-    Resources
-  </a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -441,12 +418,311 @@ div.tocify {
 
 <h1 class="title toc-ignore">Statistical Analyses</h1>
 <h4 class="author">Author: Ravin Poudel</h4>
-<h4 class="date">Last update: 04 April, 2024</h4>
+<h4 class="date">Last update: 26 May, 2024</h4>
 
 </div>
 
 
+<div id="descriptive-and-inferential-statistics" class="section level1">
+<h1>Descriptive and Inferential Statistics</h1>
+<p>We will introduce the concepts of <em>descriptive</em> and
+<em>inferential statistic</em>s, and briefly discuss a few most basic
+ways of getting an overall high-level view at the data at hand
+(descriptive approach). Towards this end, we will also introduce a few
+additional R commands and useful plots.</p>
+<p>Statistics is about detecting trends, dependencies and features in
+the data in the presence of random noise and uncertainty. Statistical
+approaches to data analysis can be roughly categorized into descriptive
+and inferential, although the boundary is somewhat blurred and one
+rarely goes without the other. It is still useful to realize that in
+different situations we might be at least leaning towards one or the
+other end depending on the stated goal.</p>
+<p><strong>Descriptive Statistics</strong> Methods for organizing and
+summarizing data and information – E.g. “where is the center and what is
+the spread of measurements forapples and oranges in this sample?” -
+Inferential Statistics – Drawing conclusions about a population based on
+information obtained from a limited sample drawn from the population and
+assessing the reliability of these conclusions. – E.g. “are apples same
+as oranges?” Or, rather, “given the differences between measurements for
+apples and oranges obtained from a limited sample, how likely it is that
+apples and oranges in general are/are not indeed different?”</p>
+<p><strong>Inferential statistics</strong> uses probability theory to
+make generalizing statements based on the results of descriptive
+analysis and R has numerous methods implementing most conventional (as
+well as more state-of-art) approaches.</p>
+<div id="data-display-and-characterization" class="section level2">
+<h2>Data Display and Characterization</h2>
+<pre class="r"><code>library(dplyr)
+meta_df &lt;- read.csv(&quot;input_data/tomato_grafting_metadata.csv&quot;, header = TRUE)
+yield_df &lt;- read.csv(&quot;input_data/tomato_grafting_yield_spad.csv&quot;, header = TRUE)
 
+# merge metadata with yield data
+yield_with_meata_df &lt;- merge(yield_df, meta_df, by=&quot;plantID&quot;)
+
+pie(table(yield_with_meata_df$rootstock))</code></pre>
+<p><img src="lesson_006_statistical_analyses_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<pre class="r"><code>pie(table(yield_with_meata_df$sampling_date))</code></pre>
+<p><img src="lesson_006_statistical_analyses_files/figure-html/unnamed-chunk-1-2.png" width="672" /></p>
+<pre class="r"><code>hist(yield_with_meata_df$spad_value)</code></pre>
+<p><img src="lesson_006_statistical_analyses_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<pre class="r"><code>hist(yield_with_meata_df$marketable_yield_kg)</code></pre>
+<p><img src="lesson_006_statistical_analyses_files/figure-html/unnamed-chunk-2-2.png" width="672" /></p>
+<pre class="r"><code>plot(yield_with_meata_df$marketable_yield_kg,type=&quot;p&quot;,main=&quot;marketable_yield_kg&quot;,ylab=&quot;Yiled ~ Kg&quot;)</code></pre>
+<p><img src="lesson_006_statistical_analyses_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<pre class="r"><code>plot(yield_with_meata_df$spad_value, type =&quot;p&quot;,main=&quot;SPAD&quot;,ylab=&quot;SPAD&quot;)</code></pre>
+<p><img src="lesson_006_statistical_analyses_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
+<p><strong>Mean</strong></p>
+<pre class="r"><code>mean(yield_with_meata_df$marketable_yield_kg);</code></pre>
+<pre><code>## [1] 29.25562</code></pre>
+<p><strong>Median</strong></p>
+<pre class="r"><code>median(yield_with_meata_df$marketable_yield_kg)</code></pre>
+<pre><code>## [1] 24.65</code></pre>
+<p><strong>SD</strong></p>
+<pre class="r"><code>sd(yield_with_meata_df$marketable_yield_kg, na.rm = TRUE) </code></pre>
+<pre><code>## [1] 12.35358</code></pre>
+<p><strong>MAD</strong></p>
+<pre class="r"><code>mad(yield_with_meata_df$marketable_yield_kg, na.rm = TRUE) </code></pre>
+<pre><code>## [1] 6.22692</code></pre>
+<p>Note that sd() and mad() (like many other functions) have optional
+parameter na.rm; when it set to T it instructs the function to discard
+all NA’s from the input vector and apply the computations to the
+remaining data.</p>
+<p>Other useful characteristics are:</p>
+<p><strong>Range</strong> is simply the min-to-max range of all observed
+values in the data.</p>
+<pre class="r"><code>range(yield_with_meata_df$marketable_yield_kg,na.rm=T) # range of all observed values, min to max</code></pre>
+<pre><code>## [1] 10.5 55.1</code></pre>
+<p><strong>Interquartile range(IQR)</strong> is yet another robust
+characteristic of the data defined similarly to a median. Namely, just
+like the median is the midpoint of the data, we can also define a lower
+quartile (Q1) as a value such that 25% of the observed data values are
+below Q1. Similarly, the upper quartile (Q3) is such a value that only
+25% of the observed values are above (Q3), and the rest is below Q3.
+Interquartile distance is then defined as <code>IQR=Q3-Q1</code>.</p>
+<pre class="r"><code>IQR(yield_with_meata_df$marketable_yield_kg,na.rm=T) # interquartile distance</code></pre>
+<pre><code>## [1] 14.5</code></pre>
+<p><strong>Box Plot fivenum</strong></p>
+<p>To conclude this section, let us examine another extremely useful
+visualization of the distribution of the data values, a box-and-whisker
+plot (or simply a “boxplot”). Boxplot is based on the “5-number” summary
+of the observed data: (Min, lower quartile, median, upper quartile,
+max).</p>
+<pre class="r"><code>fivenum(yield_with_meata_df$marketable_yield_kg, na.rm = TRUE) </code></pre>
+<pre><code>## [1] 10.50 21.15 24.65 37.95 55.10</code></pre>
+<p>Here, fivenum provides:</p>
+<ul>
+<li>First value ~ Minimum : 17.70</li>
+<li>Second value ~ Q1 : 22.25</li>
+<li>Third value ~ Q2/median : 32.05</li>
+<li>Fourth value ~ Q3 : 45.05</li>
+<li>Fifth value ~ Maximum : 51.80</li>
+</ul>
+<p>In the boxplot, the box is drawn from lower to upper quartile
+(i.e. the height of the box is equal to IQR, 50% of the observed values
+are within the box), the median of the data is marked with a line inside
+the box, and the whiskers show the tails of the distribution of the
+data: lower whisker is drawn to Lower quartile – 1.5 IQR or to the Min,
+whichever is greater, and the upper whisker extends to Upper quartile +
+1.5 IQR or to the Max, whichever is less. Data points that fall outside
+of the whiskers (i.e. those that are located far from the center and are
+likely outliers and/or very long tails of the distribution) are drawn,
+if present, as individual dots. The commands and the resulting plots are
+shown below.</p>
+<div
+style="display: flex; justify-content: center; align-items: center; height: 30vh;">
+<p><img src="img/IQR.png" width="500" /></p>
+</div>
+<pre class="r"><code># Create a boxplot for the &#39;marketable_yield_kg&#39; column in &#39;yield_with_meata_df&#39; dataframe
+boxplot(yield_with_meata_df$marketable_yield_kg, na.rm = TRUE, horizontal = TRUE)</code></pre>
+<p><img src="lesson_006_statistical_analyses_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+</div>
+</div>
+<div id="statistical-analysis" class="section level1">
+<h1>Statistical Analysis</h1>
+<p><strong>ANOVA (Analysis of Variance Model)</strong> is often used
+when there are more than two groups to compare, and it helps determine
+whether there are statistically significant differences among the means
+of these groups.</p>
+<p><strong><em>Which rootstock shows better results? Is there a
+treatment effect in the mean yield across the
+rootstocks?</em></strong></p>
+<pre class="r"><code># how to run the ANOCA in R
+help(aov)</code></pre>
+<p>The ANOVA test will evaluate whether there are significant
+differences in the mean <code>marketable_yield_kg</code> across
+different levels of the <code>rootstock</code> variable. If the p-value
+associated with the <code>rootstock</code> variable is below a certain
+significance level (e.g., 0.05), we would reject the null hypothesis,
+concluding that there are significant differences in
+<code>marketable_yield_kg</code> between at least two levels of the
+<code>rootstock</code> variable.</p>
+<p>In the code
+<code>aov(formula = marketable_yield_kg ~ rootstock, data = yield_with_meata_df)</code>,
+we are conducting an Analysis of Variance (ANOVA) to explore the
+relationship between the <code>marketable_yield_kg</code> variable
+(dependent variable) and the <code>rootstock</code> variable
+(independent variable) using the data stored in the
+<code>yield_with_meata_df</code> dataframe.</p>
+<p>Let’s break down the components:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong><code>aov()</code></strong>: This function in R stands
+for “Analysis of Variance.” It is used to perform ANOVA, which is a
+statistical method used to analyze the differences among group means in
+a sample.</p></li>
+<li><p><strong><code>formula = marketable_yield_kg ~ rootstock</code></strong>:
+This part defines the formula for the ANOVA. It specifies that
+<code>marketable_yield_kg</code> is the dependent variable, and
+<code>rootstock</code> is the independent variable. The <code>~</code>
+symbol separates the dependent variable from the independent
+variable.</p></li>
+<li><p><strong><code>data = yield_with_meata_df</code></strong>: This
+specifies the dataframe <code>yield_with_meata_df</code> from which the
+variables are taken. It tells R where to find the variables specified in
+the formula.</p></li>
+</ol>
+<pre class="r"><code>m1_yield_avo &lt;- aov(formula=marketable_yield_kg ~ rootstock, data=yield_with_meata_df) </code></pre>
+<p>Let’s check the ‘Value’ section of the help page so we know what does
+it return. It returns an object, which can further be explored with
+print() and summary(). Let’s assign it to an object so that we can use
+print() and summary() on it.</p>
+<pre class="r"><code>summary(m1_yield_avo)</code></pre>
+<pre><code>##              Df Sum Sq Mean Sq F value Pr(&gt;F)    
+## rootstock     3  22063    7354     521 &lt;2e-16 ***
+## Residuals   156   2202      14                   
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div id="what-is-in-the-summary-of-the-model" class="section level3">
+<h3>What is in the summary of the model?</h3>
+<p>The ANOVA results indicate the statistical significance of the
+<code>rootstock</code> variable in explaining the variation in the
+<code>marketable_yield_kg</code> variable. Let’s interpret the key
+components:</p>
+<ul>
+<li><p><strong>Df (Degrees of Freedom)</strong>: This column displays
+the degrees of freedom associated with the <code>rootstock</code>
+variable and the residuals. In this case, there are 3 degrees of freedom
+for <code>rootstock</code> and 156 degrees of freedom for
+residuals.</p></li>
+<li><p><strong>Sum Sq (Sum of Squares)</strong>: This column shows the
+sum of squared deviations from the mean for <code>rootstock</code> and
+residuals. For <code>rootstock</code>, the sum of squares is 23478,
+while for residuals, it is 138.</p></li>
+<li><p><strong>Mean Sq (Mean Square)</strong>: This is the mean square,
+calculated by dividing the sum of squares by the degrees of freedom. For
+<code>rootstock</code>, it is 7826 (23478 divided by 3), while for
+residuals, it is 1 (138 divided by 156).</p></li>
+<li><p><strong>F value</strong>: This is the F-statistic, which is the
+ratio of the mean square for <code>rootstock</code> to the mean square
+for residuals. It is used to test the null hypothesis that all group
+means are equal. Here, the F value is 8826.</p></li>
+<li><p><strong>Pr(&gt;F)</strong>: This is the p-value associated with
+the F-statistic. It represents the probability of observing an
+F-statistic as extreme as, or more extreme than, the one computed from
+the sample data, assuming the null hypothesis (no effect of
+<code>rootstock</code>) is true. In this case, the p-value is less than
+2e-16 (a very small number close to zero), indicating strong evidence
+against the null hypothesis.</p></li>
+</ul>
+<p>Overall, the results suggested that the <code>rootstock</code>
+variable has a statistically significant effect on the
+<code>marketable_yield_kg</code> variable. The extremely low p-value
+indicates that the observed differences in mean
+<code>marketable_yield_kg</code> among different levels of
+<code>rootstock</code> are highly unlikely to be due to random
+chance.</p>
+<div id="which-treatments-are-different" class="section level4">
+<h4>Which treatments are different???</h4>
+<p>Now that we know that differences exist between our treatments, how
+can we find which treatments are different? We can do this by using
+Tukey’s post-hoc test. If you scroll down the help page of aov and go
+the section ‘See Also’, you will see a function TukeyHSD. This is what
+we need.</p>
+<pre class="r"><code>TukeyHSD(m1_yield_avo) </code></pre>
+<pre><code>##   Tukey multiple comparisons of means
+##     95% family-wise confidence level
+## 
+## Fit: aov(formula = marketable_yield_kg ~ rootstock, data = yield_with_meata_df)
+## 
+## $rootstock
+##                          diff        lwr          upr     p adj
+## Nongraft-Maxifort    -26.9325 -29.114179 -24.75082061 0.0000000
+## RST-04-106-Maxifort  -25.9900 -28.171679 -23.80832061 0.0000000
+## Selfgraft-Maxifort   -28.2450 -30.426679 -26.06332061 0.0000000
+## RST-04-106-Nongraft    0.9425  -1.239179   3.12417939 0.6766024
+## Selfgraft-Nongraft    -1.3125  -3.494179   0.86917939 0.4031948
+## Selfgraft-RST-04-106  -2.2550  -4.436679  -0.07332061 0.0398197</code></pre>
+<p>After you conduct an ANOVA and find a significant difference between
+the groups, Tukey’s HSD test allows you to determine which specific
+pairs of group means are significantly different from each other. It
+calculates confidence intervals for all pairwise differences between
+group means and then compares these intervals to determine which
+differences are statistically significant.</p>
+</div>
+</div>
+<div id="challenge" class="section level3 blue">
+<h3>Challenge</h3>
+Can you run the ANOVA test using SPAD value as response? Do we see the
+similar pattern?
+<details>
+<summary>
+ANSWER
+</summary>
+<pre class="r"><code># build the anova model
+m2_spad_avo &lt;- aov(formula=spad_value ~ rootstock, data=yield_with_meata_df) 
+
+# get the summary of the model
+summary(m2_spad_avo)
+
+
+# TukeyHSD
+TukeyHSD(m2_spad_avo) </code></pre>
+</details>
+</div>
+<p><br></p>
+<p><strong>How to get the figure with comparing means with statistical
+significane added?</strong></p>
+<p>Let get the boxplot comparing means by rootstocks, then add the level
+of signifance to the same plot. For doing this we will be ggplot2 and
+additional R package <code>ggpubr</code>:</p>
+<pre class="r"><code>library(ggplot2)
+library(ggpubr)
+# change the order of the barplor
+yield_with_meata_df$rootstock &lt;- factor(yield_with_meata_df$rootstock, levels = c(&quot;Nongraft&quot;,&quot;Selfgraft&quot;,&quot;RST-04-106&quot;,&quot;Maxifort&quot;))
+
+# get the plot
+gg_yiled_boxplot &lt;- yield_with_meata_df %&gt;% 
+   ggplot(mapping = aes(x = rootstock, y = marketable_yield_kg)) +
+   geom_jitter(alpha = 0.8) +
+   geom_boxplot() +
+   labs(x=&quot;Rootstocks&quot;, y=&quot;Marketable Yield (Kg)&quot;) +
+   theme_classic() +
+     theme(panel.grid = element_blank(),
+           axis.line = element_line(linewidth = 1),
+           axis.title = element_text(size = 20, face = &quot;bold&quot;),
+           axis.text.x = element_text(size = 14, angle = 45, vjust = 1, hjust = 1),
+           axis.text.y = element_text(size = 14))
+
+
+# add stat comparision part
+gg_yiled_boxplot + stat_compare_means(method = &quot;anova&quot;, label.y = 50)</code></pre>
+<p><img src="lesson_006_statistical_analyses_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<pre class="r"><code>## Define the pairwise comparison - one that is more meaningful.
+
+my_comparisons &lt;- list(
+c(&quot;Nongraft&quot;, &quot;Maxifort&quot;),
+c(&quot;Selfgraft&quot;, &quot;Maxifort&quot;),
+c(&quot;RST-04-106&quot;, &quot;Maxifort&quot;),
+c(&quot;Nongraft&quot;, &quot;Selfgraft&quot;),
+c(&quot;Nongraft&quot;, &quot;RST-04-106&quot;),
+c(&quot;Selfgraft&quot;, &quot;RST-04-106&quot;)) 
+
+## add the compariopns to the the plot
+gg_yiled_boxplot_with_pairwise_test &lt;- gg_yiled_boxplot + 
+stat_compare_means(comparisons = my_comparisons, label = &quot;p.signif&quot;,  method = &quot;t.test&quot;)
+
+gg_yiled_boxplot_with_pairwise_test</code></pre>
+<p><img src="lesson_006_statistical_analyses_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+</div>
 
 
 

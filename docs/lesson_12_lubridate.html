@@ -381,30 +381,7 @@ div.tocify {
     <li>
       <a href="lesson_006_statistical_analyses.html">Statistical Analyses</a>
     </li>
-    <li>
-      <a href="lesson_12_lubridate.html">Date-times with lubridate</a>
-    </li>
-    <li>
-      <a href="lesson_13_functions.html">Writing functions</a>
-    </li>
-    <li>
-      <a href="lesson_14_iteration.html">Iteration</a>
-    </li>
   </ul>
-</li>
-<li>
-  <a href="assignments.html">
-    <span class="fa fa-paperclip fa-1x"></span>
-     
-    Challenges
-  </a>
-</li>
-<li>
-  <a href="resources.html">
-    <span class="fa fa-list"></span>
-     
-    Resources
-  </a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -549,10 +526,10 @@ ANSWER
 <code>POSIXct</code>.</p>
 <pre class="r"><code>tm1 &lt;- as.POSIXct(&quot;2016-07-24 23:55:26&quot;)
 tm1</code></pre>
-<pre><code>## [1] &quot;2016-07-24 23:55:26 EDT&quot;</code></pre>
+<pre><code>## [1] &quot;2016-07-24 23:55:26 +0545&quot;</code></pre>
 <pre class="r"><code>tm2 &lt;- as.POSIXct(&quot;25072016 08:32:07&quot;, format = &quot;%d%m%Y %H:%M:%S&quot;)
 tm2</code></pre>
-<pre><code>## [1] &quot;2016-07-25 08:32:07 EDT&quot;</code></pre>
+<pre><code>## [1] &quot;2016-07-25 08:32:07 +0545&quot;</code></pre>
 <pre class="r"><code>#Notice how POSIXct automatically uses the timezone your computer is set to. What if we collected this data in a different timezone?
 
 # specify the time zone:
