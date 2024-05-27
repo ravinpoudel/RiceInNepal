@@ -28,6 +28,10 @@ navbar:
       href: lesson_09_data_viz_pt1.html
     - text: Statistical Analyses
       href: lesson_006_statistical_analyses.html
+  - text: Program Participants
+    href: participants.html
+
+      
   right:
   - text: Contact
     icon: fa-hand-spock-o

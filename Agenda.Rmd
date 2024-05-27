@@ -1,6 +1,5 @@
 ---
-title: "Rice in Nepal"
-subtitle: "Workshop Agenda"
+title: "Program Schedule"
 output:
   html_document:
     toc: true
@@ -22,67 +21,129 @@ suppressPackageStartupMessages({
 ```
 
 
-```{r,echo=FALSE}
-# Create a sample data frame for the meeting agenda
-agenda_morning <- data.frame(
-  Agenda_Item = c("Introduction", "Lesson", "Lesson", "Break", "Lesson", "Lesson","Break"),
-  Time = c("8:00 AM - 8:15 AM", 
-           "8:15 AM - 9:00 AM", 
-           "9:00 AM - 9:45 AM",
-           "9:45 AM - 10:15 AM", 
-           "10:15 AM - 11:00 AM",
-           "11:00 AM - 12:00",
-           "12:00 - 1:00 PM"),
-  Notes = c(
-    "Welcome and introductions",
-    "[Intro to programming, R, & RStudio](file:///Users/ravinpoudel/Personal/RiceHealthinNepal2024/RiceInNepal/docs/lesson_01_intro_r_rstudio.html)",
-    "[Project Management](file:///Users/ravinpoudel/Personal/RiceHealthinNepal2024/RiceInNepal/docs/lesson_01_intro_r_rstudio.html)",
-    "Coffee Break",
-    "[Spreadsheets & data organization](file:///Users/ravinpoudel/Personal/RiceHealthinNepal2024/RiceInNepal/docs/lesson_01_intro_r_rstudio.html)",
-    "[Variables in R](file:///Users/ravinpoudel/Personal/RiceHealthinNepal2024/RiceInNepal/docs/lesson_01_intro_r_rstudio.html)",
-    "Lunch Break"
-  )
+**Day 1: EKE workshop schedule May 29, 2024**
+
+***Venue: National Plant Pathology Research Centre, Khumaltar Lalitpur***
+
+```{r}
+library(knitr)
+
+day1_schedule <- data.frame(
+  Time = c("9:00", "9:30-9:45", "9:45-10:00", "10:00-11:00", "11:00-12:00", 
+           "12:00-1:00", "1:00-1:30", "1:30-2:30", "2:00-3:00", "3:00-3:15", 
+           "3:15-4:00", "4:00-5:00", "5:15"),
+  Topic = c("Tea snacks", "Introductions of participants", 
+            "Introduction to expert knowledge elicitation", 
+            "First set of questions: individual answers", 
+            "The first set of questions: small group answers", 
+            "The second set of questions: individual answers", 
+            "Snacks/break", "BIONET and Patho Tracer", 
+            "The second set of questions: small group answers", 
+            "Tea snacks", "The third set of questions: individual answers", 
+            "The third set of questions: small group answers", 
+            "Closing remarks and feedback"),
+  Leader = c("", "Prem Raj Bhatt", "Karen Garrett & Ravin Poudel", 
+             "Karen Garrett & Ravin Poudel", "Four groups", 
+             "Karen Garrett & Ravin Poudel", "", 
+             "Dr. Van Schepler Luu & Dale Pinili", "Four groups", 
+             "", "Karen Garrett & Ravin Poudel", "Four groups", 
+             "Dr. Karen Garrett & Dr. Suraj Baidhya")
 )
 
-agenda_afternoon <- data.frame(
-  Agenda_Item = c("Lesson", "Lesson", "Break", "Lesson", "Lesson"),
-  Time = c("1:00 PM - 2:00 PM", 
-           "2:00 PM - 3:00 PM", 
-           "3:00 AM - 3:30 PM",
-           "3:30 AM - 4:30 PM", 
-           "4:30 PM - 5:30 PM"),
-  Notes = c(
-    " [Data Manipulation in R - part 1](file:///Users/ravinpoudel/Personal/RiceHealthinNepal2024/RiceInNepal/docs/lesson_01_intro_r_rstudio.html)",
-    " [Data Manipulation in R - part 2](file:///Users/ravinpoudel/Personal/RiceHealthinNepal2024/RiceInNepal/docs/lesson_01_intro_r_rstudio.html)",
-    " Coffee Break",
-    " [Visualizations](file:///Users/ravinpoudel/Personal/RiceHealthinNepal2024/RiceInNepal/docs/lesson_01_intro_r_rstudio.html)",
-    " [Functions and apply method in R](file:///Users/ravinpoudel/Personal/RiceHealthinNepal2024/RiceInNepal/docs/lesson_01_intro_r_rstudio.html)"
-  )
-)
+#kable(day1_schedule, align = c("l", "l", "l"), caption = "")
 
 
-```
-
-```{r,echo=FALSE}
-
-# Combine morning and afternoon tables
-combined_agenda <- dplyr::bind_rows(
-  mutate(agenda_morning, Session = "Morning"),
-  mutate(agenda_afternoon, Session = "Afternoon")
-)
-
-# Create a new table with styling
-combined_agenda_table <- combined_agenda %>%
-  kable(caption = "", format = "html", table.attr = "style='width:50%;'") %>%
+# Create the new table with all agenda items
+d1 <- day1_schedule %>%
+  kable( align = c("l", "l", "l"), caption = "", format = "html", table.attr = "style='width:50%;'") %>%
   kable_styling(
     full_width = FALSE,
     position = "center",
     latex_options = "scale_down",
-    font_size = 20,
+    font_size = 16,
     bootstrap_options = "striped"
   ) %>%
   row_spec(0, bold = TRUE, color = "white", background = "#708090")
 
-combined_agenda_table
+d1
+```
+
+
+**Day 2: R workshop schedule May 30, 2024**
+
+***Venue: National Plant Pathology Research Centre, Khumaltar Lalitpur***
+
+```{r}
+day2_schedule <- data.frame(
+  Time = c("9:00 AM", "9:30 AM - 10:15 AM", "10:15 AM - 11:00 AM", "11:00 AM - 11:30 AM", 
+           "11:30 AM - 12:30 PM", "12:30 PM - 1:30 PM", "1:30 PM - 3:00 PM", "3:00 PM - 4:00 PM", 
+           "4:00 PM", "5:15 PM - 5:00 PM", "5:15 PM"),
+  Topic = c("Tea snacks",
+            "[Project management in R](https://ravinpoudel.github.io/RiceInNepal/lesson_000_R_Rstudio_project.html)",
+            "[Getting started with R](https://ravinpoudel.github.io/RiceInNepal/lesson_001_basic_ds_inR.html)", 
+            "[Spreadsheets and data organization](https://ravinpoudel.github.io/RiceInNepal/lesson_002_spreadsheets.html)",
+            "[Working with spreadsheet in R](https://ravinpoudel.github.io/RiceInNepal/lesson_003_working_with_spreadsheet.html)",
+            "[Data manipulation in R](https://ravinpoudel.github.io/RiceInNepal/lesson_06_data_manipulation_pt1.html)",
+            "Poster session / Snacks/break",
+            "[Data visualizations in R](https://ravinpoudel.github.io/RiceInNepal/lesson_09_data_viz_pt1.html)",
+            "Tea snacks",
+            "[Statistical analyses in R](https://ravinpoudel.github.io/RiceInNepal/lesson_006_statistical_analyses.html)",
+            "Closing remarks and feedback"),
+  Leader = c("", "Ravin Poudel", "Ravin Poudel", "Ravin Poudel", "Ravin Poudel", 
+             "Ravin Poudel", "", "Ravin Poudel", "", "Ravin Poudel", "")
+)
+
+
+#kable(day2_schedule, align = c("l", "l", "l"), caption = "Day 2 Schedule")
+
+
+
+# Create the new table with all agenda items
+d2 <- day2_schedule %>%
+  kable( align = c("l", "l", "l"), caption = "", format = "html", table.attr = "style='width:50%;'") %>%
+  kable_styling(
+    full_width = FALSE,
+    position = "center",
+    latex_options = "scale_down",
+    font_size = 16,
+    bootstrap_options = "striped"
+  ) %>%
+  row_spec(0, bold = TRUE, color = "white", background = "#708090")
+
+d2
+```
+
+
+
+**Day 3: Research Seminar Schedule, May 31, 2024**
+
+***Venue: Institute of Agriculture and Animal Science, Kirtipur***
+
+
+```{r}
+day3_schedule <- data.frame(
+  Time = c("TBD", "TBD", "TBD"),
+  Topic = c("R2M toolbox: rapid risk assessment to support mitigation of crop pathogens and pests", 
+            "Harnessing Microbiome Networks: Unveiling Potential Microbial Assemblages for Disease Management", 
+            "Panel Discussions"),
+  Leader = c("Dr. Karen Garrett", "Ravin Poudel", "Drs. Karen Garrett & Ravin Poudel")
+)
+
+#kable(day3_schedule, align = c("l", "l", "l"), caption = "Day 3 Schedule")
+
+# Create the new table with all agenda items
+d3 <- day3_schedule %>%
+  kable( align = c("l", "l", "l"), caption = "", format = "html", table.attr = "style='width:50%;'") %>%
+  kable_styling(
+    full_width = FALSE,
+    position = "center",
+    latex_options = "scale_down",
+    font_size = 16,
+    bootstrap_options = "striped"
+  ) %>%
+  row_spec(0, bold = TRUE, color = "white", background = "#708090")
+
+d3
 
 ```
+

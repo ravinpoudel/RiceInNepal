@@ -21,9 +21,9 @@ See more about the Garrett Lab at:  [website](https://www.garrettlab.com).
 
 <br>
 
-## Instructors 
+**Instructors: **
 
-**Ravin Poudel** 
+[**Ravin Poudel**](https://github.com/ravinpoudel)
 
 <i class="fa fa-envelope-square" aria-hidden="true"></i> [email](mailto:raveenpoudel@gmail.com)  
 

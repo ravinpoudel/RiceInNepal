@@ -1,0 +1,145 @@
+---
+title: "Program Participants"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+
+# Suppress package startup messages
+suppressPackageStartupMessages({
+  library(knitr)
+  library(kableExtra)
+  library(dplyr)
+
+  # Add other libraries here
+})
+
+```
+
+
+
+**Day 1: EKE workshop participants **
+
+```{r}
+library(knitr)
+
+participants <- data.frame(
+  SN = 1:27,
+  Name = c("Suraj Baidhya", "Basistha Acharya", "Ram Bahadur Khadka", "Pratiksha Sharma",
+           "Shrinkhala Manadhar", "Chetana Manandhar", "Bimala Pant", "Prakash Paudel",
+           "Subekchya Shrestha", "Krishna Dev Joshi", "Hari Datta Joshi", "Lalit Prasad Sah",
+           "Anupama Shrestha", "Pratikshya Adhikari", "Shawshank Kafle", "SQCC", "Prasant Pant",
+           "NARC", "Shree Krishna Neupane", "Bhaba Prasad Tripathi", "Ankur Paudel", "Yam Nath Paudel",
+           "Dipendra Rana", "NARC", "Sundar Shrestha", "Sukha Bdr Gurung", "Narayan Dhakal"),
+  Affiliation = c(
+    "NARC,National Plant Pathology Research Center",
+    "NARC,National Plant Pathology Research Center",
+    "NARC,National Plant Pathology Research Center",
+    "NARC,National Plant Pathology Research Center",
+    "NARC,National Plant Pathology Research Center",
+    "NARC,National Plant Pathology Research Center",
+    "NARC,National Plant Pathology Research Center",
+    "MoALD/PQPMC",
+    "PU/HICAST",
+    "Former IRRI country representative",
+    "Ilami Agro and Tech",
+    "iDE",
+    "Madan Bhandari University, Chitlang",
+    "Karma Group of Company",
+    "Agrovet/pathologist",
+    "SQCC",
+    "Nepal Plant Disease and Agro Associates Pvt. Ltd (NPDA)",
+    "NARC",
+    "NA",
+    "NA",
+    "TU",
+    "Rice Lab/Hardinath",
+    "TU, Lamjung campus",
+    "NARC",
+    "NARC/NRRP",
+    "NARC/NMRP",
+    "AFU, Tikapur"
+  ),
+  Degree_Specialization = c(
+    "M.Sc.Ag (Plant Pathology)",
+    "M.Sc.Ag (Plant Pathology)",
+    "Ph.D (Plant Pathology)",
+    "M.Sc.Ag (Plant Pathology)",
+    "M.Sc.Ag (Plant Pathology)",
+    "M.Sc.Ag (Plant Pathology)",
+    "M.Sc.Ag (Plant Pathology)",
+    "M.Sc.Ag (Plant Pathology)",
+    "Pathologist (Coordinator)",
+    "Ph.D (Plant Breeding)",
+    "Microbiologist",
+    "Entomologist",
+    "Pathologist",
+    "Pathologist (Manager)",
+    "Pathologist",
+    "Seed Expert",
+    "Pathologist",
+    "Entomologist",
+    "Pathologist",
+    "Rice Scientist",
+    "Breeder/Rice Expert",
+    "Student",
+    "Pathologist",
+    "Pathologist",
+    "Pathologist",
+    "NARC/NMRP",
+    "Pathologist"
+  ),
+  Email = c(
+    "suraj_baidya222@yahoo.co.in",
+    "basisthacharya1@gmail.com",
+    "ramkhadka.narc@gmail.com",
+    "pratikshasharmakandel@gmail.com",
+    "shrinkhala25@gmail.com",
+    "chetana.manandhar@gmail.com",
+    NA,
+    "prakashpaudel4@gmail.com / info@npponepal.gov.np",
+    "subeksha.shresthab@gmail.com",
+    "kdjoshi.np@gmail.com",
+    "haridattjoshi00@gmail.com",
+    "lpsah@ideglobal.org",
+    "anupamanp123@gmail.com / anupama.shrestha@mbust.edu.np",
+    "pratikshya@karmagroups.com",
+    "Shawshankkafle17@gmail.com",
+    "sqccnepal@gmail.com",
+    "nepalpda@gmail.com / prashantpant1234@gmail.com",
+    "ento.narc@gmail.com",
+    "shree.neupane2000@gmail.com",
+    "tripathibhabaprasad@gmail.com",
+    "ankur.iaas@gmail.com",
+    "yamnathpaudel200@gmail.com",
+    "dipendra.rana@lac.tu.edu.np",
+    "nwrp.bhairahawa@gmail.com",
+    "sundarsansar71@gmail.com / nrrpjnk@gmail.com",
+    "s.b.syangbo@gmail.com / nmrp2012@gmail.com",
+    "narayandhakal07@gmail.com"
+  )
+)
+
+
+#kable(day1_schedule, align = c("l", "l", "l"), caption = "")
+
+
+# Create the new table with all agenda items
+d1_participants <- participants %>%
+  kable( align = c("l", "l", "l"), caption = "", format = "html", table.attr = "style='width:50%;'") %>%
+  kable_styling(
+    full_width = FALSE,
+    position = "center",
+    latex_options = "scale_down",
+    font_size = 16,
+    bootstrap_options = "striped"
+  ) %>%
+  row_spec(0, bold = TRUE, color = "white", background = "#708090")
+
+d1_participants
+```

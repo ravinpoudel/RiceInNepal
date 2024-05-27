@@ -90,11 +90,11 @@ fivenum(yield_with_meata_df$marketable_yield_kg, na.rm = TRUE)
 ```
 Here, fivenum provides:
 
-   - First value ~ Minimum : 17.70
-   - Second value ~ Q1 : 22.25
-   - Third value ~  Q2/median : 32.05
-   - Fourth value ~ Q3 : 45.05
-   - Fifth value ~ Maximum : 51.80
+   - First value ~ Minimum : 10.50
+   - Second value ~ Q1 : 21.15
+   - Third value ~  Q2/median : 24.65
+   - Fourth value ~ Q3 : 37.95
+   - Fifth value ~ Maximum : 55.10
 
 
 In the boxplot, the box is drawn from lower to upper quartile (i.e. the height of the box is equal to IQR, 50% of the observed values are within the box), the median of the data is marked with a line inside the box, and the whiskers show the tails of the distribution of the data: lower whisker is drawn to Lower quartile – 1.5 IQR or to the Min, whichever is greater, and the upper whisker extends to Upper quartile + 1.5 IQR or to the Max, whichever is less. Data points that fall outside of the whiskers (i.e. those that are located far from the center and are likely outliers and/or very long tails of the distribution) are drawn, if present, as individual dots. The commands and the resulting plots are shown below.
