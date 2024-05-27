@@ -11,7 +11,7 @@
 
 
 
-<title>Manipulating and analyzing data in the tidyverse, Part 1</title>
+<title>Data manipulation in R</title>
 
 <script src="site_libs/header-attrs-2.26/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -418,8 +418,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Manipulating and analyzing data in the
-tidyverse, Part 1</h1>
+<h1 class="title toc-ignore">Data manipulation in R</h1>
 
 </div>
 
@@ -439,9 +438,8 @@ to the input of another function with the ‘pipe’ operator
 <code>%&gt;%</code>.</li>
 <li>Add new columns to a data frame that are functions of existing
 columns with <code>mutate</code>.</li>
-<li>Use the split-apply-combine concept for data analysis.</li>
 <li>Use <code>summarize</code>, <code>group_by</code>, and
-<code>tally</code> to split a data frame into groups of observations,
+<code>count</code> to split a data frame into groups of observations,
 apply a summary statistics for each group, and then combine the
 results.</li>
 </ul>
@@ -451,15 +449,15 @@ class="section level2">
 <h2>Data Manipulation using <strong><code>dplyr</code></strong> and
 <strong><code>tidyr</code></strong></h2>
 <p>Bracket subsetting is handy, but it can be cumbersome and difficult
-to read, especially for complicated operations. Enter
+to read,especially for complicated operations. Enter
 <strong><code>dplyr</code></strong>. <strong><code>dplyr</code></strong>
 is a package for making tabular data manipulation easier. It pairs
 nicely with <strong><code>tidyr</code></strong> which enables you to
 swiftly convert between different data formats for plotting and
 analysis.</p>
 <p>Packages in R are basically sets of additional functions that let you
-do more stuff. The functions we’ve been using so far, like
-<code>str()</code> or <code>data.frame()</code>, come built into R;
+do morestuff. The functions we’ve been using so far, like
+<code>str()</code> or <code>data.frame()</code>,come built into R;
 packages give you access to more of them. Before you use a package for
 the first time you need to install it on your machine, and then you
 should import it in every subsequent R session when you need it. You
@@ -471,12 +469,6 @@ analysis which work together well such as
 <strong><code>dplyr</code></strong>,
 <strong><code>ggplot2</code></strong>,
 <strong><code>tibble</code></strong>, etc.</p>
-<p>The <strong><code>tidyverse</code></strong> package tries to address
-3 major problems with some of base R functions: 1. The results from a
-base R function sometimes depend on the type of data. 2. Using R
-expressions in a non standard way, which can be confusing for new
-learners. 3. Hidden arguments, having default operations that new
-learners are not aware of.</p>
 <p>To load the package type:</p>
 <pre class="r"><code>library(&quot;tidyverse&quot;)    ## load the tidyverse packages, incl. dplyr</code></pre>
 <div id="what-are-dplyr-and-tidyr" class="section level3">
@@ -504,19 +496,9 @@ type has its own column, and rows are instead more aggregated groups -
 like plots or aquaria. Moving back and forth between these formats is
 nontrivial, and <strong><code>tidyr</code></strong> gives you tools for
 this and more sophisticated data manipulation.</p>
-<p>To learn more about <strong><code>dplyr</code></strong> and
-<strong><code>tidyr</code></strong> after the workshop, you may want to
-check out this <a
-href="https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf">handy
-data transformation with <strong><code>dplyr</code></strong>
-cheatsheet</a> and this <a
-href="https://github.com/rstudio/cheatsheets/raw/master/data-import.pdf">one
-about <strong><code>tidyr</code></strong></a>.</p>
-<p>We’ll read in our data using the <code>read_csv()</code> function,
-from the tidyverse package <strong><code>readr</code></strong>, instead
-of <code>read.csv()</code>, the base function for reading in data. The
-data we are going to be using today should already be in your
-R_DAVIS_2022 project in the folder <code>data</code>.</p>
+<p>We’ll read in our data using the <code>read.csv()</code> function.
+You should have already downloaded and organized data from the github
+repo.</p>
 <pre class="r"><code>yield_df &lt;- read.csv(&quot;input_data/tomato_grafting_yield_spad.csv&quot;, header = TRUE)
 
 ## inspect the data
@@ -822,7 +804,9 @@ head(yield_with_meata_df)</code></pre>
 <pre class="r"><code>yield_with_meata_df %&gt;%
   group_by(rootstock, sampling_date) %&gt;%
   summarize(mean_weight = mean(marketable_yield_kg, na.rm = TRUE))</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;rootstock&#39;. You can override using the
+<pre><code>## `summarise()` has grouped
+## output by &#39;rootstock&#39;. You
+## can override using the
 ## `.groups` argument.</code></pre>
 <pre><code>## # A tibble: 8 × 3
 ## # Groups:   rootstock [4]
@@ -876,7 +860,9 @@ yield_with_meata_df %&gt;%
   group_by(rootstock, sampling_date) %&gt;%
   summarize(max_yiled = max(marketable_yield_kg)) %&gt;%
   arrange(desc(sampling_date))</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;rootstock&#39;. You can override using the
+<pre><code>## `summarise()` has grouped
+## output by &#39;rootstock&#39;. You
+## can override using the
 ## `.groups` argument.</code></pre>
 <pre><code>## # A tibble: 8 × 3
 ## # Groups:   rootstock [4]
@@ -907,7 +893,8 @@ yield_with_meata_df %&gt;%
   group_by(rootstock, sampling_date) %&gt;%
   count()</code></pre>
 <pre><code>## # A tibble: 8 × 3
-## # Groups:   rootstock, sampling_date [8]
+## # Groups:   rootstock,
+## #   sampling_date [8]
 ##   rootstock  sampling_date     n
 ##   &lt;chr&gt;      &lt;chr&gt;         &lt;int&gt;
 ## 1 Maxifort   6/15/18          20

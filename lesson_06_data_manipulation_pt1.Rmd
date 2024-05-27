@@ -1,5 +1,5 @@
 ---
-title: "Manipulating and analyzing data in the tidyverse, Part 1"
+title: "Data manipulation in R"
 ---
 
 
@@ -12,30 +12,17 @@ title: "Manipulating and analyzing data in the tidyverse, Part 1"
 * Select certain rows in a data frame according to filtering conditions with the **`dplyr`** function `filter`.
 * Link the output of one **`dplyr`** function to the input of another function with the 'pipe' operator `%>%`.
 * Add new columns to a data frame that are functions of existing columns with `mutate`.
-* Use the split-apply-combine concept for data analysis.
-* Use `summarize`, `group_by`, and `tally` to split a data frame into groups of observations, apply a summary statistics for each group, and then combine the results.
+* Use `summarize`, `group_by`, and `count` to split a data frame into groups of observations, apply a summary statistics for each group, and then combine the results.
 
 </div>
 
 ## Data Manipulation using **`dplyr`** and **`tidyr`**
 
-Bracket subsetting is handy, but it can be cumbersome and difficult to read,
-especially for complicated operations. Enter **`dplyr`**. **`dplyr`** is a package for
-making tabular data manipulation easier. It pairs nicely with **`tidyr`** which enables you to swiftly convert between different data formats for plotting and analysis.
+Bracket subsetting is handy, but it can be cumbersome and difficult to read,especially for complicated operations. Enter **`dplyr`**. **`dplyr`** is a package for making tabular data manipulation easier. It pairs nicely with **`tidyr`** which enables you to swiftly convert between different data formats for plotting and analysis.
 
-Packages in R are basically sets of additional functions that let you do more
-stuff. The functions we've been using so far, like `str()` or `data.frame()`,
-come built into R; packages give you access to more of them. Before you use a
-package for the first time you need to install it on your machine, and then you
-should import it in every subsequent R session when you need it. You should
-already have installed the **`tidyverse`** package. This is an
-"umbrella-package" that installs several packages useful for data analysis which
-work together well such as **`tidyr`**, **`dplyr`**, **`ggplot2`**, **`tibble`**, etc.
+Packages in R are basically sets of additional functions that let you do morestuff. The functions we've been using so far, like `str()` or `data.frame()`,come built into R; packages give you access to more of them. Before you use a package for the first time you need to install it on your machine, and then you should import it in every subsequent R session when you need it. You should already have installed the **`tidyverse`** package. This is an
+"umbrella-package" that installs several packages useful for data analysis which work together well such as **`tidyr`**, **`dplyr`**, **`ggplot2`**, **`tibble`**, etc.
 
-The **`tidyverse`** package tries to address 3 major problems with some of base R functions:
-1. The results from a base R function sometimes depend on the type of data.
-2. Using R expressions in a non standard way, which can be confusing for new learners.
-3. Hidden arguments, having default operations that new learners are not aware of.
 
 To load the package type:
 
@@ -62,10 +49,9 @@ back into R only what you need for analysis.
 
 The package **`tidyr`** addresses the common problem of wanting to reshape your data for plotting and use by different R functions. Sometimes we want data sets where we have one row per measurement. Sometimes we want a data frame where each measurement type has its own column, and rows are instead more aggregated groups - like plots or aquaria. Moving back and forth between these formats is nontrivial, and **`tidyr`** gives you tools for this and more sophisticated  data manipulation.
 
-To learn more about **`dplyr`** and **`tidyr`** after the workshop, you may want to check out this
-[handy data transformation with **`dplyr`** cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf) and this [one about **`tidyr`**](https://github.com/rstudio/cheatsheets/raw/master/data-import.pdf).
 
-We'll read in our data using the `read_csv()` function, from the tidyverse package **`readr`**, instead of `read.csv()`, the base function for reading in data. The data we are going to be using today should already be in your R_DAVIS_2022 project in the folder `data`. 
+We'll read in our data using the `read.csv()` function. You should have already downloaded and organized data from the github repo. 
+
 
 ```{r,results = 'hide', purl = FALSE}
 yield_df <- read.csv("input_data/tomato_grafting_yield_spad.csv", header = TRUE)
