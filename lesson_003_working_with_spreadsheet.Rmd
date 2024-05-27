@@ -49,9 +49,9 @@ You can read more about this research at [Poudel et., al, 2019 ](https://www.ncb
 ### Downloading the data
 Download the data, and save these csv files inside `input_data` folder within `RiceInNepal` project folder that we created earlier, on Desktop. 
 
-* [Yield Data](https://github.com/ravinpoudel/tXploreR/blob/master/tXploreR/d_long.csv)
+* [Yield Data](https://github.com/ravinpoudel/RiceInNepal/blob/main/input_data/tomato_grafting_yield_spad.csv)
 
-* [Metadata](https://github.com/ravinpoudel/tXploreR/blob/master/tXploreR/d_long.csv)
+* [Metadata](https://github.com/ravinpoudel/RiceInNepal/blob/main/input_data/tomato_grafting_metadata.csv)
 
 
 ### Loading the Data

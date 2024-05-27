@@ -2,14 +2,6 @@
 title: "Computer Software Setup"
 ---
 
-<br>
-
-Welcome! There's a few things we'd like everyone to try and get sorted out *before* our first class. 
-
-Our goal is for you to learn how to use these tools so you can get stuff done. You can learn to be an expert later. Mainly, we'd like you know that computer programming or coding doesn't have to make you feel like this:
-
-<br>
-
 ### Please complete these 2 main tasks before our first class:
 
  
