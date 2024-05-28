@@ -29,13 +29,19 @@ suppressPackageStartupMessages({
 library(knitr)
 
 participants <- data.frame(
-  SN = 1:27,
+  SN = 1:32,
   Name = c("Suraj Baidhya", "Basistha Acharya", "Ram Bahadur Khadka", "Pratiksha Sharma",
            "Shrinkhala Manadhar", "Chetana Manandhar", "Bimala Pant", "Prakash Paudel",
-           "Subekchya Shrestha", "Krishna Dev Joshi", "Hari Datta Joshi", "Lalit Prasad Sah",
+           "Subekchya Shrestha", "Krishna Dev Joshi", "Hari Datta Joshi",
            "Anupama Shrestha", "Pratikshya Adhikari", "Shawshank Kafle", "SQCC", "Prasant Pant",
            "NARC", "Shree Krishna Neupane", "Bhaba Prasad Tripathi", "Ankur Paudel", "Yam Nath Paudel",
-           "Dipendra Rana", "NARC", "Sundar Shrestha", "Sukha Bdr Gurung", "Narayan Dhakal"),
+           "Dipendra Rana", "NARC", "Sundar Shrestha", "Sukha Bdr Gurung", "Narayan Dhakal",
+           "Laxam Aryal",
+           "Khem Raj Pant",
+           "Sushil Subedi",
+           "Van Schepler-Luu",
+           "Dale Pinili",
+           "Humnath Bhandari"),
   Affiliation = c(
     "NARC,National Plant Pathology Research Center",
     "NARC,National Plant Pathology Research Center",
@@ -48,7 +54,6 @@ participants <- data.frame(
     "PU/HICAST",
     "Former IRRI country representative",
     "Ilami Agro and Tech",
-    "iDE",
     "Madan Bhandari University, Chitlang",
     "Karma Group of Company",
     "Agrovet/pathologist",
@@ -63,7 +68,13 @@ participants <- data.frame(
     "NARC",
     "NARC/NRRP",
     "NARC/NMRP",
-    "AFU, Tikapur"
+    "AFU, Tikapur",
+    "NARC/NWRP",
+    "NARC/NWRP",
+    "NARC",
+    "IRRI HQ",
+    "IRRI HQ",
+    "IRRI"
   ),
   Degree_Specialization = c(
     "M.Sc.Ag (Plant Pathology)",
@@ -77,7 +88,6 @@ participants <- data.frame(
     "Pathologist (Coordinator)",
     "Ph.D (Plant Breeding)",
     "Microbiologist",
-    "Entomologist",
     "Pathologist",
     "Pathologist (Manager)",
     "Pathologist",
@@ -92,7 +102,14 @@ participants <- data.frame(
     "Pathologist",
     "Pathologist",
     "NARC/NMRP",
-    "Pathologist"
+    "Pathologist",
+    "Pathologist",
+    "Breeder",
+    "Breeder/Scientist",
+    "Group leader/Scientist II: Plant Pathology and Host Plant Resistance",
+    "Pathologist",
+    "Country Representative (Bangladesh & Nepal)
+Senior Scientist (Agricultural Economics)"
   ),
   Email = c(
     "suraj_baidya222@yahoo.co.in",
@@ -106,7 +123,6 @@ participants <- data.frame(
     "subeksha.shresthab@gmail.com",
     "kdjoshi.np@gmail.com",
     "haridattjoshi00@gmail.com",
-    "lpsah@ideglobal.org",
     "anupamanp123@gmail.com / anupama.shrestha@mbust.edu.np",
     "pratikshya@karmagroups.com",
     "Shawshankkafle17@gmail.com",
@@ -121,7 +137,13 @@ participants <- data.frame(
     "nwrp.bhairahawa@gmail.com",
     "sundarsansar71@gmail.com / nrrpjnk@gmail.com",
     "s.b.syangbo@gmail.com / nmrp2012@gmail.com",
-    "narayandhakal07@gmail.com"
+    "narayandhakal07@gmail.com",
+    "laxmanaryal.ag@gmail.com",
+    "pantkhemraj07@gmail.com",
+    "subedirajsubedi@gmail.com",
+    "v.scheplerluu@irri.org",
+    "d.pinili@irri.org",
+    "h.bhandari@irri.org"
   )
 )
 
