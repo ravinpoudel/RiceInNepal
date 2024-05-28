@@ -1,0 +1,14 @@
+---
+title: "Join Slack Workspace"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+We've established a group Slack channel for the EKE workshop, which we'll use to communicate and share group activities. You should have received an email inviting you to join the channel. If you haven't signed up yet, please use your email to [join](https://join.slack.com/t/newworkspace-u9x4408/shared_invite/zt-2jk95n8qu-seVcNBq68WXwT~15hvuEzw). Once you're in the channel, please introduce yourself to the group! If you encounter any issues joining the channel, please email us directly. You can also start familiarizing yourself with Slack and download the Slack app by watching these [tutorial videos](https://slack.com/help/articles/115004071768-What-is-Slack-).
+
+In the future, we could use this Slack workspace to communicate results. Additionally, this channel could be utilized as part of BIONET to enhance communication and share information among rice experts in Nepal and around the world.
+
+[Slack Workspace](https://join.slack.com/t/newworkspace-u9x4408/shared_invite/zt-2jk95n8qu-seVcNBq68WXwT~15hvuEzw)
+

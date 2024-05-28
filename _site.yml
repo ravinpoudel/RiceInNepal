@@ -30,6 +30,8 @@ navbar:
       href: lesson_006_statistical_analyses.html
   - text: Program Participants
     href: participants.html
+  - text: Join Slack Workspace
+    href: slack.html
 
       
   right:

@@ -386,6 +386,9 @@ div.tocify {
 <li>
   <a href="participants.html">Program Participants</a>
 </li>
+<li>
+  <a href="slack.html">Join Slack Workspace</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -804,10 +807,8 @@ head(yield_with_meata_df)</code></pre>
 <pre class="r"><code>yield_with_meata_df %&gt;%
   group_by(rootstock, sampling_date) %&gt;%
   summarize(mean_weight = mean(marketable_yield_kg, na.rm = TRUE))</code></pre>
-<pre><code>## `summarise()` has grouped
-## output by &#39;rootstock&#39;. You
-## can override using the
-## `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;rootstock&#39;. You
+## can override using the `.groups` argument.</code></pre>
 <pre><code>## # A tibble: 8 × 3
 ## # Groups:   rootstock [4]
 ##   rootstock  sampling_date mean_weight
@@ -860,10 +861,8 @@ yield_with_meata_df %&gt;%
   group_by(rootstock, sampling_date) %&gt;%
   summarize(max_yiled = max(marketable_yield_kg)) %&gt;%
   arrange(desc(sampling_date))</code></pre>
-<pre><code>## `summarise()` has grouped
-## output by &#39;rootstock&#39;. You
-## can override using the
-## `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;rootstock&#39;. You
+## can override using the `.groups` argument.</code></pre>
 <pre><code>## # A tibble: 8 × 3
 ## # Groups:   rootstock [4]
 ##   rootstock  sampling_date max_yiled
@@ -893,8 +892,7 @@ yield_with_meata_df %&gt;%
   group_by(rootstock, sampling_date) %&gt;%
   count()</code></pre>
 <pre><code>## # A tibble: 8 × 3
-## # Groups:   rootstock,
-## #   sampling_date [8]
+## # Groups:   rootstock, sampling_date [8]
 ##   rootstock  sampling_date     n
 ##   &lt;chr&gt;      &lt;chr&gt;         &lt;int&gt;
 ## 1 Maxifort   6/15/18          20
