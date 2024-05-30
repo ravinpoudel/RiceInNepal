@@ -39,6 +39,26 @@ print(vector)
 # Load required library
 library(stringdist)
 
+vector <- c("NARC",
+            "MoALD",
+            "Private Co",
+            "Agrovet",
+            "Inst in China",
+            "Inst in India",
+            "Inst in Bangladesh",
+            "Inst in Pakistan",
+            "PU",
+            "TU",
+            "FWU",
+            "MBU",
+            "AFU", 
+            "KU")
+            
+            
+            
+            
+            
+
 # Define the vector
 vector <- c("NARC",
             "MoALD",

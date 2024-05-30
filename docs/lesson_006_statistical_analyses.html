@@ -424,42 +424,37 @@ div.tocify {
 
 <h1 class="title toc-ignore">Statistical Analyses</h1>
 <h4 class="author">Author: Ravin Poudel</h4>
-<h4 class="date">Last update: 28 May, 2024</h4>
+<h4 class="date">Updated: 2024-05-30</h4>
 
 </div>
 
 
-<div id="descriptive-and-inferential-statistics" class="section level1">
-<h1>Descriptive and Inferential Statistics</h1>
-<p>We will introduce the concepts of <em>descriptive</em> and
-<em>inferential statistic</em>s, and briefly discuss a few most basic
-ways of getting an overall high-level view at the data at hand
-(descriptive approach). Towards this end, we will also introduce a few
-additional R commands and useful plots.</p>
-<p>Statistics is about detecting trends, dependencies and features in
-the data in the presence of random noise and uncertainty. Statistical
-approaches to data analysis can be roughly categorized into descriptive
-and inferential, although the boundary is somewhat blurred and one
-rarely goes without the other. It is still useful to realize that in
-different situations we might be at least leaning towards one or the
-other end depending on the stated goal.</p>
-<p><strong>Descriptive Statistics</strong> Methods for organizing and
-summarizing data and information – E.g. “where is the center and what is
-the spread of measurements forapples and oranges in this sample?” -
-Inferential Statistics – Drawing conclusions about a population based on
-information obtained from a limited sample drawn from the population and
-assessing the reliability of these conclusions. – E.g. “are apples same
-as oranges?” Or, rather, “given the differences between measurements for
-apples and oranges obtained from a limited sample, how likely it is that
-apples and oranges in general are/are not indeed different?”</p>
-<p><strong>Inferential statistics</strong> uses probability theory to
-make generalizing statements based on the results of descriptive
-analysis and R has numerous methods implementing most conventional (as
-well as more state-of-art) approaches.</p>
-<div id="data-display-and-characterization" class="section level2">
-<h2>Data Display and Characterization</h2>
-<pre class="r"><code>library(dplyr)
-meta_df &lt;- read.csv(&quot;input_data/tomato_grafting_metadata.csv&quot;, header = TRUE)
+<div id="descriptive-and-inferential-statistics" class="section level3">
+<h3>Descriptive and Inferential Statistics</h3>
+<p>We’ll cover <strong>descriptive and inferential statistics</strong>,
+offering a high-level view of data.</p>
+<p><em>Descriptive statistics</em> organize and summarize data,
+answering questions like “Where is the center and what is the spread of
+measurements?”</p>
+<p><strong>Inferential statistics</strong> draw conclusions about a
+population from a sample, assessing reliability. For instance, “Are
+apples the same as oranges?” or “Given differences between measurements,
+how likely is it that apples and oranges differ?” Inferential stats use
+probability theory to generalize findings. R provides various methods
+for both conventional and advanced approaches to statistical
+analysis.</p>
+<div id="data-display-and-characterization" class="section level4">
+<h4>Data Display and Characterization</h4>
+<pre class="r"><code>library(dplyr)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>meta_df &lt;- read.csv(&quot;input_data/tomato_grafting_metadata.csv&quot;, header = TRUE)
 yield_df &lt;- read.csv(&quot;input_data/tomato_grafting_yield_spad.csv&quot;, header = TRUE)
 
 # merge metadata with yield data
@@ -542,9 +537,8 @@ style="display: flex; justify-content: center; align-items: center; height: 30vh
 boxplot(yield_with_meata_df$marketable_yield_kg, na.rm = TRUE, horizontal = TRUE)</code></pre>
 <p><img src="lesson_006_statistical_analyses_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 </div>
-</div>
-<div id="statistical-analysis" class="section level1">
-<h1>Statistical Analysis</h1>
+<div id="statistical-analysis" class="section level4">
+<h4>Statistical Analysis</h4>
 <p><strong>ANOVA (Analysis of Variance Model)</strong> is often used
 when there are more than two groups to compare, and it helps determine
 whether there are statistically significant differences among the means
@@ -597,6 +591,8 @@ print() and summary() on it.</p>
 ## Residuals   156   2202      14                   
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+</div>
 <div id="what-is-in-the-summary-of-the-model" class="section level3">
 <h3>What is in the summary of the model?</h3>
 <p>The ANOVA results indicate the statistical significance of the
@@ -636,8 +632,7 @@ indicates that the observed differences in mean
 <code>marketable_yield_kg</code> among different levels of
 <code>rootstock</code> are highly unlikely to be due to random
 chance.</p>
-<div id="which-treatments-are-different" class="section level4">
-<h4>Which treatments are different???</h4>
+<p><strong>Which treatments are different???</strong></p>
 <p>Now that we know that differences exist between our treatments, how
 can we find which treatments are different? We can do this by using
 Tukey’s post-hoc test. If you scroll down the help page of aov and go
@@ -664,7 +659,6 @@ calculates confidence intervals for all pairwise differences between
 group means and then compares these intervals to determine which
 differences are statistically significant.</p>
 </div>
-</div>
 <div id="challenge" class="section level3 blue">
 <h3>Challenge</h3>
 Can you run the ANOVA test using SPAD value as response? Do we see the
@@ -686,7 +680,7 @@ TukeyHSD(m2_spad_avo) </code></pre>
 </div>
 <p><br></p>
 <p><strong>How to get the figure with comparing means with statistical
-significane added?</strong></p>
+significance added?</strong></p>
 <p>Let get the boxplot comparing means by rootstocks, then add the level
 of signifance to the same plot. For doing this we will be ggplot2 and
 additional R package <code>ggpubr</code>:</p>
@@ -728,7 +722,6 @@ stat_compare_means(comparisons = my_comparisons, label = &quot;p.signif&quot;,  
 
 gg_yiled_boxplot_with_pairwise_test</code></pre>
 <p><img src="lesson_006_statistical_analyses_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
-</div>
 
 
 

@@ -430,10 +430,10 @@ div.tocify {
 <div id="learning-objectives" class="section level3 blue">
 <h3>Learning Objectives</h3>
 <ul>
-<li>Produce scatter plots, boxplots, and time series plots using
-ggplot.</li>
+<li>Understand basic grammar of plots in ggplot.</li>
+<li>Produce scatter plots, and boxplots plots using ggplot.</li>
 <li>Describe what faceting is and apply faceting in ggplot.</li>
-<li>Set universal plot settings.</li>
+<li>Learn to generate high quality plots using ggplot.</li>
 </ul>
 </div>
 <p><br></p>
@@ -441,34 +441,28 @@ ggplot.</li>
 <strong><code>ggplot2</code></strong> is included in the
 <strong><code>tidyverse</code></strong> package.</p>
 <pre class="r"><code>library(tidyverse)</code></pre>
-<p>Let’s read in our tomato yiled data for learning various plots in R.
-We will use the data maniputation techniques, that we have learned
-before, and use it for visulization as well.</p>
+<p>Let’s read in our tomato yield data for learning various plots in R.
+We will use the data manipulation techniques, that we have learned
+before, and use it for visualization as well.</p>
 <div id="plotting-with-ggplot2" class="section level2">
 <h2>Plotting with <strong><code>ggplot2</code></strong></h2>
-<p><strong><code>ggplot2</code></strong> is a plotting package that
-makes it simple to create complex plots from data in a data frame. It
-provides a more programmatic interface for specifying what variables to
-plot, how they are displayed, and general visual properties. Therefore,
-we only need minimal changes if the underlying data change or if we
-decide to change from a bar plot to a scatterplot. This helps in
-creating publication quality plots with minimal amounts of adjustments
-and tweaking.</p>
-<p><strong><code>ggplot2</code></strong> functions like data in the
-‘long’ format, i.e., a column for every dimension, and a row for every
-observation. Well-structured data will save you lots of time when making
-figures with <strong><code>ggplot2</code></strong></p>
-<p>ggplot graphics are built step by step by adding new elements. Adding
-layers in this fashion allows for extensive flexibility and
-customization of plots.</p>
-<p>To build a ggplot, we will use the following basic template that can
-be used for different types of plots:</p>
+<p><strong><code>ggplot2</code></strong> simplifies the creation of
+intricate plots from data within a data frame. It offers a programmatic
+approach for specifying variables, their display, and overall visual
+properties. With this, minimal adjustments are needed if the data change
+or if switching between plot types. This streamlines the creation of
+publication-quality plots with minimal tweaking.</p>
+<p>Graphics in ggplot are constructed by adding layers incrementally,
+providing extensive flexibility and customization options.</p>
+<p>For building a ggplot, we’ll utilize a basic template adaptable to
+various plot types.</p>
 <pre><code>ggplot(data = &lt;DATA&gt;, mapping = aes(&lt;MAPPINGS&gt;)) +  &lt;GEOM_FUNCTION&gt;()</code></pre>
 <ul>
 <li>use the <code>ggplot()</code> function and bind the plot to a
 specific data frame using the <code>data</code> argument</li>
 </ul>
 <pre class="r"><code>ggplot(data = yield_with_meata_df)</code></pre>
+<p><img src="lesson_09_data_viz_pt1_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
 <ul>
 <li>define a mapping (using the aesthetic (<code>aes</code>) function),
 by selecting the variables to be plotted and specifying how to present
@@ -517,11 +511,10 @@ layer and will return an error message.</li>
 </ul>
 <pre class="r"><code># This is the correct syntax for adding layers
 gg_spad_yield +
-  geom_point()
-
-# This will not add the new layer and will return an error message
-gg_spad_yield
-  + geom_point()</code></pre>
+  geom_point()</code></pre>
+<pre><code># This will not add the new layer and will return an error message
+# gg_spad_yield
+#   + geom_point()</code></pre>
 </div>
 <div id="building-your-plots-iteratively" class="section level2">
 <h2>Building your plots iteratively</h2>
@@ -541,21 +534,21 @@ overplotting:</p>
 <pre class="r"><code>ggplot(data = yield_with_meata_df, mapping = aes(x = marketable_yield_kg, y = spad_value))+
     geom_point(alpha = 0.5, color = &quot;blue&quot;)</code></pre>
 <p><img src="lesson_09_data_viz_pt1_files/figure-html/adding-colors-1.png" width="672" /></p>
-<p>Or to color each species in the plot differently, you could use a
+<p>Or to color each rootstock in the plot differently, you could use a
 vector as an input to the argument <strong>color</strong>.
 <strong><code>ggplot2</code></strong> will provide a different color
 corresponding to different values in the vector. Here is an example
-where we color with <strong><code>species_id</code></strong>:</p>
+where we color with <strong><code>rootstock</code></strong>:</p>
 <pre class="r"><code>ggplot(data = yield_with_meata_df, mapping = aes(x = marketable_yield_kg, y = spad_value))+
     geom_point(alpha = 0.5, aes(color = rootstock))</code></pre>
-<p><img src="lesson_09_data_viz_pt1_files/figure-html/color-by-species-1.png" width="672" /></p>
+<p><img src="lesson_09_data_viz_pt1_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p>We can also specify the colors directly inside the mapping provided
 in the <code>ggplot()</code> function. This will be seen by all geom
 layers and the mapping will be determined by the x- and y-axis set up in
 <code>aes()</code>.</p>
 <pre class="r"><code>ggplot(data = yield_with_meata_df, mapping = aes(x = marketable_yield_kg, y = spad_value, color = rootstock))+
     geom_point(alpha = 0.5)</code></pre>
-<p><img src="lesson_09_data_viz_pt1_files/figure-html/color-by-species2-1.png" width="672" /></p>
+<p><img src="lesson_09_data_viz_pt1_files/figure-html/color-by-rootstock-1.png" width="672" /></p>
 <p>Notice that we can change the geom layer and colors will be still
 determined by <strong><code>rootstock</code></strong></p>
 <div id="challenge" class="section level3 blue">
@@ -579,7 +572,7 @@ ANSWER
 <div id="boxplot" class="section level2">
 <h2>Boxplot</h2>
 <p>We can use boxplots to visualize the distribution of weight within
-each species:</p>
+each rootstock:</p>
 <pre class="r"><code>ggplot(data = yield_with_meata_df, mapping = aes(x = rootstock, y = marketable_yield_kg, color = rootstock))+
     geom_boxplot()</code></pre>
 <p><img src="lesson_09_data_viz_pt1_files/figure-html/boxplot-1.png" width="672" /></p>
@@ -638,13 +631,13 @@ ANSWER
 ggplot(data = yield_with_meata_df, mapping = aes(x = rootstock, y = marketable_yield_kg))+
     geom_jitter(alpha = 0.5, color = &quot;tomato&quot;) +
     geom_violin(alpha = 0)</code></pre>
-<p><img src="lesson_09_data_viz_pt1_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><img src="lesson_09_data_viz_pt1_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <pre class="r"><code># 2
 ggplot(data = yield_with_meata_df, mapping = aes(x = rootstock, y = marketable_yield_kg))+
     geom_jitter(alpha = 0.5, color = &quot;tomato&quot;) +
     geom_violin(alpha = 0) + 
     scale_y_log10()</code></pre>
-<p><img src="lesson_09_data_viz_pt1_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
+<p><img src="lesson_09_data_viz_pt1_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
 <pre class="r"><code>#3
 
 yield_with_meata_df %&gt;% 
@@ -652,7 +645,7 @@ yield_with_meata_df %&gt;%
   ggplot(mapping = aes(x = rootstock, y = marketable_yield_kg))+
     geom_jitter(alpha = 0.3, aes(color = plantID)) +
    geom_boxplot()</code></pre>
-<img src="lesson_09_data_viz_pt1_files/figure-html/unnamed-chunk-3-3.png" width="672" />
+<img src="lesson_09_data_viz_pt1_files/figure-html/unnamed-chunk-4-3.png" width="672" />
 </details>
 </div>
 <p><br></p>
@@ -662,7 +655,7 @@ yield_with_meata_df %&gt;%
 <p><strong><code>ggplot2</code></strong> has a special technique called
 <em>faceting</em> that allows the user to split one plot into multiple
 plots based on a factor included in the dataset. We will use it to make
-a time series plot for each species:</p>
+a time series plot for each rootstock:</p>
 <pre class="r"><code>yield_with_meata_df %&gt;% 
   ggplot(data = yield_with_meata_df, mapping = aes(x = rootstock, y = marketable_yield_kg, color = rootstock)) +
     geom_jitter(alpha = 0.3) +
@@ -693,7 +686,7 @@ We can set the background to white using the function
   facet_wrap(~ sampling_date)+
    theme_bw() +
      theme(panel.grid = element_blank())</code></pre>
-<p><img src="lesson_09_data_viz_pt1_files/figure-html/facet-by-species-and-sex-white-bg-1.png" width="672" /></p>
+<p><img src="lesson_09_data_viz_pt1_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <div id="challenge-1" class="section level3 blue">
 <h3>Challenge 1</h3>
 <p>How to make high quality plot for the publication? We want to show
@@ -715,7 +708,7 @@ yield_with_meta_date_fix_df %&gt;%
   facet_wrap(~ date_column)+
    theme_classic() +
      theme(panel.grid = element_blank())</code></pre>
-<p><img src="lesson_09_data_viz_pt1_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="lesson_09_data_viz_pt1_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <pre class="r"><code>###
 
 ## change the order of the rootstocsk. We want Nongraft, Selfgraft, RST-04-106, and Maxifort
@@ -728,7 +721,7 @@ yield_with_meta_date_fix_df %&gt;%
   facet_wrap(~ date_column)+
    theme_classic() +
      theme(panel.grid = element_blank())</code></pre>
-<p><img src="lesson_09_data_viz_pt1_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
+<p><img src="lesson_09_data_viz_pt1_files/figure-html/unnamed-chunk-6-2.png" width="672" /></p>
 <pre class="r"><code>## Chnage the Y axis and X axis label
 
 yield_with_meta_date_fix_df %&gt;%
@@ -739,7 +732,7 @@ yield_with_meta_date_fix_df %&gt;%
   labs(x=&quot;Rootstocks&quot;, y=&quot;Marketable Yield (Kg)&quot;)+
    theme_classic() +
      theme(panel.grid = element_blank())</code></pre>
-<p><img src="lesson_09_data_viz_pt1_files/figure-html/unnamed-chunk-4-3.png" width="672" /></p>
+<p><img src="lesson_09_data_viz_pt1_files/figure-html/unnamed-chunk-6-3.png" width="672" /></p>
 <pre class="r"><code>## line thinkness
 yield_with_meta_date_fix_df %&gt;%
   ggplot(mapping = aes(x = rootstock, y = marketable_yield_kg)) +
@@ -750,7 +743,7 @@ yield_with_meta_date_fix_df %&gt;%
    theme_classic() +
      theme(panel.grid = element_blank(),
            axis.line = element_line(linewidth = 1))</code></pre>
-<p><img src="lesson_09_data_viz_pt1_files/figure-html/unnamed-chunk-4-4.png" width="672" /></p>
+<p><img src="lesson_09_data_viz_pt1_files/figure-html/unnamed-chunk-6-4.png" width="672" /></p>
 <pre class="r"><code>## 
 gg_marketable_yiled_by_rootstocks_sdate &lt;- yield_with_meta_date_fix_df %&gt;%
   ggplot(mapping = aes(x = rootstock, y = marketable_yield_kg)) +
@@ -771,7 +764,7 @@ gg_marketable_yiled_by_rootstocks_sdate &lt;- yield_with_meta_date_fix_df %&gt;%
         strip.text = element_text(size = 20))
 
 gg_marketable_yiled_by_rootstocks_sdate</code></pre>
-<p><img src="lesson_09_data_viz_pt1_files/figure-html/unnamed-chunk-4-5.png" width="672" /></p>
+<p><img src="lesson_09_data_viz_pt1_files/figure-html/unnamed-chunk-6-5.png" width="672" /></p>
 <pre class="r"><code>## save the plot in pdf
 ggsave(&quot;output/figures/gg_marketable_yiled_by_rootstocks_sdate.pdf&quot;, gg_marketable_yiled_by_rootstocks_sdate, height = 5, width = 5 )</code></pre>
 </details>
@@ -780,7 +773,7 @@ ggsave(&quot;output/figures/gg_marketable_yiled_by_rootstocks_sdate.pdf&quot;, g
 <div id="challenge-2" class="section level3 blue">
 <h3>Challenge 2</h3>
 <p>Use what you just learned to create a plot that depicts how the
-average weight of each species changes through the years.</p>
+average weight of each rootstock changes through the years.</p>
 <details>
 <summary>
 ANSWER

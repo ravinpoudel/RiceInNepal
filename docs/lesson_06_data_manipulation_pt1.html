@@ -429,76 +429,49 @@ div.tocify {
 <div id="learning-objectives" class="section level3 blue">
 <h3>Learning Objectives</h3>
 <ul>
-<li>Describe the purpose of the <strong><code>dplyr</code></strong> and
-<strong><code>tidyr</code></strong> packages.</li>
-<li>Select certain columns in a data frame with the
-<strong><code>dplyr</code></strong> function <code>select</code>.</li>
-<li>Select certain rows in a data frame according to filtering
-conditions with the <strong><code>dplyr</code></strong> function
-<code>filter</code>.</li>
-<li>Link the output of one <strong><code>dplyr</code></strong> function
-to the input of another function with the ‘pipe’ operator
-<code>%&gt;%</code>.</li>
-<li>Add new columns to a data frame that are functions of existing
-columns with <code>mutate</code>.</li>
-<li>Use <code>summarize</code>, <code>group_by</code>, and
-<code>count</code> to split a data frame into groups of observations,
-apply a summary statistics for each group, and then combine the
-results.</li>
+<li>Explain the purpose of the <em><code>dplyr</code></em> and
+<em><code>tidyr</code></em> packages.</li>
+<li>Use the <em><code>select</code></em> function from dplyr to pick
+specific columns from a data frame.</li>
+<li>Utilize the <em>filter</em> function from dplyr to choose specific
+rows based on filtering conditions.</li>
+<li>Employ the pipe operator <code>%&gt;%</code> to seamlessly connect
+the output of one dplyr function to another.</li>
+<li>Expand data frames by creating new columns derived from existing
+ones using <strong><code>mutate</code></strong>.</li>
+<li>Leverage <code>summarize</code>, <code>group_by</code>, and
+<code>count</code> to break down a data frame into subsets, compute
+summary statistics for each subset, and then merge the results.</li>
 </ul>
 </div>
-<div id="data-manipulation-using-dplyr-and-tidyr"
-class="section level2">
-<h2>Data Manipulation using <strong><code>dplyr</code></strong> and
-<strong><code>tidyr</code></strong></h2>
-<p>Bracket subsetting is handy, but it can be cumbersome and difficult
-to read,especially for complicated operations. Enter
-<strong><code>dplyr</code></strong>. <strong><code>dplyr</code></strong>
-is a package for making tabular data manipulation easier. It pairs
-nicely with <strong><code>tidyr</code></strong> which enables you to
-swiftly convert between different data formats for plotting and
-analysis.</p>
-<p>Packages in R are basically sets of additional functions that let you
-do morestuff. The functions we’ve been using so far, like
-<code>str()</code> or <code>data.frame()</code>,come built into R;
-packages give you access to more of them. Before you use a package for
-the first time you need to install it on your machine, and then you
-should import it in every subsequent R session when you need it. You
-should already have installed the
-<strong><code>tidyverse</code></strong> package. This is an
-“umbrella-package” that installs several packages useful for data
-analysis which work together well such as
-<strong><code>tidyr</code></strong>,
+<div id="data-manipulation-using-tidyverse" class="section level2">
+<h2>Data Manipulation using <strong><code>tidyverse</code></strong></h2>
+<p>Bracket subsetting, while useful, can become cumbersome and
+challenging to interpret, especially for complex operations.</p>
+<p><strong><code>dplyr</code></strong>. It’s a package designed to
+simplify tabular data manipulation tasks, providing a more intuitive
+approach. <strong><code>dplyr</code></strong> pairs seamlessly with
+<strong><code>tidyr</code></strong>, which facilitates swift conversion
+between various data formats, aiding in visualization and analysis.</p>
+<p>In R, packages extend the functionality of the base language by
+providing additional functions for various tasks. While R comes with
+built-in functions like <code>str()</code> and
+<code>data.frame()</code>, packages offer a broader range of tools. To
+use a package, you typically need to install it on your system initially
+and then import it into your R session whenever needed. The
+<strong><code>tidyverse</code></strong> package, which you should
+already have installed, is particularly valuable. It serves as an
+“umbrella-package,” bundling together several essential packages for
+data analysis, including <strong><code>tidyr</code></strong>,
 <strong><code>dplyr</code></strong>,
-<strong><code>ggplot2</code></strong>,
-<strong><code>tibble</code></strong>, etc.</p>
+<strong><code>ggplot2</code></strong>, and
+<strong><code>tibble</code></strong>, among others, ensuring they work
+harmoniously together.</p>
+<p>To install the package type:</p>
+<pre class="r"><code># install.packages(&quot;tidyverse&quot;)
+# install.packages(&quot;ggpubr&quot;)</code></pre>
 <p>To load the package type:</p>
 <pre class="r"><code>library(&quot;tidyverse&quot;)    ## load the tidyverse packages, incl. dplyr</code></pre>
-<div id="what-are-dplyr-and-tidyr" class="section level3">
-<h3>What are <strong><code>dplyr</code></strong> and
-<strong><code>tidyr</code></strong>?</h3>
-<p>The package <strong><code>dplyr</code></strong> provides easy tools
-for the most common data manipulation tasks. It is built to work
-directly with data frames, with many common tasks optimized by being
-written in a compiled language (C++). An additional feature is the
-ability to work directly with data stored in an external database. The
-benefits of doing this are that the data can be managed natively in a
-relational database, queries can be conducted on that database, and only
-the results of the query are returned.</p>
-<p>This addresses a common problem with R in that all operations are
-conducted in-memory and thus the amount of data you can work with is
-limited by available memory. The database connections essentially remove
-that limitation in that you can connect to a database of many hundreds
-of GB, conduct queries on it directly, and pull back into R only what
-you need for analysis.</p>
-<p>The package <strong><code>tidyr</code></strong> addresses the common
-problem of wanting to reshape your data for plotting and use by
-different R functions. Sometimes we want data sets where we have one row
-per measurement. Sometimes we want a data frame where each measurement
-type has its own column, and rows are instead more aggregated groups -
-like plots or aquaria. Moving back and forth between these formats is
-nontrivial, and <strong><code>tidyr</code></strong> gives you tools for
-this and more sophisticated data manipulation.</p>
 <p>We’ll read in our data using the <code>read.csv()</code> function.
 You should have already downloaded and organized data from the github
 repo.</p>
@@ -517,12 +490,11 @@ For our purposes the only differences between data frames and tibbles
 are that:</p>
 <ol style="list-style-type: decimal">
 <li>When you print a tibble, R displays the data type of each column
-under its name; it prints only the first few rows of data and only as
-many columns as fit on one screen.</li>
+|&gt; under its name; it prints only the first few rows of data and only
+as many columns as fit on one screen.</li>
 <li>Columns of class <code>character</code> are never automatically
 converted into factors.</li>
 </ol>
-</div>
 </div>
 <div id="selecting-columns-and-filtering-rows" class="section level2">
 <h2>Selecting columns and filtering rows</h2>
@@ -531,7 +503,7 @@ converted into factors.</li>
 <code>filter()</code>, <code>mutate()</code>, <code>group_by()</code>,
 <code>summarize()</code>, and <code>join</code>. To select columns of a
 data frame, use <code>select()</code>. The first argument to this
-function is the data frame (<code>surveys</code>), and the subsequent
+function is the data frame (<code>yield_df</code>), and the subsequent
 arguments are the <strong>columns</strong> to keep.</p>
 <pre class="r"><code>head(select(yield_df, plantID, sampling_date))</code></pre>
 <p>We can also use pipe function to make it more clear. Pipes let you
@@ -539,10 +511,7 @@ take the output of one function and send it directly to the next, which
 is useful when you need to do many things to the same dataset. Pipes in
 R look like <code>%&gt;%</code> and are made available via the
 <strong><code>magrittr</code></strong> package, installed automatically
-with <strong><code>dplyr</code></strong>. If you use RStudio, you can
-type the pipe with <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>M</kbd> if
-you have a PC or <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>M</kbd> if you
-have a Mac.</p>
+with <strong><code>tidyverse</code></strong>.</p>
 <pre class="r"><code>library(tidyverse)
 yield_df %&gt;% select(plantID, sampling_date) %&gt;%
   head()</code></pre>
@@ -802,13 +771,13 @@ head(yield_with_meata_df)</code></pre>
 ## 4 T1-B1-N-P2                21.1       48.9  july-15-2018   Nongraft
 ## 5 T1-B1-R-P1                23.0       47.4       6/15/18 RST-04-106
 ## 6 T1-B1-R-P2                27.0       51.4  july-15-2018 RST-04-106</code></pre>
-<p>ADD MERGE AND JOINS PICTURE HERE!!!</p>
+<p><img src="img/joinsinR.png" width="1000" /></p>
 <p>You can also group by multiple columns:</p>
 <pre class="r"><code>yield_with_meata_df %&gt;%
   group_by(rootstock, sampling_date) %&gt;%
   summarize(mean_weight = mean(marketable_yield_kg, na.rm = TRUE))</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;rootstock&#39;. You can override
-## using the `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;rootstock&#39;. You can override using the
+## `.groups` argument.</code></pre>
 <pre><code>## # A tibble: 8 × 3
 ## # Groups:   rootstock [4]
 ##   rootstock  sampling_date mean_weight
@@ -861,8 +830,8 @@ yield_with_meata_df %&gt;%
   group_by(rootstock, sampling_date) %&gt;%
   summarize(max_yiled = max(marketable_yield_kg)) %&gt;%
   arrange(desc(sampling_date))</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;rootstock&#39;. You can override
-## using the `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;rootstock&#39;. You can override using the
+## `.groups` argument.</code></pre>
 <pre><code>## # A tibble: 8 × 3
 ## # Groups:   rootstock [4]
 ##   rootstock  sampling_date max_yiled

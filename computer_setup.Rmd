@@ -1,5 +1,8 @@
 ---
 title: "Computer Software Setup"
+output:
+  word_document: default
+  pdf_document: default
 ---
 
 ### Please complete these 2 main tasks before our first class:

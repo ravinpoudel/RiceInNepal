@@ -1,21 +1,24 @@
 ---
 title: "Statistical Analyses"
-output: html_document
-author: "Author: Ravin Poudel"
-date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
+author: 'Author: Ravin Poudel'
+date: "Updated: `r format(Sys.Date())`"
+output:
+  html_document:
+    toc: true
+    toc_float: true
 ---
-# Descriptive and Inferential Statistics
-We will introduce the concepts of *descriptive* and *inferential statistic*s, and briefly discuss a few most basic ways of getting an overall high-level view at the data at hand (descriptive approach). Towards this end, we will also introduce a few additional R commands and useful plots.
 
 
-Statistics is about detecting trends, dependencies and features in the data in the presence of random noise and uncertainty. Statistical approaches to data analysis can be roughly categorized into descriptive and inferential, although the boundary is somewhat blurred and one rarely goes without the other. It is still useful to realize that in different situations we might be at least leaning towards one or the other end depending on the stated goal.
 
-**Descriptive Statistics** Methods for organizing and summarizing data and information – E.g. “where is the center and what is the spread of measurements forapples and oranges in this sample?” - Inferential Statistics – Drawing conclusions about a population based on information obtained from a limited sample drawn from the population and assessing the reliability of these conclusions. – E.g. “are apples same as oranges?” Or, rather, “given the differences between measurements for apples and oranges obtained from a limited sample, how likely it is that apples and oranges in general are/are not indeed different?”
+### Descriptive and Inferential Statistics
+We'll cover **descriptive and inferential statistics**, offering a high-level view of data. 
 
-**Inferential statistics** uses probability theory to make generalizing statements based on the results of descriptive analysis and R has numerous methods implementing most conventional (as well as more state-of-art) approaches.
+*Descriptive statistics* organize and summarize data, answering questions like "Where is the center and what is the spread of measurements?" 
+
+**Inferential statistics** draw conclusions about a population from a sample, assessing reliability. For instance, "Are apples the same as oranges?" or "Given differences between measurements, how likely is it that apples and oranges differ?" Inferential stats use probability theory to generalize findings. R provides various methods for both conventional and advanced approaches to statistical analysis.
 
 
-## Data Display and Characterization
+#### Data Display and Characterization
 
 ```{r}
 library(dplyr)
@@ -113,7 +116,7 @@ boxplot(yield_with_meata_df$marketable_yield_kg, na.rm = TRUE, horizontal = TRUE
 ```
 
 
-# Statistical Analysis
+#### Statistical Analysis
 
 **ANOVA (Analysis of Variance Model)** is often used when there are more than two groups to compare, and it helps determine whether there are statistically significant differences among the means of these groups. 
 
@@ -170,7 +173,7 @@ The ANOVA results indicate the statistical significance of the `rootstock` varia
 
 Overall, the results suggested that the `rootstock` variable has a statistically significant effect on the `marketable_yield_kg` variable. The extremely low p-value indicates that the observed differences in mean `marketable_yield_kg` among different levels of `rootstock` are highly unlikely to be due to random chance.
 
-#### Which treatments are different???
+**Which treatments are different???**
 
 Now that we know that differences exist between our treatments, how can we find which treatments are different? We can do this by using Tukey’s post-hoc test. If you scroll down the help page of aov and go the section ‘See Also’, you will see a function TukeyHSD. This is what we need.
 
@@ -206,7 +209,7 @@ TukeyHSD(m2_spad_avo)
 </div>
 <br>
 
-**How to get the figure with comparing means with statistical significane added?**
+**How to get the figure with comparing means with statistical significance added?**
 
 Let get the boxplot comparing means by rootstocks, then add the level of signifance to the same plot. For doing this we will be ggplot2 and additional R package `ggpubr`: 
 

@@ -123,5 +123,43 @@ yield_df_sub_r1_5_c2_4
 ```
 
 
-### How to name  object variable?
+**How to name object variable in R?**
+```
+# Good variable name
+car_sales_data <- read.csv("car_sales.csv")
 
+# Avoid using reserved words
+# Avoid: data <- read.csv("car_sales.csv") 
+
+# Use descriptive names
+# Good variable name
+customer_list <- read.csv("customer_data.csv")
+
+# Use snake_case:
+# Snake_case is a naming convention where words are written in lowercase letters and separated by underscores. 
+# Good variable name
+monthly_sales_data <- read.csv("monthly_sales.csv")
+
+
+```
+
+
+**How to NOT name variable in R?**
+
+```
+# Bad variable name - too short and unclear
+x <- read.csv("car_sales.csv")
+
+# Bad variable name - using cryptic abbreviations
+csd <- read.csv("car_sales.csv")
+
+# Bad variable name - overly long and verbose
+this_is_the_variable_representing_the_dataset_containing_car_sales_data <- read.csv("car_sales.csv")
+
+# Bad variable name - starts with a number
+# Avoid: 2022_sales_data <- read.csv("sales_2022.csv")
+
+# Bad variable name - using special characters other than underscore
+# Avoid: sales-data <- read.csv("sales.csv")
+
+```

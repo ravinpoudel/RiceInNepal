@@ -1,0 +1,245 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Computer Software Setup},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Computer Software Setup}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+\subsubsection{Please complete these 2 main tasks before our first
+class:}\label{please-complete-these-2-main-tasks-before-our-first-class}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  ~ Install \emph{current} \href{https://cran.rstudio.com/}{\textbf{R}}
+  on your laptop
+\item
+  ~ Install \emph{current}
+  \href{https://www.rstudio.com/products/rstudio/download/}{\textbf{RStudio}}
+  on your laptop
+\end{enumerate}
+
+Read below for more detailed information on installing the pieces of
+software we'll need, and platform specific instructions.
+
+\subsection{R \& RStudio}\label{r-rstudio}
+
+\textbf{R} and \textbf{RStudio} are separate downloads and
+installations. \textbf{R} is the underlying statistical computing
+environment. \textbf{RStudio} is a graphical integrated development
+environment (IDE) that makes using R much easier and more interactive.
+You need to install \texttt{R} before you install \textbf{RStudio}.
+Download and install both of these but in this order:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \href{http://cran.rstudio.com/}{\textbf{R}}: Get the most current
+  version version appropriate for your machine. It's free.
+\item
+  \href{http://www.rstudio.com/products/rstudio/download/}{\textbf{RStudio}}
+  is a great platform to work with R (note you need R before you can use
+  RStudio). Please install the most recent version. It's free. It does
+  lots of cool things. We'll talk more about it in class.
+\end{enumerate}
+
+\subsubsection{Windows}\label{windows}
+
+\paragraph{\texorpdfstring{If you already have \texttt{R} and
+\texttt{RStudio}
+installed}{If you already have R and RStudio installed}}\label{if-you-already-have-r-and-rstudio-installed}
+
+\begin{itemize}
+\tightlist
+\item
+  Open \texttt{RStudio}, and click on \emph{Help} \textgreater{}
+  \emph{Check for updates}. If a new version is available, quit
+  \texttt{RStudio}, and download the latest version for
+  \texttt{RStudio}.
+\item
+  To check which version of \texttt{R} you are using, start
+  \texttt{RStudio} and the first thing that appears in the console
+  indicates the version of \texttt{R} you are running. Alternatively,
+  you can type \texttt{sessionInfo()}, which will also display which
+  version of \texttt{R} you are running. Go on the
+  \href{https://cran.r-project.org/bin/windows/base/}{CRAN website} and
+  check whether a more recent version is available. If so, please
+  download and install it. You can
+  \href{https://cran.r-project.org/bin/windows/base/rw-FAQ.html\#How-do-I-UNinstall-R_003f}{check
+  here} for more information on how to remove old versions from your
+  system if you wish to do so.
+\end{itemize}
+
+\paragraph{\texorpdfstring{If you don't have \texttt{R} and
+\texttt{RStudio}
+installed}{If you don't have R and RStudio installed}}\label{if-you-dont-have-r-and-rstudio-installed}
+
+\begin{itemize}
+\tightlist
+\item
+  Download \texttt{R} from the
+  \href{http://cran.r-project.org/bin/windows/base/release.htm}{CRAN
+  website}.
+\item
+  Run the \texttt{.exe} file that was just downloaded
+\item
+  Go to the
+  \href{https://www.rstudio.com/products/rstudio/download/\#download}{RStudio
+  download page}
+\item
+  Under \emph{Installers} select \textbf{RStudio x.yy.zzz - Windows
+  XP/Vista/7/8} (where x, y, and z represent version numbers)
+\item
+  Double click the file to install it
+\item
+  Once it's installed, open \texttt{RStudio} to make sure it works and
+  you don't get any error messages.
+\end{itemize}
+
+\subsubsection{macOS}\label{macos}
+
+\paragraph{If you already have R and RStudio
+installed}\label{if-you-already-have-r-and-rstudio-installed-1}
+
+\begin{itemize}
+\tightlist
+\item
+  Open \texttt{RStudio}, and click on ``Help'' \textgreater{} ``Check
+  for updates''. If a new version is available, quit \texttt{RStudio},
+  and download the latest version for \texttt{RStudio}.
+\item
+  To check the version of R you are using, start \texttt{RStudio} and
+  the first thing that appears on the terminal indicates the version of
+  \texttt{R} you are running. Alternatively, you can type
+  \texttt{sessionInfo()}, which will also display which version of
+  \texttt{R} you are running. Go on the
+  \href{https://cran.r-project.org/bin/macosx/}{CRAN website} and check
+  whether a more recent version is available. If so, please download and
+  install it.
+\end{itemize}
+
+\paragraph{If you don't have R and RStudio
+installed}\label{if-you-dont-have-r-and-rstudio-installed-1}
+
+\begin{itemize}
+\tightlist
+\item
+  Download \texttt{R} from the
+  \href{http://cran.r-project.org/bin/macosx}{CRAN website}.
+\item
+  Select the \texttt{.pkg} file for the latest \texttt{R} version
+\item
+  Double click on the downloaded file to install \texttt{R}
+\item
+  It is also a good idea to install
+  \href{https://www.xquartz.org/}{XQuartz} (needed by some packages)
+\item
+  Go to the
+  \href{https://www.rstudio.com/products/rstudio/download/\#download}{RStudio
+  download page}
+\item
+  Under \emph{Installers} select \textbf{RStudio x.yy.zzz - Mac OS X
+  10.6+ (64-bit)} (where x, y, and z represent version numbers)
+\item
+  Double click the file to install \texttt{RStudio}
+\item
+  Once it's installed, open \texttt{RStudio} to make sure it works and
+  you don't get any error messages.
+\end{itemize}
+
+\subsubsection{Linux}\label{linux}
+
+\begin{itemize}
+\tightlist
+\item
+  Follow the instructions for your distribution from
+  \href{https://cloud.r-project.org/bin/linux}{CRAN}, they provide
+  information to get the most recent version of \texttt{R} for common
+  distributions. For most distributions, you could use your package
+  manager (e.g., for Debian/Ubuntu run
+  \texttt{sudo\ apt-get\ install\ r-base}, and for Fedora
+  \texttt{sudo\ yum\ install\ R}), but we don't recommend this approach
+  as the versions provided by this are usually out of date. In any case,
+  make sure you have at least \texttt{R\ 3.4.3}
+\item
+  Go to the
+  \href{https://www.rstudio.com/products/rstudio/download/\#download}{RStudio
+  download page}
+\item
+  Under \emph{Installers} select the version that matches your
+  distribution, and install it with your preferred method (e.g., with
+  Debian/Ubuntu \texttt{sudo\ dpkg\ -i\ \ \ rstudio-x.yy.zzz-amd64.deb}
+  at the terminal).
+\item
+  Once it's installed, open \texttt{RStudio} to make sure it works and
+  you don't get any error messages.
+\end{itemize}
+
+\end{document}

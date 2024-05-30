@@ -19,10 +19,10 @@ yield_with_meata_df <- merge(yield_df, meta_df, by="plantID")
 <br>
 <div class = "blue">
 ### Learning Objectives
-
-* Produce scatter plots, boxplots, and time series plots using ggplot.
+* Understand basic grammar of plots in ggplot.
+* Produce scatter plots, and boxplots plots using ggplot.
 * Describe what faceting is and apply faceting in ggplot.
-* Set universal plot settings.
+* Learn to generate high quality plots using ggplot.
 </div>
 
 <br>
@@ -33,25 +33,15 @@ We start by loading the required packages. **`ggplot2`** is included in the **`t
 library(tidyverse)
 ```
 
-Let's read in our tomato yiled data for learning various plots in R. We will use the data maniputation techniques, that we have learned before, and use it for visulization as well.
+Let's read in our tomato yield data for learning various plots in R. We will use the data manipulation techniques, that we have learned before, and use it for visualization as well.
 
 ## Plotting with **`ggplot2`**
 
-**`ggplot2`** is a plotting package that makes it simple to create complex plots
-from data in a data frame. It provides a more programmatic interface for
-specifying what variables to plot, how they are displayed, and general visual
-properties. Therefore, we only need minimal changes if the underlying data change
-or if we decide to change from a bar plot to a scatterplot. This helps in creating
-publication quality plots with minimal amounts of adjustments and tweaking.
+**`ggplot2`** simplifies the creation of intricate plots from data within a data frame. It offers a programmatic approach for specifying variables, their display, and overall visual properties. With this, minimal adjustments are needed if the data change or if switching between plot types. This streamlines the creation of publication-quality plots with minimal tweaking.
 
-**`ggplot2`** functions like data in the 'long' format, i.e., a column for every dimension,
-and a row for every observation. Well-structured data will save you lots of time
-when making figures with **`ggplot2`**
+Graphics in ggplot are constructed by adding layers incrementally, providing extensive flexibility and customization options.
 
-ggplot graphics are built step by step by adding new elements. Adding layers in
-this fashion allows for extensive flexibility and customization of plots.
-
-To build a ggplot, we will use the following basic template that can be used for different types of plots:
+For building a ggplot, we'll utilize a basic template adaptable to various plot types.
 
 ```
 ggplot(data = <DATA>, mapping = aes(<MAPPINGS>)) +  <GEOM_FUNCTION>()
@@ -60,7 +50,7 @@ ggplot(data = <DATA>, mapping = aes(<MAPPINGS>)) +  <GEOM_FUNCTION>()
 - use the `ggplot()` function and bind the plot to a specific data frame using the
       `data` argument
 
-```{r, eval=FALSE, purl=FALSE}
+```{r}
 ggplot(data = yield_with_meata_df)
 ```
 
@@ -117,9 +107,14 @@ error message.
 gg_spad_yield +
   geom_point()
 
+
+```
+
+
+```
 # This will not add the new layer and will return an error message
-gg_spad_yield
-  + geom_point()
+# gg_spad_yield
+#   + geom_point()
 ```
 
 ## Building your plots iteratively
@@ -150,10 +145,10 @@ ggplot(data = yield_with_meata_df, mapping = aes(x = marketable_yield_kg, y = sp
 
 ```
 
-Or to color each species in the plot differently, you could use a vector as an input to the argument **color**. **`ggplot2`** will provide a different color corresponding to different values in the vector. Here is an example where we color with **`species_id`**:
+Or to color each rootstock in the plot differently, you could use a vector as an input to the argument **color**. **`ggplot2`** will provide a different color corresponding to different values in the vector. Here is an example where we color with **`rootstock`**:
 
 
-```{r color-by-species, purl=FALSE}
+```{r, purl=FALSE}
 
 ggplot(data = yield_with_meata_df, mapping = aes(x = marketable_yield_kg, y = spad_value))+
     geom_point(alpha = 0.5, aes(color = rootstock))
@@ -163,7 +158,7 @@ ggplot(data = yield_with_meata_df, mapping = aes(x = marketable_yield_kg, y = sp
 
 We can also specify the colors directly inside the mapping provided in the `ggplot()` function. This will be seen by all geom layers and the mapping will be determined by the x- and y-axis set up in `aes()`.
 
-```{r color-by-species2, purl=FALSE}
+```{r color-by-rootstock, purl=FALSE}
 
 ggplot(data = yield_with_meata_df, mapping = aes(x = marketable_yield_kg, y = spad_value, color = rootstock))+
     geom_point(alpha = 0.5)
@@ -192,7 +187,7 @@ ggplot(data = yield_with_meata_df, mapping = aes(x = rootstock, y = marketable_y
 
 ## Boxplot
 
-We can use boxplots to visualize the distribution of weight within each species:
+We can use boxplots to visualize the distribution of weight within each rootstock:
 
 ```{r boxplot, purl=FALSE}
 
@@ -276,7 +271,7 @@ yield_with_meata_df %>%
 
 **`ggplot2`** has a special technique called *faceting* that allows the user to split one
 plot into multiple plots based on a factor included in the dataset. We will use it to
-make a time series plot for each species:
+make a time series plot for each rootstock:
 
 ```{r first-facet, purl=FALSE}
 
@@ -306,7 +301,7 @@ Usually plots with white background look more readable when printed.  We can set
 the background to white using the function `theme_bw()`. Additionally, you can remove
 the grid:
 
-```{r facet-by-species-and-sex-white-bg, purl=FALSE}
+```{r}
 
 yield_with_meata_df %>% 
   ggplot(data = yield_with_meata_df, mapping = aes(x = rootstock, y = marketable_yield_kg, color = rootstock)) +
@@ -413,7 +408,7 @@ ggsave("output/figures/gg_marketable_yiled_by_rootstocks_sdate.pdf", gg_marketab
 ### Challenge 2
 
 Use what you just learned to create a plot that depicts how the average weight
-of each species changes through the years.
+of each rootstock changes through the years.
 
 <details>
 <summary>ANSWER</summary>
