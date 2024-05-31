@@ -32,8 +32,9 @@ navbar:
     href: participants.html
   - text: Join Slack Workspace
     href: slack.html
-
-      
+  - text: Opportunities
+    href: Opportunities.html
+    
   right:
   - text: Contact
     icon: fa-hand-spock-o

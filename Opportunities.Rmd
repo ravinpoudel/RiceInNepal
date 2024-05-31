@@ -1,0 +1,62 @@
+---
+title: "---"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+
+# Suppress package startup messages
+suppressPackageStartupMessages({
+  library(knitr)
+  library(kableExtra)
+  library(dplyr)
+
+  # Add other libraries here
+})
+
+```
+
+
+**Opportunity for linking with plant health scientists globally through APS**
+ 
+There are many opportunities to engage with the **American Phytopathological Society (APS)** and link with plant pathologists in the US and around the world.
+
+The **APS Office of International Programs (OIP)** is the central hub for the international activities of APS and has a goal of promoting and increasing worldwide interaction among plant pathologists.
+
+Currently, there are a few APS members in Nepal.
+ 
+**Plant health scientists in Nepal are eligible for a $15/year membership.**
+
+  - For the $15 rate per year, you can go to the link below, click "[Join with Reduced Dues option](https://www.apsnet.org/members/community/join/Pages/DEDiscount.aspx)", then choose regular, early career or student membership type and the country of Nepal.
+  
+  - In the next screen, this should appear at the top: “Discount Code Applied: Developing Economy Discount Option #1 applied. (Price reflected at checkout)”
+  
+  - At checkout, the $15 reduced membership fee should appear or if for whatever reason that is not the case, they can use the discount code 001 at checkout. That is mentioned when they are inputting the information for reduced membership fees.
+
+
+**If the $15/year rate is not practical for you, you can apply for a Global Membership**
+
+  - For potential members such as graduate students, early career, post-docs, technical staff, and undergraduates, you can consider applying for a [Global Membership](	https://www.apsnet.org/members/engagement/oip/Pages/GlobalMembership.aspx ). The deadline for 2024 is May 31, 2024. (There will likely be a new opportunity next year.)
+  
+  - APS members can apply for OIP/Foundation Funds such as the JANE fund, International Travel Fund and collaborate with an APS member outside of Nepal for the OIP Global Experience Program (GEP) Fund.  
+ 
+    - For example, Dr. Shankar Shakya, as an APS member, and later an OIP volunteer in 2021-2022, received the OIP GEP Fund recognition in 2019 and did a Workshop in Nepal titled: “Population Genetics and Data Science in R For Plant Pathologists in Nepal“.  Shankar worked with Dr. Subodh Khanal at Tribhuvan University. 
+
+  - APS members can [participate in subject matter committees](https://www.apsnet.org/members/leadership/apsleadership/Pages/default.aspx) and other programs listed in the APS website. 
+
+ 
+**APS members receive many other benefits **
+
+  - Voting privileges, the Bi-Weekly APS News Capsule, online access to Phytopathology News for APS news and updates, Significant discounts on the annual meeting, APS PRESS items, and journal subscriptions, access to the online member directory and member-only areas of the APS website, networking opportunities with other APS members, access to webinars free to members, discounted rate on publishing in all journals, and Job Center services
+  
+  - [OIP Library Assistance/Donation Program](https://www.apsnet.org/members/engagement/oip/Pages/LibraryDonationProgram.aspx)
+  
+    - The OIP Library Assistance Program (LAP) provides APS publications to developing country libraries and institutions that do not have access or cannot afford them. OIP also assists APS members who wish to donate APS resources (books, DVDs, compendia) to designated libraries.
+ 
+
+
+

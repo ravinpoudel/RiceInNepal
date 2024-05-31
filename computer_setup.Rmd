@@ -1,9 +1,11 @@
 ---
 title: "Computer Software Setup"
 output:
-  word_document: default
-  pdf_document: default
+  html_document:
+    toc: true
+    toc_float: true
 ---
+
 
 ### Please complete these 2 main tasks before our first class:
 

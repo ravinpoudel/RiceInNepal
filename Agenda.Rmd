@@ -135,7 +135,7 @@ d2
 
 ```{r}
 day3_schedule <- data.frame(
-  Time = c("TBD", "TBD", "TBD"),
+  Time = c("9:30 AM - 10:00 AM", "10:00 AM -10:30 AM", "10:30 AM - 11:00 AM"),
   Topic = c("R2M toolbox: rapid risk assessment to support mitigation of crop pathogens and pests", 
             "Harnessing Microbiome Networks: Unveiling Potential Microbial Assemblages for Disease Management", 
             "Panel Discussions"),
