@@ -255,6 +255,9 @@ stat_compare_means(comparisons = my_comparisons, label = "p.signif",  method = "
 
 gg_yiled_boxplot_with_pairwise_test
 
+# Save the plot in the `output`folder
+ggsave("output/figures/gg_yiled_boxplot_with_pairwise_test.pdf", height = 6, width = 8)
+
 ```
 
 
